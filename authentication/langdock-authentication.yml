@@ -1,0 +1,82 @@
+generated: '2026-07-19'
+method: searched
+source: openapi/langdock-openapi-original.yml
+docs: https://docs.langdock.com/en/developer/overview/api-introduction
+description: >-
+  Langdock authenticates every public API call with a workspace API key presented as
+  an HTTP bearer token. There is no OAuth 2.0 or OpenID Connect surface on the public
+  API — no /.well-known/openid-configuration or /.well-known/oauth-authorization-server
+  is served (both 404). Keys are workspace-scoped, carry named product scopes, and are
+  additionally bound to the specific agents and knowledge folders shared with them.
+summary:
+  types:
+  - http
+  http_schemes:
+  - bearer
+  api_key_in:
+  - header
+  oauth2_flows: []
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  bearerFormat: API Key
+  description: API key as Bearer token. Format "Bearer [example key]"
+  sources:
+  - openapi/langdock-openapi-original.yml
+  applied: global — declared as the root-level security requirement for all operations
+alternate_headers:
+- header: x-api-key
+  value: <api-key>
+  applies_to: Langdock Agent MCP Server (https://api.langdock.com/mcp)
+  source: https://docs.langdock.com/en/using-langdock/guides/integrations/mcp/langdock-agent-mcp-server
+key_format:
+  prefix: sk-ld-
+  source: https://docs.langdock.com/en/admin/ai-adoption-and-rollout/best-practices/api-key-best-practices
+key_management:
+  console: https://app.langdock.com/settings/workspace/products/api
+  path: Workspace Settings → Products → API
+  operations:
+  - create
+  - view
+  - revoke
+  environment_variable: LANGDOCK_API_KEY
+  rotation_guidance: >-
+    Langdock recommends rotating keys at least every 90 days, or immediately if
+    compromise is suspected.
+  docs: https://docs.langdock.com/en/admin/ai-adoption-and-rollout/best-practices/api-key-best-practices
+scopes:
+  model: >-
+    Langdock API keys carry named product scopes. Langdock does not publish a
+    consolidated scope reference page; the scope names below are the ones evidenced
+    verbatim in the OpenAPI operation and error descriptions.
+  known:
+  - name: AGENT_API
+    evidence: 403 "Insufficient permissions - requires AGENT_API scope" on POST /assistant/v1/create
+    console_label: Agent API
+  - name: AUDIT_LOG_API
+    evidence: GET /audit-logs/{workspace_id} — "Requires an API key with the `AUDIT_LOG_API`
+      scope."
+  unnamed:
+  - area: Skills
+    evidence: >-
+      Skills operations return 403 "Missing required scope or access / create
+      permission / editor access / owner access" but the scope name is not published.
+resource_sharing:
+  description: >-
+    Beyond scopes, access is granted per-resource: an agent or a knowledge folder must
+    be explicitly shared with an API key before that key can use it.
+  docs:
+  - https://docs.langdock.com/en/developer/agents-api/agent-api-guide
+  - https://docs.langdock.com/en/developer/knowledge-folder-api/sharing
+browser_restriction: >-
+  API calls from browsers are blocked for security reasons; the API is backend-access
+  only.
+oauth:
+  public_api: false
+  note: >-
+    OAuth appears inside the product as an authentication option for CUSTOM
+    INTEGRATIONS an admin configures — that is Langdock acting as an OAuth client
+    against third-party APIs, not an OAuth surface on the Langdock API itself. No
+    scopes/ artifact is emitted for this reason.
+  integrations_auth_docs: https://docs.langdock.com/en/developer/integrations-api/update-auth
