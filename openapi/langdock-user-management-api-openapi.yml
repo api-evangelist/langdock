@@ -1,0 +1,310 @@
+openapi: 3.0.0
+info:
+  title: Langdock Agent User Management API
+  version: 3.0.0
+servers:
+- url: https://api.langdock.com
+  description: Production
+security:
+- bearerAuth: []
+tags:
+- name: User Management
+paths:
+  /user-management/v1/invite:
+    post:
+      tags:
+      - User Management
+      summary: Invite users to workspace
+      description: 'Sends workspace invitations to one or more users by email. Each user can optionally
+
+        be assigned a specific role. If no role is specified, the default role `member` is used.
+
+
+        Users who are already members of the workspace are silently skipped. Users with pending
+
+        join requests are automatically approved. Invalid email addresses are reported in the
+
+        response but do not cause the entire request to fail.
+
+
+        An invitation email is sent to each successfully invited user. If the workspace does not
+
+        have SAML enabled, the email includes a magic link for passwordless sign-in.
+
+        '
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InviteUsersRequest'
+            examples:
+              single_user:
+                summary: Invite a single user
+                value:
+                  users:
+                  - email: jane.doe@example.com
+              multiple_users_with_roles:
+                summary: Invite multiple users with roles
+                value:
+                  users:
+                  - email: alice@example.com
+                    role: admin
+                  - email: bob@example.com
+                    role: member
+                  - email: carol@example.com
+      responses:
+        '200':
+          description: Invitations processed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InviteUsersResponse'
+              examples:
+                all_successful:
+                  summary: All invitations sent
+                  value:
+                    status: success
+                    message: Invitations processed
+                    successfulInvites:
+                    - alice@example.com
+                    - bob@example.com
+                    invalidEmails: []
+                partial_success:
+                  summary: Some emails were invalid
+                  value:
+                    status: success
+                    message: Invitations processed
+                    successfulInvites:
+                    - alice@example.com
+                    invalidEmails:
+                    - not-a-valid-email
+        '400':
+          description: Invalid request body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InviteUsersError'
+              examples:
+                missing_users:
+                  summary: Missing or empty users array
+                  value:
+                    message: Invalid request body
+                    errors:
+                    - code: too_small
+                      minimum: 1
+                      type: array
+                      inclusive: true
+                      exact: false
+                      message: Array must contain at least 1 element(s)
+                      path:
+                      - users
+                invalid_role:
+                  summary: Invalid role value
+                  value:
+                    message: Invalid request body
+                    errors:
+                    - code: invalid_enum_value
+                      options:
+                      - member
+                      - editor
+                      - admin
+                      received: superadmin
+                      message: Invalid enum value. Expected 'member' | 'editor' | 'admin', received 'superadmin'
+                      path:
+                      - users
+                      - 0
+                      - role
+        '401':
+          description: Unauthorized - API key is missing, invalid, or the key creator was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InviteUsersError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InviteUsersError'
+  /user-management/v1/deactivate-user:
+    post:
+      tags:
+      - User Management
+      summary: Deactivate a workspace user
+      description: 'Removes a user from the workspace by email. The user immediately loses access,
+
+        but all their data (conversations, assistants, files, integrations) is preserved
+
+        and restored if they are re-added later.
+
+        '
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserEmailRequest'
+            examples:
+              deactivate_user:
+                summary: Deactivate a user
+                value:
+                  email: user@example.com
+      responses:
+        '200':
+          description: User deactivated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserManagementResponse'
+              examples:
+                success:
+                  summary: User deactivated
+                  value:
+                    status: success
+                    message: User deactivated
+        '401':
+          description: Unauthorized - API key is missing, invalid, or the key creator was not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserManagementError'
+        '404':
+          description: User not found or not an active member
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserManagementError'
+              examples:
+                not_found:
+                  summary: User not found
+                  value:
+                    message: User not found or not an active member
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserManagementError'
+components:
+  schemas:
+    UserEmailRequest:
+      type: object
+      required:
+      - email
+      properties:
+        email:
+          type: string
+          format: email
+          description: Email address of the user
+          example: user@example.com
+    UserManagementResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+          description: Always "success" when the request is processed
+          example: success
+        message:
+          type: string
+          description: Human-readable summary of the result
+          example: User deactivated
+      required:
+      - status
+      - message
+    InviteUsersError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Error message
+          example: Invalid request body
+        errors:
+          type: array
+          items:
+            type: object
+          description: Detailed validation errors (present on 400 responses)
+        error:
+          type: string
+          description: Additional error details (present on 500 responses)
+      required:
+      - message
+    UserManagementError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Error message
+          example: User not found or not an active member
+      required:
+      - message
+    InviteUsersRequest:
+      type: object
+      required:
+      - users
+      properties:
+        users:
+          type: array
+          minItems: 1
+          description: List of users to invite. At least one user is required.
+          items:
+            type: object
+            required:
+            - email
+            properties:
+              email:
+                type: string
+                format: email
+                description: Email address of the user to invite
+                example: jane.doe@example.com
+              role:
+                type: string
+                enum:
+                - member
+                - editor
+                - admin
+                description: Role to assign. If omitted, defaults to `member`.
+                example: member
+    InviteUsersResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+          description: Always "success" when the request is processed
+          example: success
+        message:
+          type: string
+          description: Human-readable summary of the result
+          example: Invitations processed
+        successfulInvites:
+          type: array
+          items:
+            type: string
+            format: email
+          description: Email addresses that were successfully invited
+          example:
+          - alice@example.com
+          - bob@example.com
+        invalidEmails:
+          type: array
+          items:
+            type: string
+          description: Email addresses that failed deeper validation (e.g., unreachable domain)
+          example: []
+      required:
+      - status
+      - message
+      - successfulInvites
+      - invalidEmails
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: API Key
+      description: API key as Bearer token. Format "Bearer YOUR_API_KEY"

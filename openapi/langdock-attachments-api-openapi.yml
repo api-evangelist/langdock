@@ -1,0 +1,189 @@
+openapi: 3.0.0
+info:
+  title: Langdock Agent Attachments API
+  version: 3.0.0
+servers:
+- url: https://api.langdock.com
+  description: Production
+security:
+- bearerAuth: []
+tags:
+- name: Attachments
+paths:
+  /attachment/v1/upload:
+    post:
+      operationId: uploadAttachment
+      summary: Upload an attachment
+      description: Upload a file that can be referenced in Agent conversations.
+      tags:
+      - Attachments
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+              - file
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The file to upload
+      responses:
+        '200':
+          description: Successfully uploaded file
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - attachmentId
+                - file
+                properties:
+                  attachmentId:
+                    type: string
+                    format: uuid
+                    description: Unique identifier for the uploaded attachment
+                  file:
+                    type: object
+                    required:
+                    - name
+                    - mimeType
+                    - sizeInBytes
+                    properties:
+                      name:
+                        type: string
+                        description: Original filename
+                      mimeType:
+                        type: string
+                        description: MIME type of the file
+                      sizeInBytes:
+                        type: integer
+                        description: Size of the file in bytes
+        '400':
+          description: No file provided
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '401':
+          description: Invalid API key
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+  /attachment/v1/delete:
+    delete:
+      operationId: deleteAttachment
+      summary: Delete an attachment
+      description: Soft-deletes an attachment by ID. The attachment must be created by the API key's creator or belong to a Knowledge base shared with the API key.
+      tags:
+      - Attachments
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - attachmentId
+              properties:
+                attachmentId:
+                  type: string
+                  format: uuid
+                  description: The ID of the attachment to delete
+      responses:
+        '200':
+          description: Attachment deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - message
+                - attachmentId
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Attachment deleted successfully
+                  attachmentId:
+                    type: string
+                    format: uuid
+                    description: The ID of the deleted attachment
+        '400':
+          description: Invalid request body
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  errors:
+                    type: array
+                    items: {}
+        '401':
+          description: Invalid API key
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '403':
+          description: API key does not have access to this attachment
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '404':
+          description: Attachment not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: API Key
+      description: API key as Bearer token. Format "Bearer YOUR_API_KEY"

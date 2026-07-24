@@ -1,0 +1,381 @@
+openapi: 3.0.0
+info:
+  title: Langdock Agent Usage Export API
+  version: 3.0.0
+servers:
+- url: https://api.langdock.com
+  description: Production
+security:
+- bearerAuth: []
+tags:
+- name: Usage Export
+paths:
+  /export/assistants:
+    post:
+      tags:
+      - Usage Export
+      summary: Export assistant usage data
+      description: Export detailed usage data for all assistants in the workspace
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UsageExportModelGroupByRequest'
+            example:
+              from:
+                date: '2024-01-01T00:00:00.000Z'
+                timezone: UTC
+              to:
+                date: '2024-01-31T23:59:59.999Z'
+                timezone: UTC
+      responses:
+        '200':
+          description: Export successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsageExportResponse'
+              example:
+                success: true
+                data:
+                  filePath: assistants-usage/workspace-id/assistants-usage-2024-01-01-2024-01-31-abc12345.csv
+                  downloadUrl: https://storage.example.com/signed-url
+                  dataType: assistants
+                  recordCount: 1250
+                  dateRange:
+                    from: '2024-01-01T00:00:00.000Z'
+                    to: '2024-01-31T23:59:59.999Z'
+        '400':
+          description: Bad Request - Export too large or invalid date range
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsageExportError'
+              example:
+                error: Export too large
+                message: 'Export too large: 1500000 rows exceeds limit of 1000000. Please narrow the date range.'
+        '401':
+          description: Unauthorized - Invalid or missing API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsageExportError'
+              example:
+                error: Unauthorized
+                message: Invalid or missing API key
+        '404':
+          description: No data found for the selected period
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsageExportError'
+              example:
+                error: No data found
+                message: No usage data found for the selected period
+  /export/users:
+    post:
+      tags:
+      - Usage Export
+      summary: Export user usage data
+      description: Export detailed usage data for all users in the workspace (subject to privacy settings)
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UsageExportModelGroupByRequest'
+      responses:
+        '200':
+          description: Export successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsageExportResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsageExportError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsageExportError'
+        '404':
+          description: No data found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsageExportError'
+  /export/projects:
+    post:
+      tags:
+      - Usage Export
+      summary: Export project usage data
+      description: Export detailed usage data for all projects in the workspace
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UsageExportRequest'
+      responses:
+        '200':
+          description: Export successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsageExportResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsageExportError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsageExportError'
+        '404':
+          description: No data found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsageExportError'
+  /export/models:
+    post:
+      tags:
+      - Usage Export
+      summary: Export model usage data
+      description: Export detailed usage data for all AI models used in the workspace
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UsageExportModelsRequest'
+      responses:
+        '200':
+          description: Export successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsageExportResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsageExportError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsageExportError'
+        '404':
+          description: No data found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsageExportError'
+  /export/api-keys:
+    post:
+      tags:
+      - Usage Export
+      summary: Export API key usage data
+      description: Export detailed usage and cost data grouped by API key
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UsageExportModelGroupByRequest'
+            example:
+              from:
+                date: '2024-01-01T00:00:00.000Z'
+                timezone: UTC
+              to:
+                date: '2024-01-31T23:59:59.999Z'
+                timezone: UTC
+              group_by: model
+      responses:
+        '200':
+          description: Export successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsageExportResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsageExportError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsageExportError'
+        '404':
+          description: No data found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsageExportError'
+components:
+  schemas:
+    UsageExportResponse:
+      type: object
+      description: Successful response from usage export endpoints
+      properties:
+        success:
+          type: boolean
+          description: Indicates if the export was successful
+          example: true
+        data:
+          type: object
+          description: Export data information
+          properties:
+            filePath:
+              type: string
+              description: Path to the generated export file
+              example: agents-usage/workspace-id/agents-usage-2024-01-01-2024-01-31-abc12345.csv
+            downloadUrl:
+              type: string
+              format: uri
+              description: Signed URL to download the export file
+              example: https://storage.example.com/signed-url
+            dataType:
+              type: string
+              description: Type of data exported
+              enum:
+              - assistants
+              - agents
+              - api_keys
+              - users
+              - projects
+              - models
+              example: assistants
+            recordCount:
+              type: integer
+              description: Number of records in the export
+              example: 1250
+            dateRange:
+              type: object
+              description: Actual date range of the exported data
+              properties:
+                from:
+                  type: string
+                  format: date-time
+                  description: Start date of the export
+                  example: '2024-01-01T00:00:00.000Z'
+                to:
+                  type: string
+                  format: date-time
+                  description: End date of the export
+                  example: '2024-01-31T23:59:59.999Z'
+              required:
+              - from
+              - to
+          required:
+          - filePath
+          - downloadUrl
+          - dataType
+          - recordCount
+          - dateRange
+      required:
+      - success
+      - data
+    UsageExportModelsRequest:
+      allOf:
+      - $ref: '#/components/schemas/UsageExportRequest'
+      - type: object
+        properties:
+          group_by:
+            type: string
+            description: Optional aggregation dimension. `deployment` is only available for BYOK workspaces.
+            enum:
+            - source
+            - deployment
+    UsageExportRequest:
+      type: object
+      description: Request body for usage export endpoints
+      properties:
+        from:
+          type: object
+          description: Start date and timezone for the export
+          properties:
+            date:
+              type: string
+              format: date-time
+              description: Start date in ISO 8601 format
+              example: '2024-01-01T00:00:00.000Z'
+            timezone:
+              type: string
+              description: Timezone for the date range
+              example: UTC
+          required:
+          - date
+          - timezone
+        to:
+          type: object
+          description: End date and timezone for the export
+          properties:
+            date:
+              type: string
+              format: date-time
+              description: End date in ISO 8601 format
+              example: '2024-01-31T23:59:59.999Z'
+            timezone:
+              type: string
+              description: Timezone for the date range
+              example: UTC
+          required:
+          - date
+          - timezone
+      required:
+      - from
+      - to
+    UsageExportModelGroupByRequest:
+      allOf:
+      - $ref: '#/components/schemas/UsageExportRequest'
+      - type: object
+        properties:
+          group_by:
+            type: string
+            description: Optional aggregation dimension.
+            enum:
+            - model
+    UsageExportError:
+      type: object
+      description: Error response from usage export endpoints
+      properties:
+        error:
+          type: string
+          description: Error type
+          example: No data found
+        message:
+          type: string
+          description: Detailed error message
+          example: No usage data found for the selected period
+      required:
+      - error
+      - message
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: API Key
+      description: API key as Bearer token. Format "Bearer YOUR_API_KEY"

@@ -1,0 +1,256 @@
+openapi: 3.0.0
+info:
+  title: Langdock Agent Google API
+  version: 3.0.0
+servers:
+- url: https://api.langdock.com
+  description: Production
+security:
+- bearerAuth: []
+tags:
+- name: Google
+paths:
+  /google/{region}/v1beta/models/{model}:generateContent:
+    post:
+      tags:
+      - Google
+      summary: Generate Content
+      description: 'Generate content using Google Gemini models.
+
+        This endpoint mirrors the structure of the official Vertex AI generateContent API while adding API-key based authentication and region selection.'
+      parameters:
+      - name: region
+        in: path
+        required: true
+        description: The region of the API to use.
+        schema:
+          type: string
+          enum:
+          - eu
+          - us
+      - name: model
+        in: path
+        required: true
+        description: The model ID (e.g., gemini-2.5-pro, gemini-2.5-flash).
+        schema:
+          type: string
+      operationId: google_generate_content_post
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                contents:
+                  type: array
+                  description: The content to generate a response for.
+                  items:
+                    type: object
+                    properties:
+                      role:
+                        type: string
+                        enum:
+                        - user
+                        - model
+                      parts:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            text:
+                              type: string
+              required:
+              - contents
+            example:
+              contents:
+              - role: user
+                parts:
+                - text: Write a short haiku about the ocean.
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  candidates:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        content:
+                          type: object
+                        finishReason:
+                          type: string
+                  usageMetadata:
+                    type: object
+        4XX:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      security:
+      - bearerAuth: []
+components:
+  schemas:
+    NotFoundError:
+      properties:
+        type:
+          default: not_found_error
+          enum:
+          - not_found_error
+          title: Type
+          type: string
+        message:
+          default: Not found
+          title: Message
+          type: string
+      required:
+      - type
+      - message
+      title: NotFoundError
+      type: object
+    InvalidRequestError:
+      properties:
+        type:
+          default: invalid_request_error
+          enum:
+          - invalid_request_error
+          title: Type
+          type: string
+        message:
+          default: Invalid request
+          title: Message
+          type: string
+      required:
+      - type
+      - message
+      title: InvalidRequestError
+      type: object
+    AuthenticationError:
+      properties:
+        type:
+          default: authentication_error
+          enum:
+          - authentication_error
+          title: Type
+          type: string
+        message:
+          default: Authentication error
+          title: Message
+          type: string
+      required:
+      - type
+      - message
+      title: AuthenticationError
+      type: object
+    PermissionError:
+      properties:
+        type:
+          default: permission_error
+          enum:
+          - permission_error
+          title: Type
+          type: string
+        message:
+          default: Permission denied
+          title: Message
+          type: string
+      required:
+      - type
+      - message
+      title: PermissionError
+      type: object
+    APIError:
+      properties:
+        type:
+          default: api_error
+          enum:
+          - api_error
+          title: Type
+          type: string
+        message:
+          default: Internal server error
+          title: Message
+          type: string
+      required:
+      - type
+      - message
+      title: APIError
+      type: object
+    ErrorResponse:
+      properties:
+        type:
+          default: error
+          enum:
+          - error
+          title: Type
+          type: string
+        error:
+          discriminator:
+            mapping:
+              api_error: '#/components/schemas/APIError'
+              authentication_error: '#/components/schemas/AuthenticationError'
+              invalid_request_error: '#/components/schemas/InvalidRequestError'
+              not_found_error: '#/components/schemas/NotFoundError'
+              overloaded_error: '#/components/schemas/OverloadedError'
+              permission_error: '#/components/schemas/PermissionError'
+              rate_limit_error: '#/components/schemas/RateLimitError'
+            propertyName: type
+          oneOf:
+          - $ref: '#/components/schemas/InvalidRequestError'
+          - $ref: '#/components/schemas/AuthenticationError'
+          - $ref: '#/components/schemas/PermissionError'
+          - $ref: '#/components/schemas/NotFoundError'
+          - $ref: '#/components/schemas/RateLimitError'
+          - $ref: '#/components/schemas/APIError'
+          - $ref: '#/components/schemas/OverloadedError'
+          title: Error
+      required:
+      - type
+      - error
+      title: ErrorResponse
+      type: object
+    OverloadedError:
+      properties:
+        type:
+          default: overloaded_error
+          enum:
+          - overloaded_error
+          title: Type
+          type: string
+        message:
+          default: Overloaded
+          title: Message
+          type: string
+      required:
+      - type
+      - message
+      title: OverloadedError
+      type: object
+    RateLimitError:
+      properties:
+        type:
+          default: rate_limit_error
+          enum:
+          - rate_limit_error
+          title: Type
+          type: string
+        message:
+          default: Rate limited
+          title: Message
+          type: string
+      required:
+      - type
+      - message
+      title: RateLimitError
+      type: object
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: API Key
+      description: API key as Bearer token. Format "Bearer YOUR_API_KEY"

@@ -1,0 +1,147 @@
+openapi: 3.0.0
+info:
+  title: Langdock Agent Knowledge API
+  version: 3.0.0
+servers:
+- url: https://api.langdock.com
+  description: Production
+security:
+- bearerAuth: []
+tags:
+- name: Knowledge
+paths:
+  /knowledge/search:
+    post:
+      summary: Search through all files in data folders shared with the API Key
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - query
+              properties:
+                query:
+                  type: string
+                  description: The search query
+                  example: API Documentation
+      responses:
+        '200':
+          description: Successfully found search result
+      security:
+      - bearerAuth: []
+      tags:
+      - Knowledge
+  /knowledge/{folderId}:
+    post:
+      summary: Upload a file to a knowledge folder
+      parameters:
+      - name: folderId
+        in: path
+        required: true
+        description: The ID of the knowledge folder
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The file to upload
+                url:
+                  type: string
+                  description: The associated URL
+      responses:
+        '200':
+          description: File uploaded successfully
+      security:
+      - bearerAuth: []
+      tags:
+      - Knowledge
+    patch:
+      summary: Update a file in a knowledge folder
+      parameters:
+      - name: folderId
+        in: path
+        required: true
+        description: The ID of the knowledge folder
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The new file to upload
+                url:
+                  type: string
+                  description: URL that is shown to the user if the file is used in an answer
+                attachmentId:
+                  type: string
+                  description: The ID of the attachment to update
+      responses:
+        '200':
+          description: Attachment updated successfully
+      security:
+      - bearerAuth: []
+      tags:
+      - Knowledge
+  /knowledge/{folderId}/list:
+    get:
+      summary: Retrieve files from a knowledge folder
+      parameters:
+      - name: folderId
+        in: path
+        required: true
+        description: The ID of the knowledge folder
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of files retrieved successfully
+      security:
+      - bearerAuth: []
+      tags:
+      - Knowledge
+  /knowledge/{folderId}/{attachmentId}:
+    delete:
+      summary: Delete a file from a knowledge folder
+      parameters:
+      - name: folderId
+        in: path
+        required: true
+        description: The ID of the knowledge folder
+        schema:
+          type: string
+      - name: attachmentId
+        in: path
+        required: true
+        description: The ID of the attachment to delete
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Attachment deleted successfully
+      security:
+      - bearerAuth: []
+      tags:
+      - Knowledge
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: API Key
+      description: API key as Bearer token. Format "Bearer YOUR_API_KEY"

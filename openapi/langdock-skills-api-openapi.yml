@@ -1,0 +1,438 @@
+openapi: 3.0.0
+info:
+  title: Langdock Agent Skills API
+  version: 3.0.0
+servers:
+- url: https://api.langdock.com
+  description: Production
+security:
+- bearerAuth: []
+tags:
+- name: Skills
+paths:
+  /skills/v1:
+    get:
+      operationId: listSkills
+      summary: List Skills
+      description: Returns Skills in your workspace.
+      tags:
+      - Skills
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 250
+          default: 50
+        description: Number of Skills to return.
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+          format: uuid
+        description: Cursor from the previous response for pagination.
+      - name: query
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Search query for matching Skills.
+      - name: slug
+        in: query
+        required: false
+        schema:
+          type: string
+          maxLength: 100
+          pattern: ^[a-z0-9-]+$
+        description: Filter by Skill slug.
+      responses:
+        '200':
+          description: Skills returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListSkillsResponse'
+        '400':
+          description: Invalid query parameter
+        '401':
+          description: Invalid or missing API key
+        '403':
+          description: Missing required scope or access
+        '429':
+          description: Rate limit exceeded
+        '500':
+          description: Internal server error
+    post:
+      operationId: createSkill
+      summary: Create a Skill
+      description: Creates a Skill in your workspace.
+      tags:
+      - Skills
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSkillRequest'
+      responses:
+        '201':
+          description: Skill created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SkillResponse'
+        '400':
+          description: Invalid request body
+        '401':
+          description: Invalid or missing API key
+        '403':
+          description: Missing required scope or create permission
+        '409':
+          description: Skill slug conflict
+        '429':
+          description: Rate limit exceeded
+        '500':
+          description: Internal server error
+  /skills/v1/{skillId}:
+    get:
+      operationId: getSkill
+      summary: Get a Skill
+      description: Retrieves a Skill by ID from your workspace.
+      tags:
+      - Skills
+      parameters:
+      - $ref: '#/components/parameters/SkillId'
+      responses:
+        '200':
+          description: Skill returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SkillResponse'
+        '400':
+          description: Invalid Skill ID
+        '401':
+          description: Invalid or missing API key
+        '403':
+          description: Missing required scope or access
+        '404':
+          description: Skill not found
+        '429':
+          description: Rate limit exceeded
+        '500':
+          description: Internal server error
+    patch:
+      operationId: updateSkill
+      summary: Update a Skill
+      description: Updates an existing Skill in your workspace.
+      tags:
+      - Skills
+      parameters:
+      - $ref: '#/components/parameters/SkillId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateSkillRequest'
+      responses:
+        '200':
+          description: Skill updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SkillResponse'
+        '400':
+          description: Invalid request body
+        '401':
+          description: Invalid or missing API key
+        '403':
+          description: Missing required scope or editor access
+        '404':
+          description: Skill not found
+        '409':
+          description: Skill slug conflict
+        '429':
+          description: Rate limit exceeded
+        '500':
+          description: Internal server error
+    delete:
+      operationId: deleteSkill
+      summary: Delete a Skill
+      description: Permanently deletes a Skill from your workspace.
+      tags:
+      - Skills
+      parameters:
+      - $ref: '#/components/parameters/SkillId'
+      responses:
+        '200':
+          description: Skill deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+        '400':
+          description: Invalid Skill ID
+        '401':
+          description: Invalid or missing API key
+        '403':
+          description: Missing required scope or owner access
+        '404':
+          description: Skill not found
+        '429':
+          description: Rate limit exceeded
+        '500':
+          description: Internal server error
+  /skills/v1/import:
+    post:
+      operationId: importSkill
+      summary: Import a Skill
+      description: Creates or updates a Skill from a SKILL.md file or zip archive.
+      tags:
+      - Skills
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ImportSkillRequest'
+      responses:
+        '200':
+          description: Existing Skill updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportSkillResponse'
+        '201':
+          description: Skill created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportSkillResponse'
+        '400':
+          description: Invalid form data or zip archive
+        '401':
+          description: Invalid or missing API key
+        '403':
+          description: Missing required scope or Skill permission
+        '409':
+          description: Existing slug conflict or ambiguous upsert slug
+        '413':
+          description: Uploaded file is too large
+        '429':
+          description: Rate limit exceeded
+        '500':
+          description: Internal server error
+components:
+  parameters:
+    SkillId:
+      name: skillId
+      in: path
+      required: true
+      description: UUID of the Skill.
+      schema:
+        type: string
+        format: uuid
+  schemas:
+    UpdateSkillRequest:
+      type: object
+      minProperties: 1
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+          maxLength: 64
+          minLength: 1
+          description: Skill name.
+        slug:
+          type: string
+          maxLength: 100
+          pattern: ^[a-z0-9-]+$
+          description: Stable Skill slug.
+        description:
+          type: string
+          maxLength: 1024
+          description: Description used to explain when the Skill should apply.
+        instructions:
+          type: string
+          maxLength: 50000
+          minLength: 1
+          description: Skill instructions.
+        integrationIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: Integration IDs to attach to the Skill. Replaces the current integration list.
+    Skill:
+      type: object
+      required:
+      - id
+      - name
+      - slug
+      - description
+      - instructions
+      - integrationIds
+      - createdAt
+      - updatedAt
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the Skill.
+        name:
+          type: string
+          maxLength: 64
+          description: Skill name.
+        slug:
+          type: string
+          maxLength: 100
+          pattern: ^[a-z0-9-]+$
+          description: Stable Skill slug.
+        description:
+          type: string
+          maxLength: 1024
+          description: Description used to explain when the Skill should apply.
+        instructions:
+          type: string
+          maxLength: 50000
+          description: Skill instructions.
+        integrationIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: Integration IDs attached to the Skill. Each integration must be enabled in your workspace.
+        createdAt:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp for Skill creation.
+        updatedAt:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp for the latest Skill update.
+    ImportedSkillFile:
+      type: object
+      required:
+      - path
+      - sizeBytes
+      - extension
+      - hasScript
+      properties:
+        path:
+          type: string
+          description: File path inside the imported Skill.
+        sizeBytes:
+          type: integer
+          description: File size in bytes.
+        extension:
+          type: string
+          description: File extension.
+        hasScript:
+          type: boolean
+          description: Whether the file is a script file.
+    ListSkillsResponse:
+      type: object
+      required:
+      - skills
+      properties:
+        skills:
+          type: array
+          items:
+            $ref: '#/components/schemas/Skill'
+        nextCursor:
+          type: string
+          format: uuid
+          description: Cursor for the next page, if more results are available.
+    ImportSkillResponse:
+      type: object
+      required:
+      - skill
+      - files
+      properties:
+        skill:
+          $ref: '#/components/schemas/Skill'
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImportedSkillFile'
+    ImportSkillRequest:
+      type: object
+      required:
+      - file
+      - fileType
+      properties:
+        file:
+          type: string
+          format: binary
+          description: SKILL.md, .zip, or .skill file content.
+        fileType:
+          type: string
+          enum:
+          - md
+          - zip
+          description: File parser to use.
+        mode:
+          type: string
+          enum:
+          - create
+          - upsert
+          default: create
+          description: Whether to create a Skill or update an editable Skill with the same slug.
+        integrationIds:
+          type: string
+          description: JSON-encoded array of integration UUIDs.
+    SkillResponse:
+      type: object
+      required:
+      - skill
+      properties:
+        skill:
+          $ref: '#/components/schemas/Skill'
+    CreateSkillRequest:
+      type: object
+      required:
+      - name
+      - instructions
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+          maxLength: 64
+          minLength: 1
+          description: Skill name.
+        slug:
+          type: string
+          maxLength: 100
+          pattern: ^[a-z0-9-]+$
+          description: Stable Skill slug.
+        description:
+          type: string
+          maxLength: 1024
+          description: Description used to explain when the Skill should apply.
+        instructions:
+          type: string
+          maxLength: 50000
+          minLength: 1
+          description: Skill instructions.
+        integrationIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: Integration IDs to attach to the Skill.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: API Key
+      description: API key as Bearer token. Format "Bearer YOUR_API_KEY"

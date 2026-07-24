@@ -1,0 +1,736 @@
+openapi: 3.0.0
+info:
+  title: Langdock Agent Assistant Build API
+  version: 3.0.0
+servers:
+- url: https://api.langdock.com
+  description: Production
+security:
+- bearerAuth: []
+tags:
+- name: Assistant Build
+paths:
+  /assistant/v1/create:
+    post:
+      deprecated: true
+      operationId: createAgent
+      summary: '[Deprecated] Creates a new assistant'
+      description: This endpoint is deprecated. Please use /agent/v1/create for new integrations. Creates a new assistant in your workspace programmatically.
+      tags:
+      - Assistant Build
+      requestBody:
+        required: true
+        content:
+          application/json:
+            examples:
+              basicAgent:
+                summary: Basic agent with minimal configuration
+                value:
+                  name: Document Analyzer
+                  description: Analyzes and summarizes documents
+                  emoji: 📄
+                  instruction: You are a helpful agent that analyzes documents.
+                  creativity: 0.5
+              agentWithActions:
+                summary: Agent with actions and capabilities
+                value:
+                  name: Email Agent
+                  description: Helps manage and send emails
+                  emoji: 📧
+                  instruction: You are an email agent.
+                  model: gpt-5-mini
+                  creativity: 0.7
+                  conversationStarters:
+                  - Send an email to my team
+                  - Draft a follow-up email
+                  actions:
+                  - actionId: action-uuid
+                    requiresConfirmation: true
+                  webSearch: true
+              structuredInputAgent:
+                summary: Agent with structured input fields
+                value:
+                  name: Invoice Analyzer
+                  description: Analyzes invoices
+                  emoji: 🧾
+                  instruction: You are an invoice analysis agent.
+                  inputType: STRUCTURED
+                  inputFields:
+                  - slug: customer_name
+                    type: TEXT
+                    label: Customer Name
+                    description: Enter customer name
+                    required: true
+                    order: 0
+                    options: []
+                  - slug: invoice_date
+                    type: DATE
+                    label: Invoice Date
+                    required: true
+                    order: 1
+                    options: []
+            schema:
+              type: object
+              required:
+              - name
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                  description: Name of the agent
+                description:
+                  type: string
+                  maxLength: 256
+                  description: Description of what the agent does
+                emoji:
+                  type: string
+                  description: Emoji icon for the agent (e.g., "🤖")
+                instruction:
+                  type: string
+                  maxLength: 16384
+                  description: System prompt/instructions for the agent
+                inputType:
+                  type: string
+                  enum:
+                  - PROMPT
+                  - STRUCTURED
+                  default: PROMPT
+                  description: Input type for the agent
+                model:
+                  type: string
+                  description: Model ID to use (see Models for Agent API)
+                creativity:
+                  type: number
+                  minimum: 0
+                  maximum: 1
+                  default: 0.3
+                  description: Temperature for response generation
+                conversationStarters:
+                  type: array
+                  items:
+                    type: string
+                  description: Array of suggested prompts to help users get started
+                actions:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                    - actionId
+                    properties:
+                      actionId:
+                        type: string
+                        format: uuid
+                        description: UUID of the action from an enabled integration
+                      requiresConfirmation:
+                        type: boolean
+                        default: false
+                        description: Whether to require user confirmation before executing
+                  description: Array of action objects for custom integrations
+                inputFields:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                    - slug
+                    - type
+                    - label
+                    - order
+                    properties:
+                      slug:
+                        type: string
+                        description: Unique identifier for the field
+                      type:
+                        type: string
+                        enum:
+                        - TEXT
+                        - MULTI_LINE_TEXT
+                        - NUMBER
+                        - CHECKBOX
+                        - FILE
+                        - SELECT
+                        - DATE
+                        description: Field type
+                      label:
+                        type: string
+                        description: Display label for the field
+                      description:
+                        type: string
+                        description: Help text for the field
+                      required:
+                        type: boolean
+                        default: false
+                        description: Whether the field is required
+                      order:
+                        type: integer
+                        minimum: 0
+                        description: Display order (0-indexed)
+                      options:
+                        type: array
+                        items:
+                          type: string
+                        description: Options for SELECT type fields
+                      fileTypes:
+                        type: array
+                        items:
+                          type: string
+                        description: Allowed file types for FILE type fields
+                  description: Array of form field definitions (for STRUCTURED input type)
+                attachments:
+                  type: array
+                  items:
+                    type: string
+                    format: uuid
+                  description: Array of attachment UUIDs to include with the agent
+                webSearch:
+                  type: boolean
+                  default: false
+                  description: Enable web search capability
+                imageGeneration:
+                  type: boolean
+                  default: false
+                  description: Enable image generation capability
+                dataAnalyst:
+                  type: boolean
+                  default: false
+                  deprecated: true
+                  description: Deprecated. Accepted for compatibility and ignored.
+                canvas:
+                  type: boolean
+                  default: false
+                  description: Enable canvas capability
+      responses:
+        '201':
+          description: Agent created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - status
+                - message
+                - agent
+                properties:
+                  status:
+                    type: string
+                    enum:
+                    - success
+                  message:
+                    type: string
+                    example: Assistant created successfully
+                  assistant:
+                    $ref: '#/components/schemas/AssistantDetails'
+        '400':
+          description: Invalid request parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    oneOf:
+                    - type: string
+                    - type: array
+                      items:
+                        type: object
+        '401':
+          description: Invalid or missing API key
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '403':
+          description: Insufficient permissions - requires AGENT_API scope
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '404':
+          description: Resource not found (model, action, or attachment)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+  /assistant/v1/update:
+    patch:
+      deprecated: true
+      operationId: updateAgent
+      summary: '[Deprecated] Updates an existing assistant'
+      description: This endpoint is deprecated. Please use /agent/v1/update for new integrations. Updates an existing assistant in your workspace. Only provided fields will be updated.
+      tags:
+      - Assistant Build
+      requestBody:
+        required: true
+        content:
+          application/json:
+            examples:
+              updateBasicProperties:
+                summary: Update name and description
+                value:
+                  assistantId: 550e8400-e29b-41d4-a716-446655440000
+                  name: Advanced Document Analyzer
+                  description: Analyzes documents with enhanced capabilities
+                  creativity: 0.7
+              enableCapabilities:
+                summary: Enable web search
+                value:
+                  assistantId: 550e8400-e29b-41d4-a716-446655440000
+                  webSearch: true
+                  conversationStarters:
+                  - Search the web for recent news
+                  - Analyze this data
+              updateActions:
+                summary: Replace actions array
+                value:
+                  assistantId: 550e8400-e29b-41d4-a716-446655440000
+                  actions:
+                  - actionId: action-uuid-1
+                    requiresConfirmation: true
+                  - actionId: action-uuid-2
+                    requiresConfirmation: false
+              clearFields:
+                summary: Clear optional fields with null
+                value:
+                  assistantId: 550e8400-e29b-41d4-a716-446655440000
+                  description: null
+                  emoji: null
+            schema:
+              type: object
+              required:
+              - assistantId
+              properties:
+                assistantId:
+                  type: string
+                  format: uuid
+                  description: UUID of the agent to update
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 255
+                  description: Updated name
+                description:
+                  type: string
+                  maxLength: 256
+                  nullable: true
+                  description: Updated description (null to clear)
+                emoji:
+                  type: string
+                  nullable: true
+                  description: Updated emoji icon (null to clear)
+                instruction:
+                  type: string
+                  maxLength: 16384
+                  nullable: true
+                  description: Updated system prompt (null to clear)
+                inputType:
+                  type: string
+                  enum:
+                  - PROMPT
+                  - STRUCTURED
+                  description: Updated input type for the agent
+                model:
+                  type: string
+                  description: Model ID to use (see Models for Agent API)
+                creativity:
+                  type: number
+                  minimum: 0
+                  maximum: 1
+                  description: Updated temperature
+                conversationStarters:
+                  type: array
+                  items:
+                    type: string
+                  description: Updated array of suggested prompts (replaces existing)
+                actions:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                    - actionId
+                    properties:
+                      actionId:
+                        type: string
+                        format: uuid
+                      requiresConfirmation:
+                        type: boolean
+                        default: false
+                  description: Updated array of actions (replaces existing)
+                inputFields:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                    - slug
+                    - type
+                    - label
+                    - order
+                    properties:
+                      slug:
+                        type: string
+                      type:
+                        type: string
+                        enum:
+                        - TEXT
+                        - MULTI_LINE_TEXT
+                        - NUMBER
+                        - CHECKBOX
+                        - FILE
+                        - SELECT
+                        - DATE
+                      label:
+                        type: string
+                      description:
+                        type: string
+                      required:
+                        type: boolean
+                        default: false
+                      order:
+                        type: integer
+                        minimum: 0
+                      options:
+                        type: array
+                        items:
+                          type: string
+                      fileTypes:
+                        type: array
+                        items:
+                          type: string
+                  description: Updated array of form fields (replaces existing)
+                attachments:
+                  type: array
+                  items:
+                    type: string
+                    format: uuid
+                  description: Updated array of attachment UUIDs (replaces existing)
+                webSearch:
+                  type: boolean
+                  description: Updated web search capability setting
+                imageGeneration:
+                  type: boolean
+                  description: Updated image generation capability setting
+                dataAnalyst:
+                  type: boolean
+                  deprecated: true
+                  description: Deprecated. Accepted for compatibility and ignored.
+                canvas:
+                  type: boolean
+                  description: Updated canvas capability setting
+      responses:
+        '200':
+          description: Agent updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - status
+                - message
+                - agent
+                properties:
+                  status:
+                    type: string
+                    enum:
+                    - success
+                  message:
+                    type: string
+                    example: Assistant updated successfully
+                  assistant:
+                    $ref: '#/components/schemas/AssistantDetails'
+        '400':
+          description: Invalid request parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    oneOf:
+                    - type: string
+                    - type: array
+                      items:
+                        type: object
+        '401':
+          description: Invalid or missing API key
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '403':
+          description: Insufficient permissions - no access to this agent
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '404':
+          description: Agent not found or resource not found (model, action, attachment)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+  /assistant/v1/get:
+    get:
+      deprecated: true
+      operationId: getAgent
+      summary: '[Deprecated] Retrieves details of an existing assistant'
+      description: This endpoint is deprecated. Please use /agent/v1/get for new integrations. Retrieves the complete configuration and details of an existing assistant.
+      tags:
+      - Assistant Build
+      parameters:
+      - name: assistantId
+        in: query
+        required: true
+        description: UUID of the agent to retrieve
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Agent details retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - status
+                - agent
+                properties:
+                  status:
+                    type: string
+                    enum:
+                    - success
+                  assistant:
+                    $ref: '#/components/schemas/AssistantDetails'
+        '400':
+          description: Invalid assistant ID format
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '401':
+          description: Invalid or missing API key
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '403':
+          description: Insufficient permissions - no access to this agent
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '404':
+          description: Agent not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+components:
+  schemas:
+    AssistantDetails:
+      type: object
+      required:
+      - id
+      - name
+      - emojiIcon
+      - model
+      - temperature
+      - inputType
+      - webSearchEnabled
+      - imageGenerationEnabled
+      - canvasEnabled
+      - createdAt
+      - updatedAt
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the agent
+        name:
+          type: string
+          description: Name of the agent
+        description:
+          type: string
+          nullable: true
+          description: Description of what the agent does
+        instruction:
+          type: string
+          nullable: true
+          description: System prompt/instructions for the agent
+        emojiIcon:
+          type: string
+          nullable: true
+          description: Emoji icon for the agent
+        model:
+          type: string
+          description: Model ID to use (see Models for Agent API)
+        temperature:
+          type: number
+          minimum: 0
+          maximum: 1
+          description: Temperature/creativity setting for response generation
+        conversationStarters:
+          type: array
+          items:
+            type: string
+          description: Array of suggested prompts to help users get started
+        inputType:
+          type: string
+          enum:
+          - PROMPT
+          - STRUCTURED
+          description: Input type for the agent
+        webSearchEnabled:
+          type: boolean
+          description: Whether web search capability is enabled
+        imageGenerationEnabled:
+          type: boolean
+          description: Whether image generation capability is enabled
+        canvasEnabled:
+          type: boolean
+          description: Whether canvas capability is enabled
+        extendedThinking:
+          type: boolean
+          description: Whether extended thinking is enabled. Only supported on models that expose this capability; enabling it on an unsupported model returns a 400 error.
+        actions:
+          type: array
+          items:
+            type: object
+            required:
+            - actionId
+            - requiresConfirmation
+            properties:
+              actionId:
+                type: string
+                format: uuid
+                description: UUID of the action from an enabled integration
+              requiresConfirmation:
+                type: boolean
+                description: Whether user confirmation is required before executing
+          description: Array of action objects for custom integrations
+        inputFields:
+          type: array
+          items:
+            type: object
+            required:
+            - slug
+            - type
+            - label
+            - required
+            - order
+            properties:
+              slug:
+                type: string
+                description: Unique identifier for the field
+              type:
+                type: string
+                enum:
+                - TEXT
+                - MULTI_LINE_TEXT
+                - NUMBER
+                - CHECKBOX
+                - FILE
+                - SELECT
+                - DATE
+                description: Field type
+              label:
+                type: string
+                description: Display label for the field
+              description:
+                type: string
+                description: Help text for the field
+              required:
+                type: boolean
+                description: Whether the field is required
+              order:
+                type: integer
+                minimum: 0
+                description: Display order (0-indexed)
+              options:
+                type: array
+                items:
+                  type: string
+                description: Options for SELECT type fields
+              fileTypes:
+                type: array
+                items:
+                  type: string
+                nullable: true
+                description: Allowed file types for FILE type fields
+          description: Array of form field definitions (for STRUCTURED input type)
+        attachments:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: Array of attachment UUIDs associated with the agent
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp when the agent was created
+        updatedAt:
+          type: string
+          format: date-time
+          description: Timestamp when the agent was last updated
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: API Key
+      description: API key as Bearer token. Format "Bearer YOUR_API_KEY"

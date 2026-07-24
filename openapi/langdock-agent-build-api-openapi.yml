@@ -1,0 +1,199 @@
+openapi: 3.0.0
+info:
+  title: Langdock Agent Agent Build API
+  version: 3.0.0
+servers:
+- url: https://api.langdock.com
+  description: Production
+security:
+- bearerAuth: []
+tags:
+- name: Agent Build
+paths:
+  /agent/v1/create:
+    post:
+      operationId: createAgentV2
+      summary: Creates a new agent
+      description: Creates a new agent in your workspace programmatically.
+      tags:
+      - Agent Build
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Assistant'
+      responses:
+        '201':
+          description: Agent created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+                  agent:
+                    $ref: '#/components/schemas/Assistant'
+  /agent/v1/update:
+    patch:
+      operationId: updateAgentV2
+      summary: Updates an existing agent
+      description: Updates an existing agent in your workspace.
+      tags:
+      - Agent Build
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+              - type: object
+                required:
+                - agentId
+                properties:
+                  agentId:
+                    type: string
+                    format: uuid
+              - $ref: '#/components/schemas/Assistant'
+      responses:
+        '200':
+          description: Agent updated successfully
+  /agent/v1/publish:
+    post:
+      operationId: publishAgentV2
+      summary: Publishes a draft agent as a new version
+      description: Publishes the current draft of an agent as a new version. Mirrors the "Update" button in the agent editor — only agents (not projects) are supported, and the draft must differ from the latest published version.
+      tags:
+      - Agent Build
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - agentId
+              properties:
+                agentId:
+                  type: string
+                  format: uuid
+                  description: UUID of the agent to publish
+                description:
+                  type: string
+                  maxLength: 100
+                  description: Optional change description shown in version history
+      responses:
+        '200':
+          description: Agent published successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+                  version:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                      version:
+                        type: integer
+                      createdAt:
+                        type: string
+                        format: date-time
+        '403':
+          description: API key lacks edit access, agent is in a different workspace, or the resource is a project
+        '409':
+          description: No draft changes to publish
+  /agent/v1/get:
+    get:
+      operationId: getAgentV2
+      summary: Retrieves details of an existing agent
+      description: Retrieves the complete configuration and details of an existing agent.
+      tags:
+      - Agent Build
+      parameters:
+      - name: agentId
+        in: query
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Agent retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  agent:
+                    $ref: '#/components/schemas/Assistant'
+components:
+  schemas:
+    Assistant:
+      type: object
+      required:
+      - name
+      - instructions
+      properties:
+        name:
+          type: string
+          maxLength: 64
+        description:
+          type: string
+          maxLength: 256
+        instructions:
+          type: string
+          maxLength: 16384
+        temperature:
+          type: number
+          minimum: 0
+          maximum: 1
+        model:
+          type: string
+          maxLength: 64
+        capabilities:
+          type: object
+          properties:
+            webSearch:
+              type: boolean
+            dataAnalyst:
+              type: boolean
+              deprecated: true
+              description: Deprecated. Accepted for compatibility and ignored.
+            imageGeneration:
+              type: boolean
+        actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Action'
+        vectorDb:
+          type: array
+          items:
+            $ref: '#/components/schemas/VectorDb'
+        knowledgeFolderIds:
+          type: array
+          items:
+            type: string
+        attachmentIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: Array of UUID strings identifying attachments for this message
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: API Key
+      description: API key as Bearer token. Format "Bearer YOUR_API_KEY"

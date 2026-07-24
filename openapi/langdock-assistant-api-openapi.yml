@@ -1,0 +1,416 @@
+openapi: 3.0.0
+info:
+  title: Langdock Agent Assistant API
+  version: 3.0.0
+servers:
+- url: https://api.langdock.com
+  description: Production
+security:
+- bearerAuth: []
+tags:
+- name: Assistant
+paths:
+  /assistant/v1/chat/completions:
+    post:
+      deprecated: true
+      tags:
+      - Assistant
+      summary: '[Deprecated] Creates a chat completion with an assistant'
+      description: This endpoint is deprecated. Please use /agent/v1/chat/completions for new integrations.
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            examples:
+              streamingEnabled:
+                summary: Request with streaming enabled
+                value:
+                  assistantId: asst_123
+                  messages:
+                  - role: user
+                    content: Hello, how can you help me?
+                  stream: true
+              streamingDisabled:
+                summary: Request with streaming disabled (default)
+                value:
+                  assistantId: asst_123
+                  messages:
+                  - role: user
+                    content: Hello, how can you help me?
+                  stream: false
+              defaultBehavior:
+                summary: Request without stream parameter (defaults to false)
+                value:
+                  assistantId: asst_123
+                  messages:
+                  - role: user
+                    content: Hello, how can you help me?
+            schema:
+              type: object
+              oneOf:
+              - type: object
+                required:
+                - assistantId
+                - messages
+                properties:
+                  assistantId:
+                    type: string
+                    description: ID of an existing agent to use
+                  messages:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                      - role
+                      - content
+                      properties:
+                        role:
+                          type: string
+                          enum:
+                          - user
+                          - assistant
+                          - tool
+                        content:
+                          type: string
+                        attachmentIds:
+                          type: array
+                          items:
+                            type: string
+                            format: uuid
+                          description: Array of UUID strings identifying attachments for this message
+                  stream:
+                    type: boolean
+                    default: false
+                    description: Enable or disable streaming responses. When true, returns server-sent events. When false, returns complete JSON response.
+                    example: true
+                  output:
+                    $ref: '#/components/schemas/StructuredOutputConfig'
+                  maxSteps:
+                    type: integer
+                    minimum: 1
+                    maximum: 20
+                    default: 10
+                    description: Maximum number of steps the agent can take during the conversation
+              - type: object
+                required:
+                - assistant
+                - messages
+                properties:
+                  assistant:
+                    $ref: '#/components/schemas/Assistant'
+                  messages:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                      - role
+                      - content
+                      properties:
+                        role:
+                          type: string
+                          enum:
+                          - user
+                          - assistant
+                          - tool
+                        content:
+                          type: string
+                        attachmentIds:
+                          type: array
+                          items:
+                            type: string
+                            format: uuid
+                          description: Array of UUID strings identifying attachments for this message
+                  stream:
+                    type: boolean
+                    default: false
+                    description: Enable or disable streaming responses. When true, returns server-sent events. When false, returns complete JSON response.
+                    example: true
+                  output:
+                    $ref: '#/components/schemas/StructuredOutputConfig'
+                  maxSteps:
+                    type: integer
+                    minimum: 1
+                    maximum: 20
+                    default: 10
+                    description: Maximum number of steps the agent can take during the conversation
+      responses:
+        '200':
+          description: Successful chat completion
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - result
+                properties:
+                  result:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                      - id
+                      - role
+                      - content
+                      properties:
+                        id:
+                          type: string
+                        role:
+                          type: string
+                          enum:
+                          - tool
+                          - assistant
+                        content:
+                          type: array
+                          items:
+                            type: object
+                            required:
+                            - type
+                            properties:
+                              type:
+                                type: string
+                              toolCallId:
+                                type: string
+                              toolName:
+                                type: string
+                              result:
+                                type: object
+                              args:
+                                type: object
+                              text:
+                                type: string
+                  output:
+                    description: Present when output parameter was specified in the request
+                    oneOf:
+                    - type: object
+                      description: When output.type is "object"
+                    - type: array
+                      description: When output.type is "array"
+                    - type: string
+                      description: When output.type is "enum" (one of the provided enum values)
+            text/event-stream:
+              schema:
+                type: string
+                description: Server-sent events stream when stream=true
+        '400':
+          description: Invalid request parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    oneOf:
+                    - type: string
+                    - type: array
+                      items:
+                        type: object
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+  /assistant/v1/models:
+    get:
+      deprecated: true
+      tags:
+      - Assistant
+      summary: '[Deprecated] Lists the available models'
+      description: This endpoint is deprecated. Please use /agent/v1/models for new integrations. Returns a list of models that are available for use with the API.
+      parameters: []
+      responses:
+        '200':
+          description: List of available models
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - object
+                - data
+                properties:
+                  object:
+                    type: string
+                    enum:
+                    - list
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                      - id
+                      - object
+                      - created
+                      - owned_by
+                      properties:
+                        id:
+                          type: string
+                          description: The model identifier
+                        object:
+                          type: string
+                          enum:
+                          - model
+                          description: The object type, which is always "model"
+                        created:
+                          type: integer
+                          format: int64
+                          description: Unix timestamp (in milliseconds) of when the model was created
+                        owned_by:
+                          type: string
+                          enum:
+                          - system
+                          description: The organization that owns the model
+              example:
+                object: list
+                data:
+                - id: gpt-5
+                  object: model
+                  created: 1686935735000
+                  owned_by: system
+                - id: gpt-5-mini
+                  object: model
+                  created: 1686935735000
+                  owned_by: system
+        '400':
+          description: Invalid request parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: array
+                    items:
+                      type: object
+                      description: Validation error details
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Internal Server Error
+components:
+  schemas:
+    Assistant:
+      type: object
+      required:
+      - name
+      - instructions
+      properties:
+        name:
+          type: string
+          maxLength: 64
+        description:
+          type: string
+          maxLength: 256
+        instructions:
+          type: string
+          maxLength: 16384
+        temperature:
+          type: number
+          minimum: 0
+          maximum: 1
+        model:
+          type: string
+          maxLength: 64
+        capabilities:
+          type: object
+          properties:
+            webSearch:
+              type: boolean
+            dataAnalyst:
+              type: boolean
+              deprecated: true
+              description: Deprecated. Accepted for compatibility and ignored.
+            imageGeneration:
+              type: boolean
+        actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Action'
+        vectorDb:
+          type: array
+          items:
+            $ref: '#/components/schemas/VectorDb'
+        knowledgeFolderIds:
+          type: array
+          items:
+            type: string
+        attachmentIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: Array of UUID strings identifying attachments for this message
+    StructuredOutputConfig:
+      type: object
+      description: Specification for structured output format. When type is object/array and no schema is provided, the response will be JSON but can have any structure. When the type is enum, you must provide an enum parameter with an array of strings as options.
+      properties:
+        type:
+          type: string
+          enum:
+          - object
+          - array
+          - enum
+          description: The type of structured output
+        schema:
+          type: object
+          description: JSON Schema definition for the output (required for object/array types with specific structure). Search for "JSON to JSON Schema" in the web to find a tool to convert any JSON into the required JSON Schema format.
+        enum:
+          type: array
+          items:
+            type: string
+          description: Array of allowed values (required for enum type). Values must be of type string.
+      oneOf:
+      - properties:
+          type:
+            enum:
+            - enum
+          enum:
+            type: array
+            items:
+              type: string
+      - properties:
+          type:
+            enum:
+            - object
+            - array
+          schema:
+            type: object
+      - properties:
+          type:
+            enum:
+            - object
+            - array
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: API Key
+      description: API key as Bearer token. Format "Bearer YOUR_API_KEY"

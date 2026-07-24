@@ -1,0 +1,207 @@
+openapi: 3.0.0
+info:
+  title: Langdock Agent Audit Logs API
+  version: 3.0.0
+servers:
+- url: https://api.langdock.com
+  description: Production
+security:
+- bearerAuth: []
+tags:
+- name: Audit Logs
+paths:
+  /audit-logs/{workspace_id}:
+    get:
+      tags:
+      - Audit Logs
+      summary: List audit logs
+      description: 'Returns audit log entries for a workspace with cursor-based pagination.
+
+        Requires an API key with the `AUDIT_LOG_API` scope.
+
+        '
+      operationId: listAuditLogs
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: workspace_id
+        in: path
+        required: true
+        description: 'Workspace UUID. Must match the workspace associated with the API key; requests with a mismatched workspace_id are rejected with 403.
+
+          '
+        schema:
+          type: string
+          format: uuid
+      - name: cursor
+        in: query
+        required: false
+        description: Cursor for pagination (ID of last item from previous page)
+        schema:
+          type: string
+          format: uuid
+      - name: limit
+        in: query
+        required: false
+        description: Maximum number of items to return (default 50, max 50)
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 50
+          default: 50
+      - name: from
+        in: query
+        required: false
+        description: Start of date range filter (ISO 8601)
+        schema:
+          type: string
+          format: date-time
+      - name: to
+        in: query
+        required: false
+        description: End of date range filter (ISO 8601)
+        schema:
+          type: string
+          format: date-time
+      - name: entity_type
+        in: query
+        required: false
+        description: Filter by entity type (e.g. "User", "Workspace")
+        schema:
+          type: string
+      - name: actor_id
+        in: query
+        required: false
+        description: Filter by actor UUID
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Paginated list of audit log entries
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuditLogListResponse'
+              examples:
+                example:
+                  value:
+                    data:
+                    - id: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+                      created_at: '2026-02-09T14:30:00Z'
+                      actor_id: u1234567-89ab-cdef-0123-456789abcdef
+                      actor_type: USER
+                      actor_name: jane.doe@example.com
+                      action: user.updated
+                      entity_type: User
+                      entity_id: u7654321-89ab-cdef-0123-456789abcdef
+                      ip_address: 203.0.113.42
+                      user_agent: Mozilla/5.0
+                      changes:
+                        before:
+                          role: MEMBER
+                        after:
+                          role: ADMIN
+                      snapshot: null
+                    next_cursor: a1b2c3d4-e5f6-7890-abcd-ef1234567890
+        '400':
+          description: Invalid request parameters
+        '401':
+          description: Missing or invalid API key
+        '403':
+          description: Insufficient API key scopes or workspace_id does not match the API key's workspace
+        '429':
+          description: Rate limit exceeded
+        '500':
+          description: Internal server error
+components:
+  schemas:
+    AuditLogListResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuditLog'
+        next_cursor:
+          type: string
+          format: uuid
+          nullable: true
+          description: Cursor for the next page, null if no more results
+    AuditLog:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique audit log entry ID
+        created_at:
+          type: string
+          format: date-time
+          description: When the event occurred
+        actor_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: ID of the actor who performed the action
+        actor_type:
+          type: string
+          enum:
+          - USER
+          - API_KEY
+          - SYSTEM
+          - SCIM
+          description: Type of actor
+        actor_name:
+          type: string
+          nullable: true
+          description: Human-readable actor name (e.g. email, API key name, "SCIM")
+        action:
+          type: string
+          description: 'Action in dot notation: `{entity}.{operation}`, where `entity` is
+
+            the snake_case model name and `operation` is one of `created`,
+
+            `updated`, or `deleted`.
+
+            '
+          example: user.updated
+        entity_type:
+          type: string
+          description: 'PascalCase model name of the affected entity (e.g. `User`,
+
+            `Workspace`, `Group`, `IntegrationConnection`).
+
+            '
+        entity_id:
+          type: string
+          description: ID of the affected entity
+        ip_address:
+          type: string
+          nullable: true
+          description: IP address of the request
+        user_agent:
+          type: string
+          nullable: true
+          description: User-Agent header of the request
+        changes:
+          type: object
+          nullable: true
+          description: Structured diff with `before` and `after` objects containing only changed fields
+          properties:
+            before:
+              type: object
+              description: Field values before the change
+            after:
+              type: object
+              description: Field values after the change
+        snapshot:
+          type: object
+          nullable: true
+          description: Full entity snapshot or additional event metadata (e.g. on delete/create events, or extra context like failed login details)
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: API Key
+      description: API key as Bearer token. Format "Bearer YOUR_API_KEY"
