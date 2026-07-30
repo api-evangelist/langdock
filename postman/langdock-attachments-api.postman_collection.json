@@ -1,0 +1,740 @@
+{
+  "info": {
+    "_postman_id": "ebb6f5e5-38e5-4583-9331-551d29709455",
+    "name": "Langdock Agent Attachments API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:02:32.000Z",
+    "updatedAt": "2026-07-28T02:02:32.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-ebb6f5e5-38e5-4583-9331-551d29709455"
+  },
+  "item": [
+    {
+      "name": "attachment",
+      "item": [
+        {
+          "name": "v1",
+          "item": [
+            {
+              "name": "upload",
+              "item": [
+                {
+                  "name": "Upload an attachment",
+                  "id": "2c0cd953-9a0c-4c3f-a794-b2a452a93262",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "description": "(Required) The file to upload",
+                          "key": "file",
+                          "type": "file",
+                          "value": null
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/attachment/v1/upload",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "attachment",
+                        "v1",
+                        "upload"
+                      ]
+                    },
+                    "description": "Upload a file that can be referenced in Agent conversations."
+                  },
+                  "response": [
+                    {
+                      "id": "1d2fde73-6c78-4110-bf74-bc2007a68ae8",
+                      "name": "Successfully uploaded file",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "multipart/form-data"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "formdata",
+                          "formdata": [
+                            {
+                              "description": "(Required) The file to upload",
+                              "key": "file",
+                              "type": "file"
+                            }
+                          ]
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/attachment/v1/upload",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "attachment",
+                            "v1",
+                            "upload"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"attachmentId\": \"<uuid>\",\n  \"file\": {\n    \"name\": \"<string>\",\n    \"mimeType\": \"<string>\",\n    \"sizeInBytes\": \"<integer>\"\n  }\n}",
+                      "createdAt": "2026-07-28T02:02:32.000Z",
+                      "updatedAt": "2026-07-28T02:02:32.000Z",
+                      "uid": "35240-1d2fde73-6c78-4110-bf74-bc2007a68ae8"
+                    },
+                    {
+                      "id": "e0d5f335-3ee4-4f61-ae8b-5df68530f3b6",
+                      "name": "No file provided",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "multipart/form-data"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "formdata",
+                          "formdata": [
+                            {
+                              "description": "(Required) The file to upload",
+                              "key": "file",
+                              "type": "file"
+                            }
+                          ]
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/attachment/v1/upload",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "attachment",
+                            "v1",
+                            "upload"
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:02:32.000Z",
+                      "updatedAt": "2026-07-28T02:02:32.000Z",
+                      "uid": "35240-e0d5f335-3ee4-4f61-ae8b-5df68530f3b6"
+                    },
+                    {
+                      "id": "bbf64fd3-f688-4c99-ad80-0f3c65f46783",
+                      "name": "Invalid API key",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "multipart/form-data"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "formdata",
+                          "formdata": [
+                            {
+                              "description": "(Required) The file to upload",
+                              "key": "file",
+                              "type": "file"
+                            }
+                          ]
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/attachment/v1/upload",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "attachment",
+                            "v1",
+                            "upload"
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:02:32.000Z",
+                      "updatedAt": "2026-07-28T02:02:32.000Z",
+                      "uid": "35240-bbf64fd3-f688-4c99-ad80-0f3c65f46783"
+                    },
+                    {
+                      "id": "c3ff3b35-7563-4deb-8970-73bf2a3ae7d6",
+                      "name": "Internal server error",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "multipart/form-data"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "formdata",
+                          "formdata": [
+                            {
+                              "description": "(Required) The file to upload",
+                              "key": "file",
+                              "type": "file"
+                            }
+                          ]
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/attachment/v1/upload",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "attachment",
+                            "v1",
+                            "upload"
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:02:32.000Z",
+                      "updatedAt": "2026-07-28T02:02:32.000Z",
+                      "uid": "35240-c3ff3b35-7563-4deb-8970-73bf2a3ae7d6"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:02:32.000Z",
+                  "updatedAt": "2026-07-28T02:02:32.000Z",
+                  "uid": "35240-2c0cd953-9a0c-4c3f-a794-b2a452a93262"
+                }
+              ],
+              "id": "755caf6d-72bd-43e5-a390-53b8889aa688",
+              "createdAt": "2026-07-28T02:02:32.000Z",
+              "updatedAt": "2026-07-28T02:02:32.000Z",
+              "uid": "35240-755caf6d-72bd-43e5-a390-53b8889aa688"
+            },
+            {
+              "name": "delete",
+              "item": [
+                {
+                  "name": "Delete an attachment",
+                  "id": "a839812d-2334-49d5-92d9-8afa22e82a29",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"attachmentId\": \"<uuid>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/attachment/v1/delete",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "attachment",
+                        "v1",
+                        "delete"
+                      ]
+                    },
+                    "description": "Soft-deletes an attachment by ID. The attachment must be created by the API key's creator or belong to a Knowledge base shared with the API key."
+                  },
+                  "response": [
+                    {
+                      "id": "a71940d7-ed60-4656-ad63-76f2d3352985",
+                      "name": "Attachment deleted successfully",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"attachmentId\": \"<uuid>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/attachment/v1/delete",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "attachment",
+                            "v1",
+                            "delete"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"success\": \"<boolean>\",\n  \"message\": \"<string>\",\n  \"attachmentId\": \"<uuid>\"\n}",
+                      "createdAt": "2026-07-28T02:02:32.000Z",
+                      "updatedAt": "2026-07-28T02:02:32.000Z",
+                      "uid": "35240-a71940d7-ed60-4656-ad63-76f2d3352985"
+                    },
+                    {
+                      "id": "8843fe47-2863-4801-93aa-f4caaacb72fc",
+                      "name": "Invalid request body",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"attachmentId\": \"<uuid>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/attachment/v1/delete",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "attachment",
+                            "v1",
+                            "delete"
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:02:32.000Z",
+                      "updatedAt": "2026-07-28T02:02:32.000Z",
+                      "uid": "35240-8843fe47-2863-4801-93aa-f4caaacb72fc"
+                    },
+                    {
+                      "id": "3b3d499e-99f7-4834-a71e-7bc9e28f37e1",
+                      "name": "Invalid API key",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"attachmentId\": \"<uuid>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/attachment/v1/delete",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "attachment",
+                            "v1",
+                            "delete"
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"error\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:02:32.000Z",
+                      "updatedAt": "2026-07-28T02:02:32.000Z",
+                      "uid": "35240-3b3d499e-99f7-4834-a71e-7bc9e28f37e1"
+                    },
+                    {
+                      "id": "8fae5232-b5bd-40a6-a934-c8636f5e8a49",
+                      "name": "API key does not have access to this attachment",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"attachmentId\": \"<uuid>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/attachment/v1/delete",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "attachment",
+                            "v1",
+                            "delete"
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:02:32.000Z",
+                      "updatedAt": "2026-07-28T02:02:32.000Z",
+                      "uid": "35240-8fae5232-b5bd-40a6-a934-c8636f5e8a49"
+                    },
+                    {
+                      "id": "30534d79-67c8-459c-87fb-c6c676d058e7",
+                      "name": "Attachment not found",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"attachmentId\": \"<uuid>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/attachment/v1/delete",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "attachment",
+                            "v1",
+                            "delete"
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:02:32.000Z",
+                      "updatedAt": "2026-07-28T02:02:32.000Z",
+                      "uid": "35240-30534d79-67c8-459c-87fb-c6c676d058e7"
+                    },
+                    {
+                      "id": "ac1c804b-d2b7-4d1a-a58d-711e00820bcc",
+                      "name": "Internal server error",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"attachmentId\": \"<uuid>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/attachment/v1/delete",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "attachment",
+                            "v1",
+                            "delete"
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:02:32.000Z",
+                      "updatedAt": "2026-07-28T02:02:32.000Z",
+                      "uid": "35240-ac1c804b-d2b7-4d1a-a58d-711e00820bcc"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:02:32.000Z",
+                  "updatedAt": "2026-07-28T02:02:32.000Z",
+                  "uid": "35240-a839812d-2334-49d5-92d9-8afa22e82a29"
+                }
+              ],
+              "id": "8faf13d4-3630-4256-9a5e-87c798616650",
+              "createdAt": "2026-07-28T02:02:32.000Z",
+              "updatedAt": "2026-07-28T02:02:32.000Z",
+              "uid": "35240-8faf13d4-3630-4256-9a5e-87c798616650"
+            }
+          ],
+          "id": "f4227d43-9536-49ff-bfb0-5b7c127ab41f",
+          "createdAt": "2026-07-28T02:02:32.000Z",
+          "updatedAt": "2026-07-28T02:02:32.000Z",
+          "uid": "35240-f4227d43-9536-49ff-bfb0-5b7c127ab41f"
+        }
+      ],
+      "id": "888b12c9-8020-49ee-8cd9-e6acbe343aba",
+      "createdAt": "2026-07-28T02:02:32.000Z",
+      "updatedAt": "2026-07-28T02:02:32.000Z",
+      "uid": "35240-888b12c9-8020-49ee-8cd9-e6acbe343aba"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.langdock.com"
+    }
+  ]
+}

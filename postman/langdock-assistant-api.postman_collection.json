@@ -1,0 +1,567 @@
+{
+  "info": {
+    "_postman_id": "ac1afc17-b829-421e-a4ab-6a12f3b13234",
+    "name": "Langdock Agent Assistant API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:02:30.000Z",
+    "updatedAt": "2026-07-28T02:02:30.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-ac1afc17-b829-421e-a4ab-6a12f3b13234"
+  },
+  "item": [
+    {
+      "name": "assistant",
+      "item": [
+        {
+          "name": "v1",
+          "item": [
+            {
+              "name": "chat",
+              "item": [
+                {
+                  "name": "completions",
+                  "item": [
+                    {
+                      "name": "[Deprecated] Creates a chat completion with an assistant",
+                      "id": "662eda2e-6340-4c32-b237-d6bccd0edec3",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"assistantId\": \"<string>\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"<string>\",\n      \"attachmentIds\": [\n        \"<uuid>\",\n        \"<uuid>\"\n      ]\n    },\n    {\n      \"role\": \"assistant\",\n      \"content\": \"<string>\",\n      \"attachmentIds\": [\n        \"<uuid>\",\n        \"<uuid>\"\n      ]\n    }\n  ],\n  \"stream\": false,\n  \"output\": {\n    \"type\": \"enum\",\n    \"enum\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"maxSteps\": 10\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/assistant/v1/chat/completions",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "assistant",
+                            "v1",
+                            "chat",
+                            "completions"
+                          ]
+                        },
+                        "description": "This endpoint is deprecated. Please use /agent/v1/chat/completions for new integrations."
+                      },
+                      "response": [
+                        {
+                          "id": "41b34db9-6c0f-4e6f-b18c-0ddabbd5312c",
+                          "name": "Successful chat completion",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"assistantId\": \"<string>\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"<string>\",\n      \"attachmentIds\": [\n        \"<uuid>\",\n        \"<uuid>\"\n      ]\n    },\n    {\n      \"role\": \"assistant\",\n      \"content\": \"<string>\",\n      \"attachmentIds\": [\n        \"<uuid>\",\n        \"<uuid>\"\n      ]\n    }\n  ],\n  \"stream\": false,\n  \"output\": {\n    \"type\": \"enum\",\n    \"enum\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"maxSteps\": 10\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/assistant/v1/chat/completions",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "assistant",
+                                "v1",
+                                "chat",
+                                "completions"
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"result\": [\n    {\n      \"id\": \"<string>\",\n      \"role\": \"tool\",\n      \"content\": [\n        {\n          \"type\": \"<string>\",\n          \"toolCallId\": \"<string>\",\n          \"toolName\": \"<string>\",\n          \"result\": {},\n          \"args\": {},\n          \"text\": \"<string>\"\n        },\n        {\n          \"type\": \"<string>\",\n          \"toolCallId\": \"<string>\",\n          \"toolName\": \"<string>\",\n          \"result\": {},\n          \"args\": {},\n          \"text\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"id\": \"<string>\",\n      \"role\": \"tool\",\n      \"content\": [\n        {\n          \"type\": \"<string>\",\n          \"toolCallId\": \"<string>\",\n          \"toolName\": \"<string>\",\n          \"result\": {},\n          \"args\": {},\n          \"text\": \"<string>\"\n        },\n        {\n          \"type\": \"<string>\",\n          \"toolCallId\": \"<string>\",\n          \"toolName\": \"<string>\",\n          \"result\": {},\n          \"args\": {},\n          \"text\": \"<string>\"\n        }\n      ]\n    }\n  ],\n  \"output\": {}\n}",
+                          "createdAt": "2026-07-28T02:02:30.000Z",
+                          "updatedAt": "2026-07-28T02:02:30.000Z",
+                          "uid": "35240-41b34db9-6c0f-4e6f-b18c-0ddabbd5312c"
+                        },
+                        {
+                          "id": "f99480c4-a090-4815-b449-05f261ef8ab7",
+                          "name": "Invalid request parameters",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"assistantId\": \"<string>\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"<string>\",\n      \"attachmentIds\": [\n        \"<uuid>\",\n        \"<uuid>\"\n      ]\n    },\n    {\n      \"role\": \"assistant\",\n      \"content\": \"<string>\",\n      \"attachmentIds\": [\n        \"<uuid>\",\n        \"<uuid>\"\n      ]\n    }\n  ],\n  \"stream\": false,\n  \"output\": {\n    \"type\": \"enum\",\n    \"enum\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"maxSteps\": 10\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/assistant/v1/chat/completions",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "assistant",
+                                "v1",
+                                "chat",
+                                "completions"
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"message\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T02:02:30.000Z",
+                          "updatedAt": "2026-07-28T02:02:30.000Z",
+                          "uid": "35240-f99480c4-a090-4815-b449-05f261ef8ab7"
+                        },
+                        {
+                          "id": "f3d2cba6-999d-467f-a5f9-d7c7d1f5f393",
+                          "name": "Rate limit exceeded",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"assistantId\": \"<string>\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"<string>\",\n      \"attachmentIds\": [\n        \"<uuid>\",\n        \"<uuid>\"\n      ]\n    },\n    {\n      \"role\": \"assistant\",\n      \"content\": \"<string>\",\n      \"attachmentIds\": [\n        \"<uuid>\",\n        \"<uuid>\"\n      ]\n    }\n  ],\n  \"stream\": false,\n  \"output\": {\n    \"type\": \"enum\",\n    \"enum\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"maxSteps\": 10\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/assistant/v1/chat/completions",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "assistant",
+                                "v1",
+                                "chat",
+                                "completions"
+                              ]
+                            }
+                          },
+                          "status": "Too Many Requests",
+                          "code": 429,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"message\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T02:02:30.000Z",
+                          "updatedAt": "2026-07-28T02:02:30.000Z",
+                          "uid": "35240-f3d2cba6-999d-467f-a5f9-d7c7d1f5f393"
+                        },
+                        {
+                          "id": "51355db7-6336-4101-bead-e073110b5c82",
+                          "name": "Internal server error",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"assistantId\": \"<string>\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"<string>\",\n      \"attachmentIds\": [\n        \"<uuid>\",\n        \"<uuid>\"\n      ]\n    },\n    {\n      \"role\": \"assistant\",\n      \"content\": \"<string>\",\n      \"attachmentIds\": [\n        \"<uuid>\",\n        \"<uuid>\"\n      ]\n    }\n  ],\n  \"stream\": false,\n  \"output\": {\n    \"type\": \"enum\",\n    \"enum\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"maxSteps\": 10\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/assistant/v1/chat/completions",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "assistant",
+                                "v1",
+                                "chat",
+                                "completions"
+                              ]
+                            }
+                          },
+                          "status": "Internal Server Error",
+                          "code": 500,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"message\": \"<string>\"\n}",
+                          "createdAt": "2026-07-28T02:02:30.000Z",
+                          "updatedAt": "2026-07-28T02:02:30.000Z",
+                          "uid": "35240-51355db7-6336-4101-bead-e073110b5c82"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T02:02:30.000Z",
+                      "updatedAt": "2026-07-28T02:02:30.000Z",
+                      "uid": "35240-662eda2e-6340-4c32-b237-d6bccd0edec3"
+                    }
+                  ],
+                  "id": "e0272996-e6fd-4d1c-bcff-f8f95ac42fef",
+                  "createdAt": "2026-07-28T02:02:30.000Z",
+                  "updatedAt": "2026-07-28T02:02:30.000Z",
+                  "uid": "35240-e0272996-e6fd-4d1c-bcff-f8f95ac42fef"
+                }
+              ],
+              "id": "7eaa2bcc-620d-4db2-87bc-474ce05a57a9",
+              "createdAt": "2026-07-28T02:02:30.000Z",
+              "updatedAt": "2026-07-28T02:02:30.000Z",
+              "uid": "35240-7eaa2bcc-620d-4db2-87bc-474ce05a57a9"
+            },
+            {
+              "name": "models",
+              "item": [
+                {
+                  "name": "[Deprecated] Lists the available models",
+                  "id": "e9367ed4-e327-4200-893b-61a30c6347dd",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/assistant/v1/models",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "assistant",
+                        "v1",
+                        "models"
+                      ]
+                    },
+                    "description": "This endpoint is deprecated. Please use /agent/v1/models for new integrations. Returns a list of models that are available for use with the API."
+                  },
+                  "response": [
+                    {
+                      "id": "36ecd723-944d-4516-a125-9c4f110e9034",
+                      "name": "List of available models",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/assistant/v1/models",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "assistant",
+                            "v1",
+                            "models"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"id\": \"<string>\",\n      \"object\": \"model\",\n      \"created\": \"<long>\",\n      \"owned_by\": \"system\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"object\": \"model\",\n      \"created\": \"<long>\",\n      \"owned_by\": \"system\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T02:02:30.000Z",
+                      "updatedAt": "2026-07-28T02:02:30.000Z",
+                      "uid": "35240-36ecd723-944d-4516-a125-9c4f110e9034"
+                    },
+                    {
+                      "id": "c261fa9b-5e25-4ba3-9098-e278d73032bf",
+                      "name": "Invalid request parameters",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/assistant/v1/models",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "assistant",
+                            "v1",
+                            "models"
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{}",
+                      "createdAt": "2026-07-28T02:02:30.000Z",
+                      "updatedAt": "2026-07-28T02:02:30.000Z",
+                      "uid": "35240-c261fa9b-5e25-4ba3-9098-e278d73032bf"
+                    },
+                    {
+                      "id": "9278cbcd-4a94-4a59-8bec-0bcb864de3e5",
+                      "name": "Rate limit exceeded",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/assistant/v1/models",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "assistant",
+                            "v1",
+                            "models"
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:02:30.000Z",
+                      "updatedAt": "2026-07-28T02:02:30.000Z",
+                      "uid": "35240-9278cbcd-4a94-4a59-8bec-0bcb864de3e5"
+                    },
+                    {
+                      "id": "79347b1d-587a-4977-b380-c1e402696195",
+                      "name": "Internal server error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/assistant/v1/models",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "assistant",
+                            "v1",
+                            "models"
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:02:30.000Z",
+                      "updatedAt": "2026-07-28T02:02:30.000Z",
+                      "uid": "35240-79347b1d-587a-4977-b380-c1e402696195"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:02:30.000Z",
+                  "updatedAt": "2026-07-28T02:02:30.000Z",
+                  "uid": "35240-e9367ed4-e327-4200-893b-61a30c6347dd"
+                }
+              ],
+              "id": "2a8bdd42-5062-420d-a1c6-8af0ffe20f28",
+              "createdAt": "2026-07-28T02:02:30.000Z",
+              "updatedAt": "2026-07-28T02:02:30.000Z",
+              "uid": "35240-2a8bdd42-5062-420d-a1c6-8af0ffe20f28"
+            }
+          ],
+          "id": "6a1ea6cb-6a47-4911-83c4-cc686f03e9a6",
+          "createdAt": "2026-07-28T02:02:30.000Z",
+          "updatedAt": "2026-07-28T02:02:30.000Z",
+          "uid": "35240-6a1ea6cb-6a47-4911-83c4-cc686f03e9a6"
+        }
+      ],
+      "id": "b58c28f0-fba1-4f60-ade8-bdb01c878dc8",
+      "createdAt": "2026-07-28T02:02:30.000Z",
+      "updatedAt": "2026-07-28T02:02:30.000Z",
+      "uid": "35240-b58c28f0-fba1-4f60-ade8-bdb01c878dc8"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.langdock.com"
+    }
+  ]
+}

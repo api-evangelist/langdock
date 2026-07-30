@@ -1,0 +1,47 @@
+generated: '2026-07-19'
+method: searched
+source: live probe of the /.well-known/ discovery surface on every Langdock host
+description: >-
+  Langdock publishes no /.well-known/ discovery documents on any of its hosts. All
+  probed paths returned 404. This is recorded as a real, negative result — no
+  security.txt (RFC 9116), no OIDC discovery, no RFC 8414 authorization-server
+  metadata, no api-catalog (RFC 9727), and no ai-plugin.json. Langdock authenticates
+  with workspace API keys as bearer tokens rather than OAuth/OIDC, so the absence of
+  the OAuth discovery documents is consistent with its auth model. Its machine-readable
+  discovery surface is instead docs.langdock.com/llms.txt and docs.langdock.com/openapi.yaml.
+hosts:
+- host: https://www.langdock.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: https://api.langdock.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+- host: https://docs.langdock.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+alternate_discovery:
+- path: /llms.txt
+  host: https://docs.langdock.com
+  status: 200
+  file: ../llms/langdock-llms.txt
+- path: /openapi.yaml
+  host: https://docs.langdock.com
+  status: 200
+  file: ../openapi/langdock-openapi-original.yml
+note: >-
+  Disclosure contact is published at langdock.com/vulnerability-disclosure-policy
+  (security@langdock.com) rather than via security.txt — see
+  security/langdock-vulnerability-disclosure.yml.

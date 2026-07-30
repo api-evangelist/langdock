@@ -1,0 +1,71 @@
+generated: '2026-07-19'
+method: searched
+source: https://www.langdock.com/changelog
+description: >-
+  Langdock publishes a dated public product changelog covering model availability,
+  platform features, and integrations. It is a product changelog rather than an
+  API-versioning changelog — entries are not tagged with API versions, and API
+  breaking-change notices are carried in the developer docs (for example the
+  Assistants-to-Agents migration guide) rather than here.
+scheme: dated product entries, no semantic version tags
+current_version:
+  openapi_document: 3.0.0
+  source: openapi/langdock-openapi-original.yml info.version
+window: recent entries as published on 2026-07-19
+entries:
+- date: '2026-07-10'
+  title: GPT-5.6
+  type: model
+  breaking: false
+  highlights: >-
+    OpenAI's latest model family launched with three versions — Sol (flagship for
+    coding), Terra (balanced), and Luna (cost-efficient). All hosted in the EU and
+    available to all workspaces.
+- date: '2026-07-06'
+  title: Chat Agent Builder
+  type: feature
+  breaking: false
+  highlights: >-
+    Conversational interface for creating agents using natural language. Users
+    describe what they want to build and the system configures settings,
+    integrations, and sub-agents automatically with live preview.
+- date: '2026-07-02'
+  title: Langdock for Excel
+  type: integration
+  breaking: false
+  highlights: >-
+    Excel plugin enabling AI capabilities directly within spreadsheets — ask questions
+    about workbooks, create formulas and charts, clean data, and save outputs to the
+    Langdock library.
+- date: '2026-06-30'
+  title: Claude Sonnet 5 & Agent Evals
+  type: model, feature
+  breaking: false
+  highlights: >-
+    Anthropic's latest Sonnet model added alongside testing functionality. Agent Evals
+    lets builders define test cases with AI judges, tool-use checks, or keyword
+    validation to verify agent performance before deployment.
+- date: '2026-06-25'
+  title: Work in Folders
+  type: feature
+  breaking: false
+  highlights: >-
+    Users can select a working directory for chat sessions. Generated files
+    automatically save to the same folder, supporting collaborative workflows across
+    chat, projects, and agents.
+- date: '2026-06-18'
+  title: Scheduled Tasks
+  type: feature
+  breaking: false
+  highlights: >-
+    Automated prompt execution on recurring schedules (daily, weekly, custom). Tasks
+    leverage existing agents and integrations to handle recurring work like briefings,
+    summaries, and reports.
+api_change_notices:
+- title: Migrating from Assistants API to Agents API
+  url: https://docs.langdock.com/en/developer/assistants-api/assistant-to-agent-migration
+  breaking: true
+  note: The /assistant/v1 family is marked [Deprecated] in the OpenAPI in favour of
+    /agent/v1.
+related:
+  lifecycle: lifecycle/langdock-lifecycle.yml

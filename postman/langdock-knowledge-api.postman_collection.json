@@ -1,0 +1,614 @@
+{
+  "info": {
+    "_postman_id": "96de7db3-03d5-48fb-b605-269b9d02cb9f",
+    "name": "Langdock Agent Knowledge API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:02:39.000Z",
+    "updatedAt": "2026-07-28T02:02:40.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-96de7db3-03d5-48fb-b605-269b9d02cb9f"
+  },
+  "item": [
+    {
+      "name": "knowledge",
+      "item": [
+        {
+          "name": "search",
+          "item": [
+            {
+              "name": "Search through all files in data folders shared with the API Key",
+              "id": "77e3f188-4bae-4386-9538-e5e003c5ae94",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/knowledge/search",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "knowledge",
+                    "search"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "72b77410-e53f-4f09-8e23-1fb96536f559",
+                  "name": "Successfully found search result",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"query\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/knowledge/search",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "knowledge",
+                        "search"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T02:02:40.000Z",
+                  "updatedAt": "2026-07-28T02:02:40.000Z",
+                  "uid": "35240-72b77410-e53f-4f09-8e23-1fb96536f559"
+                }
+              ],
+              "createdAt": "2026-07-28T02:02:40.000Z",
+              "updatedAt": "2026-07-28T02:02:40.000Z",
+              "uid": "35240-77e3f188-4bae-4386-9538-e5e003c5ae94"
+            }
+          ],
+          "id": "5b87fe55-efb1-4887-8a11-a52c5200abbe",
+          "createdAt": "2026-07-28T02:02:40.000Z",
+          "updatedAt": "2026-07-28T02:02:40.000Z",
+          "uid": "35240-5b87fe55-efb1-4887-8a11-a52c5200abbe"
+        },
+        {
+          "name": "{folderId}",
+          "item": [
+            {
+              "name": "list",
+              "item": [
+                {
+                  "name": "Retrieve files from a knowledge folder",
+                  "id": "53b19f16-4fe4-460d-9f99-475bc19056af",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{bearerToken}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/knowledge/:folderId/list",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "knowledge",
+                        ":folderId",
+                        "list"
+                      ],
+                      "variable": [
+                        {
+                          "id": "dd47f060-9991-4b4f-b3fe-ed251038c640",
+                          "key": "folderId",
+                          "value": "<string>",
+                          "description": "(Required) The ID of the knowledge folder"
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "id": "35c7af87-7972-463c-9849-a498e32d9f95",
+                      "name": "List of files retrieved successfully",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/knowledge/:folderId/list",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "knowledge",
+                            ":folderId",
+                            "list"
+                          ],
+                          "variable": [
+                            {
+                              "key": "folderId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:02:40.000Z",
+                      "updatedAt": "2026-07-28T02:02:40.000Z",
+                      "uid": "35240-35c7af87-7972-463c-9849-a498e32d9f95"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:02:40.000Z",
+                  "updatedAt": "2026-07-28T02:02:40.000Z",
+                  "uid": "35240-53b19f16-4fe4-460d-9f99-475bc19056af"
+                }
+              ],
+              "id": "c088eb99-2c61-43df-8255-4e86ede40d79",
+              "createdAt": "2026-07-28T02:02:40.000Z",
+              "updatedAt": "2026-07-28T02:02:40.000Z",
+              "uid": "35240-c088eb99-2c61-43df-8255-4e86ede40d79"
+            },
+            {
+              "name": "{attachmentId}",
+              "item": [
+                {
+                  "name": "Delete a file from a knowledge folder",
+                  "id": "0fd5a5bd-95f3-47eb-9629-f7613059ff1a",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "{{bearerToken}}",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "DELETE",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/knowledge/:folderId/:attachmentId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "knowledge",
+                        ":folderId",
+                        ":attachmentId"
+                      ],
+                      "variable": [
+                        {
+                          "id": "52ecd031-e531-4ee7-9b92-3af7e93372ba",
+                          "key": "folderId",
+                          "value": "<string>",
+                          "description": "(Required) The ID of the knowledge folder"
+                        },
+                        {
+                          "id": "f204981f-9a84-43df-a6ac-d9cd242f5300",
+                          "key": "attachmentId",
+                          "value": "<string>",
+                          "description": "(Required) The ID of the attachment to delete"
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "id": "13a62a1f-aaef-47d7-bcfe-c4d2089af4c2",
+                      "name": "Attachment deleted successfully",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/knowledge/:folderId/:attachmentId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "knowledge",
+                            ":folderId",
+                            ":attachmentId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "folderId"
+                            },
+                            {
+                              "key": "attachmentId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:02:40.000Z",
+                      "updatedAt": "2026-07-28T02:02:40.000Z",
+                      "uid": "35240-13a62a1f-aaef-47d7-bcfe-c4d2089af4c2"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:02:40.000Z",
+                  "updatedAt": "2026-07-28T02:02:40.000Z",
+                  "uid": "35240-0fd5a5bd-95f3-47eb-9629-f7613059ff1a"
+                }
+              ],
+              "id": "bb4e0cab-2a47-487b-bb5d-cfa6bd268c0d",
+              "createdAt": "2026-07-28T02:02:40.000Z",
+              "updatedAt": "2026-07-28T02:02:40.000Z",
+              "uid": "35240-bb4e0cab-2a47-487b-bb5d-cfa6bd268c0d"
+            },
+            {
+              "name": "Upload a file to a knowledge folder",
+              "id": "ba509d55-6196-447f-8f8b-ac7a56b46203",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "multipart/form-data"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": "The file to upload",
+                      "key": "file",
+                      "type": "file",
+                      "value": null
+                    },
+                    {
+                      "description": "The associated URL",
+                      "key": "url",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/knowledge/:folderId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "knowledge",
+                    ":folderId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "f05e7c66-dff1-49d4-8003-08b696d01c45",
+                      "key": "folderId",
+                      "value": "<string>",
+                      "description": "(Required) The ID of the knowledge folder"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "690f4278-fae4-4bf1-bbd5-3fef5d059614",
+                  "name": "File uploaded successfully",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "description": "The file to upload",
+                          "key": "file",
+                          "type": "file"
+                        },
+                        {
+                          "description": "The associated URL",
+                          "key": "url",
+                          "value": "<string>",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/knowledge/:folderId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "knowledge",
+                        ":folderId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "folderId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T02:02:40.000Z",
+                  "updatedAt": "2026-07-28T02:02:40.000Z",
+                  "uid": "35240-690f4278-fae4-4bf1-bbd5-3fef5d059614"
+                }
+              ],
+              "createdAt": "2026-07-28T02:02:40.000Z",
+              "updatedAt": "2026-07-28T02:02:40.000Z",
+              "uid": "35240-ba509d55-6196-447f-8f8b-ac7a56b46203"
+            },
+            {
+              "name": "Update a file in a knowledge folder",
+              "id": "6fbade4b-e060-4de6-a1cc-1622c694031c",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "multipart/form-data"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": "The new file to upload",
+                      "key": "file",
+                      "type": "file",
+                      "value": null
+                    },
+                    {
+                      "description": "URL that is shown to the user if the file is used in an answer",
+                      "key": "url",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": "The ID of the attachment to update",
+                      "key": "attachmentId",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/knowledge/:folderId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "knowledge",
+                    ":folderId"
+                  ],
+                  "variable": [
+                    {
+                      "id": "48b7343c-c690-4861-8e24-acc943d72eb0",
+                      "key": "folderId",
+                      "value": "<string>",
+                      "description": "(Required) The ID of the knowledge folder"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "id": "0ba7cc40-1b8a-4a39-bb35-7ddd978364a3",
+                  "name": "Attachment updated successfully",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "description": "The new file to upload",
+                          "key": "file",
+                          "type": "file"
+                        },
+                        {
+                          "description": "URL that is shown to the user if the file is used in an answer",
+                          "key": "url",
+                          "value": "<string>",
+                          "type": "text"
+                        },
+                        {
+                          "description": "The ID of the attachment to update",
+                          "key": "attachmentId",
+                          "value": "<string>",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/knowledge/:folderId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "knowledge",
+                        ":folderId"
+                      ],
+                      "variable": [
+                        {
+                          "key": "folderId"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T02:02:40.000Z",
+                  "updatedAt": "2026-07-28T02:02:40.000Z",
+                  "uid": "35240-0ba7cc40-1b8a-4a39-bb35-7ddd978364a3"
+                }
+              ],
+              "createdAt": "2026-07-28T02:02:40.000Z",
+              "updatedAt": "2026-07-28T02:02:40.000Z",
+              "uid": "35240-6fbade4b-e060-4de6-a1cc-1622c694031c"
+            }
+          ],
+          "id": "bc676e8b-bb2e-423b-96ba-f06f1923182a",
+          "createdAt": "2026-07-28T02:02:40.000Z",
+          "updatedAt": "2026-07-28T02:02:40.000Z",
+          "uid": "35240-bc676e8b-bb2e-423b-96ba-f06f1923182a"
+        }
+      ],
+      "id": "9517b9c3-d952-4775-a465-a8fcd5bc8cc7",
+      "createdAt": "2026-07-28T02:02:40.000Z",
+      "updatedAt": "2026-07-28T02:02:40.000Z",
+      "uid": "35240-9517b9c3-d952-4775-a465-a8fcd5bc8cc7"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.langdock.com"
+    }
+  ]
+}

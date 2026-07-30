@@ -1,0 +1,209 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/langdock-openapi-original.yml
+description: >-
+  The entity-relationship graph of the Langdock API, derived from the OpenAPI component
+  schemas, their $ref links, and the id-reference fields that bind them. Everything
+  hangs off the Workspace, which is the boundary an API key is issued against. Agents
+  are the central entity: they compose Skills, Knowledge Folders, Attachments, and
+  Integration Actions, and they are the thing the MCP server exposes to external clients.
+root_entity: Workspace
+entities:
+- name: Workspace
+  description: The tenant boundary. API keys, users, audit logs, and usage exports are
+    all scoped to a workspace.
+  id_field: workspace_id
+  schema: null
+  note: Not modelled as a component schema; appears as the workspace_id path parameter
+    on GET /audit-logs/{workspace_id}.
+- name: Agent
+  description: A configured AI assistant with a model, instructions, capabilities, and
+    attached resources. Supersedes Assistant.
+  schema: AssistantDetails
+  id_field: id
+  key_fields:
+  - name
+  - instruction
+  - model
+  - temperature
+  - inputType
+  - webSearchEnabled
+  - imageGenerationEnabled
+  - canvasEnabled
+  - extendedThinking
+  - createdAt
+  - updatedAt
+  operations:
+  - createAgentV2
+  - updateAgentV2
+  - getAgentV2
+  - publishAgentV2
+- name: Assistant
+  description: The legacy form of Agent. Deprecated in favour of Agent.
+  schema: Assistant
+  deprecated: true
+  operations:
+  - createAgent
+  - updateAgent
+  - getAgent
+- name: Skill
+  description: A reusable, named instruction package that can be attached to agents.
+    Importable from a SKILL.md file or zip archive.
+  schema: Skill
+  id_field: id
+  alternate_key: slug
+  key_fields:
+  - name
+  - slug
+  - description
+  - instructions
+  - integrationIds
+  - createdAt
+  - updatedAt
+  operations:
+  - listSkills
+  - createSkill
+  - getSkill
+  - updateSkill
+  - deleteSkill
+  - importSkill
+- name: KnowledgeFolder
+  description: A folder of files that agents can semantically search. Must be explicitly
+    shared with an API key.
+  id_field: folderId
+  schema: null
+  operations:
+  - POST /knowledge/search
+  - POST /knowledge/{folderId}
+  - PATCH /knowledge/{folderId}
+  - GET /knowledge/{folderId}/list
+  - DELETE /knowledge/{folderId}/{attachmentId}
+- name: Attachment
+  description: An uploaded file usable by agents, or a file held inside a knowledge folder.
+  id_field: attachmentId
+  operations:
+  - uploadAttachment
+  - deleteAttachment
+- name: Integration
+  description: A custom integration in the workspace, carrying actions and triggers and
+    its own auth configuration.
+  id_field: integrationId
+  schema: null
+  note: Documented in the Integrations API docs; not expressed as component schemas in
+    the published OpenAPI.
+- name: Action
+  description: An operation on an integration that agents can execute.
+  belongs_to: Integration
+- name: Trigger
+  description: An event on an integration that can start workflows or agent conversations.
+  belongs_to: Integration
+- name: Model
+  description: An available AI model that agents and completions can target.
+  schema: Model
+  operations:
+  - GET /agent/v1/models
+  - GET /assistant/v1/models
+- name: AuditLog
+  description: An immutable record of an action in the workspace.
+  schema: AuditLog
+  id_field: id
+  key_fields:
+  - created_at
+  - actor_id
+  - actor_type
+  - actor_name
+  - action
+  - entity_type
+  - entity_id
+  - ip_address
+  - user_agent
+  - changes
+  - snapshot
+  conventions:
+    action_format: dot notation `{entity}.{operation}`
+    entity_type_format: PascalCase model name (e.g. `User`)
+    changes: structured diff with `before` and `after` objects
+  operations:
+  - listAuditLogs
+- name: User
+  description: A member of the workspace.
+  operations:
+  - POST /user-management/v1/invite
+  - POST /user-management/v1/deactivate-user
+relationships:
+- from: Workspace
+  to: Agent
+  type: has_many
+- from: Workspace
+  to: Skill
+  type: has_many
+- from: Workspace
+  to: Integration
+  type: has_many
+- from: Workspace
+  to: User
+  type: has_many
+- from: Workspace
+  to: AuditLog
+  type: has_many
+  via: workspace_id
+- from: Agent
+  to: KnowledgeFolder
+  type: has_many
+  via: knowledgeFolderIds
+  source_schema: Assistant
+- from: Agent
+  to: Attachment
+  type: has_many
+  via: attachmentIds / attachments
+  source_schema: Assistant, AssistantDetails
+- from: Agent
+  to: Action
+  type: has_many
+  via: actions
+  source_schema: Assistant, AssistantDetails
+- from: Agent
+  to: Model
+  type: has_one
+  via: model
+- from: Skill
+  to: Integration
+  type: has_many
+  via: integrationIds
+- from: Integration
+  to: Action
+  type: has_many
+- from: Integration
+  to: Trigger
+  type: has_many
+- from: KnowledgeFolder
+  to: Attachment
+  type: has_many
+  via: folderId
+- from: AuditLog
+  to: User
+  type: belongs_to
+  via: actor_id
+  note: actor may also be an API key or SCIM, per actor_type.
+- from: AuditLog
+  to: any
+  type: belongs_to
+  via: entity_id + entity_type
+  note: Polymorphic reference to the affected entity.
+pagination_envelopes:
+- entity: Skill
+  schema: ListSkillsResponse
+  items_field: skills
+  cursor_field: nextCursor
+- entity: AuditLog
+  schema: AuditLogListResponse
+  items_field: data
+  cursor_field: next_cursor
+naming_note: >-
+  Casing is inconsistent across product families — the Skills and Agents APIs use
+  camelCase (nextCursor, integrationIds, createdAt) while the Audit Logs API uses
+  snake_case (next_cursor, actor_id, created_at).
+schema_count: 98
+related:
+  conventions: conventions/langdock-conventions.yml
+  errors: errors/langdock-problem-types.yml

@@ -1,0 +1,47 @@
+{
+  "provider": "langdock",
+  "sources": [
+    "langdock-agent-api-openapi.yml",
+    "langdock-agent-build-api-openapi.yml",
+    "langdock-assistant-api-openapi.yml",
+    "langdock-assistant-build-api-openapi.yml",
+    "langdock-attachments-api-openapi.yml",
+    "langdock-audit-logs-api-openapi.yml",
+    "langdock-chat-api-openapi.yml",
+    "langdock-embeddings-api-openapi.yml",
+    "langdock-fim-api-openapi.yml",
+    "langdock-google-api-openapi.yml",
+    "langdock-knowledge-api-openapi.yml",
+    "langdock-messages-api-openapi.yml",
+    "langdock-skills-api-openapi.yml",
+    "langdock-usage-export-api-openapi.yml",
+    "langdock-user-management-api-openapi.yml"
+  ],
+  "outputs": [
+    "langdock-agent-api-openapi.yml",
+    "langdock-agent-build-api-openapi.yml",
+    "langdock-assistant-api-openapi.yml",
+    "langdock-assistant-build-api-openapi.yml",
+    "langdock-attachments-api-openapi.yml",
+    "langdock-audit-logs-api-openapi.yml",
+    "langdock-chat-api-openapi.yml",
+    "langdock-embeddings-api-openapi.yml",
+    "langdock-fim-api-openapi.yml",
+    "langdock-google-api-openapi.yml",
+    "langdock-knowledge-api-openapi.yml",
+    "langdock-messages-api-openapi.yml",
+    "langdock-skills-api-openapi.yml",
+    "langdock-usage-export-api-openapi.yml",
+    "langdock-user-management-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [
+    "langdock-agent-build-api-openapi.yml: dangling $ref: #/components/schemas/Action",
+    "langdock-agent-build-api-openapi.yml: dangling $ref: #/components/schemas/VectorDb",
+    "langdock-assistant-api-openapi.yml: dangling $ref: #/components/schemas/Action",
+    "langdock-assistant-api-openapi.yml: dangling $ref: #/components/schemas/VectorDb"
+  ],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

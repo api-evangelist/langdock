@@ -1,0 +1,62 @@
+generated: '2026-07-19'
+method: searched
+source: >-
+  openapi/langdock-openapi-original.yml (deprecated operations), plus
+  https://status.langdock.com/, https://www.langdock.com/changelog, and the
+  Assistants-to-Agents migration guide.
+description: >-
+  Langdock versions its first-party APIs in the URI path per product family and runs a
+  public status page and dated changelog. Deprecation is expressed in-band: the entire
+  legacy /assistant/v1 family is flagged deprecated:true in the OpenAPI and backed by a
+  written migration guide to /agent/v1. Langdock publishes no formal dated
+  deprecation/sunset policy and no RFC 8594 Sunset/Deprecation header contract, and no
+  public SLA/uptime target was found.
+versioning:
+  scheme: uri-path, per product family
+  current:
+    agents: v1
+    skills: v1
+    attachments: v1
+    user_management: v1
+  document_version: 3.0.0
+  docs: https://docs.langdock.com/en/developer/overview/api-introduction
+deprecation:
+  policy_url: null
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  mechanism: >-
+    Deprecation is signalled in the OpenAPI (deprecated:true plus a "[Deprecated]"
+    summary prefix) and in a written migration guide. No dated sunset window is
+    published.
+  migration_guides:
+  - from: Assistants API (/assistant/v1)
+    to: Agents API (/agent/v1)
+    url: https://docs.langdock.com/en/developer/assistants-api/assistant-to-agent-migration
+  - name: Agent Migration Guide (between workspaces)
+    url: https://docs.langdock.com/en/developer/agents-api/agent-migration
+deprecated_operations:
+- openapi/langdock-openapi-original.yml#POST /assistant/v1/chat/completions
+- openapi/langdock-openapi-original.yml#createAgent
+- openapi/langdock-openapi-original.yml#updateAgent
+- openapi/langdock-openapi-original.yml#getAgent
+- openapi/langdock-openapi-original.yml#GET /assistant/v1/models
+deprecated_operation_count: 5
+successor_operations:
+  createAgent: createAgentV2
+  updateAgent: updateAgentV2
+  getAgent: getAgentV2
+status_page:
+  url: https://status.langdock.com/
+  status: 200
+sla:
+  url: null
+  uptime_target: null
+  note: No public SLA or uptime target was found on the marketing, security, or docs
+    surface.
+changelog:
+  url: https://www.langdock.com/changelog
+  artifact: changelog/langdock-changelog.yml
+related:
+  conventions: conventions/langdock-conventions.yml
+  changelog: changelog/langdock-changelog.yml

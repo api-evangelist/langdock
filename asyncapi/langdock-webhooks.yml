@@ -1,0 +1,70 @@
+generated: '2026-07-19'
+method: searched
+type: Webhooks
+source: https://docs.langdock.com/en/using-langdock/workflows/nodes/triggers/webhook-trigger
+description: >-
+  Langdock publishes NO AsyncAPI document and NO outbound event catalog — it does not
+  emit webhooks to subscriber endpoints, and there is no published list of event types.
+  Its documented webhook surface is INBOUND: a Workflow can expose a unique HTTP
+  endpoint that external systems POST to in order to start that workflow. This artifact
+  records that receive-side surface accurately rather than implying an event feed that
+  does not exist. No AsyncAPI pointer is emitted for this provider.
+direction: inbound
+asyncapi:
+  published: false
+  probed:
+  - https://docs.langdock.com/asyncapi.yaml
+  - GitHub organization github.com/Langdock
+  result: none found
+outbound_events:
+  published: false
+  note: Langdock does not document an outbound webhook/event catalog or subscription
+    API.
+inbound_webhooks:
+  name: Webhook Trigger
+  docs: https://docs.langdock.com/en/using-langdock/workflows/nodes/triggers/webhook-trigger
+  summary: >-
+    Receive HTTP POST requests to trigger workflows and integrate with external systems.
+    Adding a Webhook Trigger to a workflow provisions a unique webhook URL and a webhook
+    ID.
+  method: POST
+  provisioning: Per-workflow; URL and webhook ID are generated automatically when the
+    trigger node is added.
+  payload_parsing: JSON body and query parameters are both parsed and made available to
+    the workflow.
+  execution: The workflow is queued for execution after the secret is validated.
+  authentication_methods:
+  - method: none
+    how: Webhook is publicly accessible — anyone with the URL can trigger it. Intended
+      for testing and low-security use cases.
+  - method: header
+    how: Secret sent via the `X-Webhook-Secret` HTTP header. Preferred — keeps secrets
+      out of server logs and browser history.
+    header: X-Webhook-Secret
+  - method: query
+    how: Secret sent as `?secret=...` appended to the URL. Legacy behavior, still fully
+      supported.
+    param: secret
+  secret_handling: >-
+    A secret is auto-generated when an auth method is selected and is preserved when
+    switching between methods. A secret is required whenever an auth method is active.
+  backward_compatibility: >-
+    Existing webhooks using a query-parameter secret continue to work unchanged; the
+    authentication-method field is optional and defaults to the previous behavior.
+  best_practice: Always use a secret for production webhooks; header-based auth is
+    preferred.
+related_triggers:
+- name: Form Trigger
+  use_for: User-facing data collection
+- name: Scheduled Trigger
+  use_for: Scheduled recurring tasks
+- name: Integration Trigger
+  use_for: Native integration events
+integrations_api:
+  note: >-
+    Triggers can also be defined programmatically on custom integrations via the
+    Integrations API (create-trigger / update-trigger / delete-trigger), which start
+    workflows or agent conversations.
+  docs: https://docs.langdock.com/en/developer/integrations-api/create-trigger
+related:
+  conventions: conventions/langdock-conventions.yml

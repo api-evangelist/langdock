@@ -1,0 +1,56 @@
+generated: '2026-07-19'
+method: searched
+probe: true
+source: https://www.langdock.com/security
+url: https://trust.langdock.com/
+description: >-
+  Langdock publishes a dedicated trust center at trust.langdock.com plus a security
+  overview page at langdock.com/security covering certifications, deployment and
+  data-residency options, subprocessor management, and penetration testing.
+pages:
+- url: https://trust.langdock.com/
+  label: Trust center
+  status: 200
+- url: https://www.langdock.com/security
+  label: Security overview
+  status: 200
+certifications:
+- SOC 2 Type II
+- ISO 27001
+- GDPR
+certification_detail:
+- name: ISO 27001
+  claim: Certified to the global standard for information management.
+- name: SOC 2 Type II
+  claim: Independently audited to ensure secure, reliable data handling.
+- name: GDPR
+  claim: Fully aligned with GDPR for strong data privacy and user protection.
+hosting:
+  cloud: Microsoft Azure
+  data_residency: EU — the application and most models (configurable) are hosted entirely
+    in the EU.
+deployment_options:
+- name: Multi-tenant SaaS
+  detail: Hosted via Microsoft Azure on EU servers.
+- name: Single-tenant SaaS
+  detail: Dedicated deployment managed by Langdock (Enterprise, 2,000+ seats).
+- name: Bring your own cloud
+  detail: Customer cloud deployment (Enterprise, 5,000+ seats).
+- name: On-premise
+  detail: Custom Kubernetes via Helm charts (Enterprise, 5,000+ seats).
+penetration_testing: Frequent independent third-party penetration testing.
+subprocessors:
+  published: true
+  detail: >-
+    Langdock regularly reviews subprocessors and maintains a published list; all
+    subprocessors must adhere to equivalent security standards.
+evidence:
+- source: https://www.langdock.com/security
+  keywords:
+  - soc 2
+  - iso 27001
+  - gdpr
+  - trust center
+  - penetration testing
+related:
+  vulnerability_disclosure: security/langdock-vulnerability-disclosure.yml

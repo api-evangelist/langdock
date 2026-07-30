@@ -1,0 +1,122 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/langdock-openapi-original.yml
+format: vendor-json
+rfc9457: false
+description: >-
+  Langdock does not use RFC 9457 application/problem+json. Its primary error contract
+  is an Anthropic-shaped discriminated union: a top-level envelope {"type":"error",
+  "error":{...}} whose inner object is discriminated on an error `type` string. Three
+  product families (Usage Export, User Management, Invite Users) use their own simpler
+  flat envelopes instead. Both the envelopes and the per-status conditions below are
+  derived from the declared 4xx/5xx responses across all 38 operations in the spec.
+envelopes:
+- name: ErrorResponse
+  shape: '{"type": "error", "error": {"type": "<discriminator>", "message": "<string>"}}'
+  discriminator: error.type
+  used_by: completion, embedding, agent, assistant, attachment, knowledge, skills, audit-log
+    operations
+- name: UsageExportError
+  shape: '{"error": "<string>", "message": "<string>"}'
+  used_by: POST /export/* operations
+- name: UserManagementError
+  shape: '{"message": "<string>"}'
+  used_by: POST /user-management/v1/deactivate-user
+- name: InviteUsersError
+  shape: '{"message": "<string>", "errors": [...], "error": "<string>"}'
+  used_by: POST /user-management/v1/invite
+  notes: errors[] is present on 400 responses; error is present on 500 responses.
+error_types:
+- type: invalid_request_error
+  default_message: Invalid request
+  typical_status: 400
+  schema: InvalidRequestError
+- type: authentication_error
+  default_message: Authentication error
+  typical_status: 401
+  schema: AuthenticationError
+- type: permission_error
+  default_message: Permission denied
+  typical_status: 403
+  schema: PermissionError
+- type: not_found_error
+  default_message: Not found
+  typical_status: 404
+  schema: NotFoundError
+- type: rate_limit_error
+  default_message: Rate limited
+  typical_status: 429
+  schema: RateLimitError
+- type: overloaded_error
+  default_message: Overloaded
+  typical_status: 529
+  schema: OverloadedError
+- type: api_error
+  default_message: Internal server error
+  typical_status: 500
+  schema: APIError
+problems:
+- status: 400
+  title: Bad Request
+  condition: Invalid request parameters, invalid request body, invalid query parameter,
+    invalid Skill ID, invalid assistant ID format, invalid form data or zip archive,
+    no file provided, or an export date range that is too large.
+  operations_declaring: 21
+  remediation: Validate the request body and query parameters against the schema before
+    retrying; the error message names the offending condition.
+- status: 401
+  title: Unauthorized
+  condition: API key is missing, invalid, or the key creator was not found.
+  operations_declaring: 20
+  remediation: >-
+    Send a valid workspace API key as `Authorization: Bearer sk-ld-...`. Keys are
+    managed in Workspace Settings → Products → API.
+- status: 403
+  title: Forbidden
+  condition: >-
+    Insufficient API key scope or resource access — requires AGENT_API scope, requires
+    AUDIT_LOG_API scope, workspace_id does not match the key's workspace, missing
+    Skill create/editor/owner permission, no access to this agent or attachment, or
+    the target resource is a project.
+  operations_declaring: 11
+  remediation: >-
+    Grant the required scope to the API key and explicitly share the target agent or
+    knowledge folder with that key. See authentication/langdock-authentication.yml.
+- status: 404
+  title: Not Found
+  condition: Agent, Skill, attachment, model, action, or user not found; or no usage
+    data found for the selected period.
+  operations_declaring: 13
+  remediation: Confirm the resource id and that it lives in the API key's workspace.
+- status: 409
+  title: Conflict
+  condition: Skill slug conflict, ambiguous upsert slug, or no draft changes to publish.
+  operations_declaring: 4
+  remediation: Choose a unique Skill slug, or make draft changes before calling publish.
+- status: 413
+  title: Payload Too Large
+  condition: Uploaded file is too large.
+  operations_declaring: 1
+  source_operation: openapi/langdock-openapi-original.yml#importSkill
+  remediation: Reduce the size of the Skill zip archive before import.
+- status: 429
+  title: Rate Limit Exceeded
+  condition: Per-model request or token rate limit exceeded (default 500 RPM / 60,000
+    TPM).
+  operations_declaring: 11
+  remediation: Back off and retry. BYOK workspaces can raise per-model limits in Settings.
+  detail: rate-limits/langdock-rate-limits.yml
+- status: 500
+  title: Internal Server Error
+  condition: Unhandled server-side error.
+  operations_declaring: 18
+  remediation: Retry with backoff; if persistent, check https://status.langdock.com/.
+upstream_error_references:
+- route: POST /anthropic/{region}/v1/messages
+  defers_to: https://platform.claude.com/docs/en/api/errors
+  note: The Anthropic-compatible route documents its 4XX responses by reference to
+    Anthropic's own error documentation.
+related:
+  conventions: conventions/langdock-conventions.yml
+  authentication: authentication/langdock-authentication.yml
+  rate_limits: rate-limits/langdock-rate-limits.yml

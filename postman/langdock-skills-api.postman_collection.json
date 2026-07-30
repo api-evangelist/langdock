@@ -1,0 +1,2698 @@
+{
+  "info": {
+    "_postman_id": "b3b25435-06d9-4339-89c7-4c42d9e3a470",
+    "name": "Langdock Agent Skills API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:02:41.000Z",
+    "updatedAt": "2026-07-28T02:02:42.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-b3b25435-06d9-4339-89c7-4c42d9e3a470"
+  },
+  "item": [
+    {
+      "name": "skills",
+      "item": [
+        {
+          "name": "v1",
+          "item": [
+            {
+              "name": "{skillId}",
+              "item": [
+                {
+                  "name": "Get a Skill",
+                  "id": "c93e2784-8b00-4de6-b914-e2cf94fce788",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/skills/v1/:skillId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "skills",
+                        "v1",
+                        ":skillId"
+                      ],
+                      "variable": [
+                        {
+                          "id": "244db565-d680-43be-8b68-31ff12fd61fe",
+                          "key": "skillId",
+                          "value": "<uuid>",
+                          "description": "(Required) UUID of the Skill."
+                        }
+                      ]
+                    },
+                    "description": "Retrieves a Skill by ID from your workspace."
+                  },
+                  "response": [
+                    {
+                      "id": "1c5be6eb-4757-4db0-99c5-82543069df18",
+                      "name": "Skill returned successfully",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/skills/v1/:skillId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "skills",
+                            "v1",
+                            ":skillId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "skillId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"skill\": {\n    \"id\": \"<uuid>\",\n    \"name\": \"<string>\",\n    \"slug\": \"d9\",\n    \"description\": \"<string>\",\n    \"instructions\": \"<string>\",\n    \"integrationIds\": [\n      \"<uuid>\",\n      \"<uuid>\"\n    ],\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\"\n  }\n}",
+                      "createdAt": "2026-07-28T02:02:42.000Z",
+                      "updatedAt": "2026-07-28T02:02:42.000Z",
+                      "uid": "35240-1c5be6eb-4757-4db0-99c5-82543069df18"
+                    },
+                    {
+                      "id": "a684bb32-c28f-438b-83ea-84ffa61c96e7",
+                      "name": "Invalid Skill ID",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/skills/v1/:skillId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "skills",
+                            "v1",
+                            ":skillId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "skillId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:02:42.000Z",
+                      "updatedAt": "2026-07-28T02:02:42.000Z",
+                      "uid": "35240-a684bb32-c28f-438b-83ea-84ffa61c96e7"
+                    },
+                    {
+                      "id": "c7eda2e7-29eb-4599-acb4-c347b2723564",
+                      "name": "Invalid or missing API key",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/skills/v1/:skillId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "skills",
+                            "v1",
+                            ":skillId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "skillId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:02:42.000Z",
+                      "updatedAt": "2026-07-28T02:02:42.000Z",
+                      "uid": "35240-c7eda2e7-29eb-4599-acb4-c347b2723564"
+                    },
+                    {
+                      "id": "4a0e72ba-1c0e-46f9-bf85-eb64ee4462dd",
+                      "name": "Missing required scope or access",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/skills/v1/:skillId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "skills",
+                            "v1",
+                            ":skillId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "skillId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:02:42.000Z",
+                      "updatedAt": "2026-07-28T02:02:42.000Z",
+                      "uid": "35240-4a0e72ba-1c0e-46f9-bf85-eb64ee4462dd"
+                    },
+                    {
+                      "id": "45db6e97-1172-4bb6-9e17-341daf112186",
+                      "name": "Skill not found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/skills/v1/:skillId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "skills",
+                            "v1",
+                            ":skillId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "skillId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:02:42.000Z",
+                      "updatedAt": "2026-07-28T02:02:42.000Z",
+                      "uid": "35240-45db6e97-1172-4bb6-9e17-341daf112186"
+                    },
+                    {
+                      "id": "281f17b9-0f46-4f35-8f28-ecb39062a08f",
+                      "name": "Rate limit exceeded",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/skills/v1/:skillId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "skills",
+                            "v1",
+                            ":skillId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "skillId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:02:42.000Z",
+                      "updatedAt": "2026-07-28T02:02:42.000Z",
+                      "uid": "35240-281f17b9-0f46-4f35-8f28-ecb39062a08f"
+                    },
+                    {
+                      "id": "dae59296-74e0-42b4-bef5-ee375345151e",
+                      "name": "Internal server error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/skills/v1/:skillId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "skills",
+                            "v1",
+                            ":skillId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "skillId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:02:42.000Z",
+                      "updatedAt": "2026-07-28T02:02:42.000Z",
+                      "uid": "35240-dae59296-74e0-42b4-bef5-ee375345151e"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:02:42.000Z",
+                  "updatedAt": "2026-07-28T02:02:42.000Z",
+                  "uid": "35240-c93e2784-8b00-4de6-b914-e2cf94fce788"
+                },
+                {
+                  "name": "Update a Skill",
+                  "id": "37c00e7b-b2cb-4fee-9156-71d823616639",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"slug\": \"tgyh9kd\",\n  \"description\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"integrationIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/skills/v1/:skillId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "skills",
+                        "v1",
+                        ":skillId"
+                      ],
+                      "variable": [
+                        {
+                          "id": "f0485d31-2ab6-4600-8264-a9d7ecce9232",
+                          "key": "skillId",
+                          "value": "<uuid>",
+                          "description": "(Required) UUID of the Skill."
+                        }
+                      ]
+                    },
+                    "description": "Updates an existing Skill in your workspace."
+                  },
+                  "response": [
+                    {
+                      "id": "259b59e3-9e9d-4983-9248-c8daedb54bc6",
+                      "name": "Skill updated successfully",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\",\n  \"slug\": \"tgyh9kd\",\n  \"description\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"integrationIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/skills/v1/:skillId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "skills",
+                            "v1",
+                            ":skillId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "skillId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"skill\": {\n    \"id\": \"<uuid>\",\n    \"name\": \"<string>\",\n    \"slug\": \"d9\",\n    \"description\": \"<string>\",\n    \"instructions\": \"<string>\",\n    \"integrationIds\": [\n      \"<uuid>\",\n      \"<uuid>\"\n    ],\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\"\n  }\n}",
+                      "createdAt": "2026-07-28T02:02:42.000Z",
+                      "updatedAt": "2026-07-28T02:02:42.000Z",
+                      "uid": "35240-259b59e3-9e9d-4983-9248-c8daedb54bc6"
+                    },
+                    {
+                      "id": "af716084-e967-4ad2-8caf-1ceb49e067bc",
+                      "name": "Invalid request body",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\",\n  \"slug\": \"tgyh9kd\",\n  \"description\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"integrationIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/skills/v1/:skillId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "skills",
+                            "v1",
+                            ":skillId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "skillId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:02:42.000Z",
+                      "updatedAt": "2026-07-28T02:02:42.000Z",
+                      "uid": "35240-af716084-e967-4ad2-8caf-1ceb49e067bc"
+                    },
+                    {
+                      "id": "ea888751-c75b-40b1-a993-51a0d75e114b",
+                      "name": "Invalid or missing API key",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\",\n  \"slug\": \"tgyh9kd\",\n  \"description\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"integrationIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/skills/v1/:skillId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "skills",
+                            "v1",
+                            ":skillId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "skillId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:02:42.000Z",
+                      "updatedAt": "2026-07-28T02:02:42.000Z",
+                      "uid": "35240-ea888751-c75b-40b1-a993-51a0d75e114b"
+                    },
+                    {
+                      "id": "683bfe4a-9e85-4ff6-a069-89072b749ea0",
+                      "name": "Missing required scope or editor access",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\",\n  \"slug\": \"tgyh9kd\",\n  \"description\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"integrationIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/skills/v1/:skillId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "skills",
+                            "v1",
+                            ":skillId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "skillId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:02:42.000Z",
+                      "updatedAt": "2026-07-28T02:02:42.000Z",
+                      "uid": "35240-683bfe4a-9e85-4ff6-a069-89072b749ea0"
+                    },
+                    {
+                      "id": "aaa4f754-aa66-45a9-8455-3cd356f9c4fc",
+                      "name": "Skill not found",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\",\n  \"slug\": \"tgyh9kd\",\n  \"description\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"integrationIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/skills/v1/:skillId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "skills",
+                            "v1",
+                            ":skillId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "skillId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:02:42.000Z",
+                      "updatedAt": "2026-07-28T02:02:42.000Z",
+                      "uid": "35240-aaa4f754-aa66-45a9-8455-3cd356f9c4fc"
+                    },
+                    {
+                      "id": "dbcfe3cf-6e9f-43d2-b62f-466b4a27534c",
+                      "name": "Skill slug conflict",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\",\n  \"slug\": \"tgyh9kd\",\n  \"description\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"integrationIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/skills/v1/:skillId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "skills",
+                            "v1",
+                            ":skillId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "skillId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Conflict",
+                      "code": 409,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:02:42.000Z",
+                      "updatedAt": "2026-07-28T02:02:42.000Z",
+                      "uid": "35240-dbcfe3cf-6e9f-43d2-b62f-466b4a27534c"
+                    },
+                    {
+                      "id": "db414226-65f9-464b-8582-9c0410dd164f",
+                      "name": "Rate limit exceeded",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\",\n  \"slug\": \"tgyh9kd\",\n  \"description\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"integrationIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/skills/v1/:skillId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "skills",
+                            "v1",
+                            ":skillId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "skillId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:02:42.000Z",
+                      "updatedAt": "2026-07-28T02:02:42.000Z",
+                      "uid": "35240-db414226-65f9-464b-8582-9c0410dd164f"
+                    },
+                    {
+                      "id": "8737d907-2b6c-43a5-934a-7b8536bd12cf",
+                      "name": "Internal server error",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\",\n  \"slug\": \"tgyh9kd\",\n  \"description\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"integrationIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/skills/v1/:skillId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "skills",
+                            "v1",
+                            ":skillId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "skillId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:02:42.000Z",
+                      "updatedAt": "2026-07-28T02:02:42.000Z",
+                      "uid": "35240-8737d907-2b6c-43a5-934a-7b8536bd12cf"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:02:42.000Z",
+                  "updatedAt": "2026-07-28T02:02:42.000Z",
+                  "uid": "35240-37c00e7b-b2cb-4fee-9156-71d823616639"
+                },
+                {
+                  "name": "Delete a Skill",
+                  "id": "0579dada-fd2f-4258-96e3-80e83acb742b",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/skills/v1/:skillId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "skills",
+                        "v1",
+                        ":skillId"
+                      ],
+                      "variable": [
+                        {
+                          "id": "ec490f61-ea10-48df-a31c-49926c2733c6",
+                          "key": "skillId",
+                          "value": "<uuid>",
+                          "description": "(Required) UUID of the Skill."
+                        }
+                      ]
+                    },
+                    "description": "Permanently deletes a Skill from your workspace."
+                  },
+                  "response": [
+                    {
+                      "id": "5058d17d-7529-4880-bd91-4e251131c303",
+                      "name": "Skill deleted successfully",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/skills/v1/:skillId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "skills",
+                            "v1",
+                            ":skillId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "skillId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"success\": \"<boolean>\"\n}",
+                      "createdAt": "2026-07-28T02:02:42.000Z",
+                      "updatedAt": "2026-07-28T02:02:42.000Z",
+                      "uid": "35240-5058d17d-7529-4880-bd91-4e251131c303"
+                    },
+                    {
+                      "id": "d6fb71aa-c1aa-4c64-aa0f-a6f4d5f74279",
+                      "name": "Invalid Skill ID",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/skills/v1/:skillId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "skills",
+                            "v1",
+                            ":skillId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "skillId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:02:42.000Z",
+                      "updatedAt": "2026-07-28T02:02:42.000Z",
+                      "uid": "35240-d6fb71aa-c1aa-4c64-aa0f-a6f4d5f74279"
+                    },
+                    {
+                      "id": "a8d5a2b6-fbf2-453f-89fe-4fb26849bcf4",
+                      "name": "Invalid or missing API key",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/skills/v1/:skillId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "skills",
+                            "v1",
+                            ":skillId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "skillId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:02:42.000Z",
+                      "updatedAt": "2026-07-28T02:02:42.000Z",
+                      "uid": "35240-a8d5a2b6-fbf2-453f-89fe-4fb26849bcf4"
+                    },
+                    {
+                      "id": "f6071079-fe57-473a-b897-c86d188c1ff1",
+                      "name": "Missing required scope or owner access",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/skills/v1/:skillId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "skills",
+                            "v1",
+                            ":skillId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "skillId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:02:42.000Z",
+                      "updatedAt": "2026-07-28T02:02:42.000Z",
+                      "uid": "35240-f6071079-fe57-473a-b897-c86d188c1ff1"
+                    },
+                    {
+                      "id": "6cd4ec71-cf90-47a8-975f-ce3d0acc41ab",
+                      "name": "Skill not found",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/skills/v1/:skillId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "skills",
+                            "v1",
+                            ":skillId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "skillId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:02:42.000Z",
+                      "updatedAt": "2026-07-28T02:02:42.000Z",
+                      "uid": "35240-6cd4ec71-cf90-47a8-975f-ce3d0acc41ab"
+                    },
+                    {
+                      "id": "d2f41535-0726-4562-84c5-031742e8d940",
+                      "name": "Rate limit exceeded",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/skills/v1/:skillId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "skills",
+                            "v1",
+                            ":skillId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "skillId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:02:42.000Z",
+                      "updatedAt": "2026-07-28T02:02:42.000Z",
+                      "uid": "35240-d2f41535-0726-4562-84c5-031742e8d940"
+                    },
+                    {
+                      "id": "f22f567a-a66b-466d-b104-46ce17e84b56",
+                      "name": "Internal server error",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/skills/v1/:skillId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "skills",
+                            "v1",
+                            ":skillId"
+                          ],
+                          "variable": [
+                            {
+                              "key": "skillId"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:02:42.000Z",
+                      "updatedAt": "2026-07-28T02:02:42.000Z",
+                      "uid": "35240-f22f567a-a66b-466d-b104-46ce17e84b56"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:02:42.000Z",
+                  "updatedAt": "2026-07-28T02:02:42.000Z",
+                  "uid": "35240-0579dada-fd2f-4258-96e3-80e83acb742b"
+                }
+              ],
+              "id": "a68c501c-4e5e-4211-8fdd-e700e3bee3ac",
+              "createdAt": "2026-07-28T02:02:42.000Z",
+              "updatedAt": "2026-07-28T02:02:42.000Z",
+              "uid": "35240-a68c501c-4e5e-4211-8fdd-e700e3bee3ac"
+            },
+            {
+              "name": "import",
+              "item": [
+                {
+                  "name": "Import a Skill",
+                  "id": "1133a81b-1243-4c03-9e50-4bf732bf58f3",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "multipart/form-data"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "description": "(Required) SKILL.md, .zip, or .skill file content.",
+                          "key": "file",
+                          "type": "file",
+                          "value": null
+                        },
+                        {
+                          "description": "(Required) File parser to use. (This can only be one of md,zip)",
+                          "key": "fileType",
+                          "value": "md",
+                          "type": "text"
+                        },
+                        {
+                          "description": "Whether to create a Skill or update an editable Skill with the same slug. (This can only be one of create,upsert)",
+                          "key": "mode",
+                          "value": "create",
+                          "type": "text"
+                        },
+                        {
+                          "description": "JSON-encoded array of integration UUIDs.",
+                          "key": "integrationIds",
+                          "value": "<string>",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/skills/v1/import",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "skills",
+                        "v1",
+                        "import"
+                      ]
+                    },
+                    "description": "Creates or updates a Skill from a SKILL.md file or zip archive."
+                  },
+                  "response": [
+                    {
+                      "id": "f50a4f7a-e03f-4c4b-a7c7-5765218561a9",
+                      "name": "Existing Skill updated successfully",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "multipart/form-data"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "formdata",
+                          "formdata": [
+                            {
+                              "description": "(Required) SKILL.md, .zip, or .skill file content.",
+                              "key": "file",
+                              "type": "file"
+                            },
+                            {
+                              "description": "(Required) File parser to use. (This can only be one of md,zip)",
+                              "key": "fileType",
+                              "value": "md",
+                              "type": "text"
+                            },
+                            {
+                              "description": "Whether to create a Skill or update an editable Skill with the same slug. (This can only be one of create,upsert)",
+                              "key": "mode",
+                              "value": "create",
+                              "type": "text"
+                            },
+                            {
+                              "description": "JSON-encoded array of integration UUIDs.",
+                              "key": "integrationIds",
+                              "value": "<string>",
+                              "type": "text"
+                            }
+                          ]
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/skills/v1/import",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "skills",
+                            "v1",
+                            "import"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"skill\": {\n    \"id\": \"<uuid>\",\n    \"name\": \"<string>\",\n    \"slug\": \"wfq\",\n    \"description\": \"<string>\",\n    \"instructions\": \"<string>\",\n    \"integrationIds\": [\n      \"<uuid>\",\n      \"<uuid>\"\n    ],\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\"\n  },\n  \"files\": [\n    {\n      \"path\": \"<string>\",\n      \"sizeBytes\": \"<integer>\",\n      \"extension\": \"<string>\",\n      \"hasScript\": \"<boolean>\"\n    },\n    {\n      \"path\": \"<string>\",\n      \"sizeBytes\": \"<integer>\",\n      \"extension\": \"<string>\",\n      \"hasScript\": \"<boolean>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T02:02:42.000Z",
+                      "updatedAt": "2026-07-28T02:02:42.000Z",
+                      "uid": "35240-f50a4f7a-e03f-4c4b-a7c7-5765218561a9"
+                    },
+                    {
+                      "id": "a51ee26c-66fb-430c-af1f-dabe3e56ccbb",
+                      "name": "Skill created successfully",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "multipart/form-data"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "formdata",
+                          "formdata": [
+                            {
+                              "description": "(Required) SKILL.md, .zip, or .skill file content.",
+                              "key": "file",
+                              "type": "file"
+                            },
+                            {
+                              "description": "(Required) File parser to use. (This can only be one of md,zip)",
+                              "key": "fileType",
+                              "value": "md",
+                              "type": "text"
+                            },
+                            {
+                              "description": "Whether to create a Skill or update an editable Skill with the same slug. (This can only be one of create,upsert)",
+                              "key": "mode",
+                              "value": "create",
+                              "type": "text"
+                            },
+                            {
+                              "description": "JSON-encoded array of integration UUIDs.",
+                              "key": "integrationIds",
+                              "value": "<string>",
+                              "type": "text"
+                            }
+                          ]
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/skills/v1/import",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "skills",
+                            "v1",
+                            "import"
+                          ]
+                        }
+                      },
+                      "status": "Created",
+                      "code": 201,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"skill\": {\n    \"id\": \"<uuid>\",\n    \"name\": \"<string>\",\n    \"slug\": \"wfq\",\n    \"description\": \"<string>\",\n    \"instructions\": \"<string>\",\n    \"integrationIds\": [\n      \"<uuid>\",\n      \"<uuid>\"\n    ],\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\"\n  },\n  \"files\": [\n    {\n      \"path\": \"<string>\",\n      \"sizeBytes\": \"<integer>\",\n      \"extension\": \"<string>\",\n      \"hasScript\": \"<boolean>\"\n    },\n    {\n      \"path\": \"<string>\",\n      \"sizeBytes\": \"<integer>\",\n      \"extension\": \"<string>\",\n      \"hasScript\": \"<boolean>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T02:02:42.000Z",
+                      "updatedAt": "2026-07-28T02:02:42.000Z",
+                      "uid": "35240-a51ee26c-66fb-430c-af1f-dabe3e56ccbb"
+                    },
+                    {
+                      "id": "2e52eeaf-e4bb-4a42-a74f-e14d059851af",
+                      "name": "Invalid form data or zip archive",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "multipart/form-data"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "formdata",
+                          "formdata": [
+                            {
+                              "description": "(Required) SKILL.md, .zip, or .skill file content.",
+                              "key": "file",
+                              "type": "file"
+                            },
+                            {
+                              "description": "(Required) File parser to use. (This can only be one of md,zip)",
+                              "key": "fileType",
+                              "value": "md",
+                              "type": "text"
+                            },
+                            {
+                              "description": "Whether to create a Skill or update an editable Skill with the same slug. (This can only be one of create,upsert)",
+                              "key": "mode",
+                              "value": "create",
+                              "type": "text"
+                            },
+                            {
+                              "description": "JSON-encoded array of integration UUIDs.",
+                              "key": "integrationIds",
+                              "value": "<string>",
+                              "type": "text"
+                            }
+                          ]
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/skills/v1/import",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "skills",
+                            "v1",
+                            "import"
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:02:42.000Z",
+                      "updatedAt": "2026-07-28T02:02:42.000Z",
+                      "uid": "35240-2e52eeaf-e4bb-4a42-a74f-e14d059851af"
+                    },
+                    {
+                      "id": "e4796275-01f6-4fbf-8a3f-979c62d9c652",
+                      "name": "Invalid or missing API key",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "multipart/form-data"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "formdata",
+                          "formdata": [
+                            {
+                              "description": "(Required) SKILL.md, .zip, or .skill file content.",
+                              "key": "file",
+                              "type": "file"
+                            },
+                            {
+                              "description": "(Required) File parser to use. (This can only be one of md,zip)",
+                              "key": "fileType",
+                              "value": "md",
+                              "type": "text"
+                            },
+                            {
+                              "description": "Whether to create a Skill or update an editable Skill with the same slug. (This can only be one of create,upsert)",
+                              "key": "mode",
+                              "value": "create",
+                              "type": "text"
+                            },
+                            {
+                              "description": "JSON-encoded array of integration UUIDs.",
+                              "key": "integrationIds",
+                              "value": "<string>",
+                              "type": "text"
+                            }
+                          ]
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/skills/v1/import",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "skills",
+                            "v1",
+                            "import"
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:02:42.000Z",
+                      "updatedAt": "2026-07-28T02:02:42.000Z",
+                      "uid": "35240-e4796275-01f6-4fbf-8a3f-979c62d9c652"
+                    },
+                    {
+                      "id": "db48d077-718d-4e85-bc89-5c97cf44ce81",
+                      "name": "Missing required scope or Skill permission",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "multipart/form-data"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "formdata",
+                          "formdata": [
+                            {
+                              "description": "(Required) SKILL.md, .zip, or .skill file content.",
+                              "key": "file",
+                              "type": "file"
+                            },
+                            {
+                              "description": "(Required) File parser to use. (This can only be one of md,zip)",
+                              "key": "fileType",
+                              "value": "md",
+                              "type": "text"
+                            },
+                            {
+                              "description": "Whether to create a Skill or update an editable Skill with the same slug. (This can only be one of create,upsert)",
+                              "key": "mode",
+                              "value": "create",
+                              "type": "text"
+                            },
+                            {
+                              "description": "JSON-encoded array of integration UUIDs.",
+                              "key": "integrationIds",
+                              "value": "<string>",
+                              "type": "text"
+                            }
+                          ]
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/skills/v1/import",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "skills",
+                            "v1",
+                            "import"
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:02:42.000Z",
+                      "updatedAt": "2026-07-28T02:02:42.000Z",
+                      "uid": "35240-db48d077-718d-4e85-bc89-5c97cf44ce81"
+                    },
+                    {
+                      "id": "93d45e9b-f461-4628-bd7e-22b328a84711",
+                      "name": "Existing slug conflict or ambiguous upsert slug",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "multipart/form-data"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "formdata",
+                          "formdata": [
+                            {
+                              "description": "(Required) SKILL.md, .zip, or .skill file content.",
+                              "key": "file",
+                              "type": "file"
+                            },
+                            {
+                              "description": "(Required) File parser to use. (This can only be one of md,zip)",
+                              "key": "fileType",
+                              "value": "md",
+                              "type": "text"
+                            },
+                            {
+                              "description": "Whether to create a Skill or update an editable Skill with the same slug. (This can only be one of create,upsert)",
+                              "key": "mode",
+                              "value": "create",
+                              "type": "text"
+                            },
+                            {
+                              "description": "JSON-encoded array of integration UUIDs.",
+                              "key": "integrationIds",
+                              "value": "<string>",
+                              "type": "text"
+                            }
+                          ]
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/skills/v1/import",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "skills",
+                            "v1",
+                            "import"
+                          ]
+                        }
+                      },
+                      "status": "Conflict",
+                      "code": 409,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:02:42.000Z",
+                      "updatedAt": "2026-07-28T02:02:42.000Z",
+                      "uid": "35240-93d45e9b-f461-4628-bd7e-22b328a84711"
+                    },
+                    {
+                      "id": "12ceea26-cb79-46cf-9737-2b8ffea262cd",
+                      "name": "Uploaded file is too large",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "multipart/form-data"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "formdata",
+                          "formdata": [
+                            {
+                              "description": "(Required) SKILL.md, .zip, or .skill file content.",
+                              "key": "file",
+                              "type": "file"
+                            },
+                            {
+                              "description": "(Required) File parser to use. (This can only be one of md,zip)",
+                              "key": "fileType",
+                              "value": "md",
+                              "type": "text"
+                            },
+                            {
+                              "description": "Whether to create a Skill or update an editable Skill with the same slug. (This can only be one of create,upsert)",
+                              "key": "mode",
+                              "value": "create",
+                              "type": "text"
+                            },
+                            {
+                              "description": "JSON-encoded array of integration UUIDs.",
+                              "key": "integrationIds",
+                              "value": "<string>",
+                              "type": "text"
+                            }
+                          ]
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/skills/v1/import",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "skills",
+                            "v1",
+                            "import"
+                          ]
+                        }
+                      },
+                      "status": "Request Entity Too Large",
+                      "code": 413,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:02:42.000Z",
+                      "updatedAt": "2026-07-28T02:02:42.000Z",
+                      "uid": "35240-12ceea26-cb79-46cf-9737-2b8ffea262cd"
+                    },
+                    {
+                      "id": "26876770-1ef6-4f94-af09-dfddb2c7286f",
+                      "name": "Rate limit exceeded",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "multipart/form-data"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "formdata",
+                          "formdata": [
+                            {
+                              "description": "(Required) SKILL.md, .zip, or .skill file content.",
+                              "key": "file",
+                              "type": "file"
+                            },
+                            {
+                              "description": "(Required) File parser to use. (This can only be one of md,zip)",
+                              "key": "fileType",
+                              "value": "md",
+                              "type": "text"
+                            },
+                            {
+                              "description": "Whether to create a Skill or update an editable Skill with the same slug. (This can only be one of create,upsert)",
+                              "key": "mode",
+                              "value": "create",
+                              "type": "text"
+                            },
+                            {
+                              "description": "JSON-encoded array of integration UUIDs.",
+                              "key": "integrationIds",
+                              "value": "<string>",
+                              "type": "text"
+                            }
+                          ]
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/skills/v1/import",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "skills",
+                            "v1",
+                            "import"
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:02:42.000Z",
+                      "updatedAt": "2026-07-28T02:02:42.000Z",
+                      "uid": "35240-26876770-1ef6-4f94-af09-dfddb2c7286f"
+                    },
+                    {
+                      "id": "4d1daf3a-6393-48bb-9da8-f408d9940a44",
+                      "name": "Internal server error",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "multipart/form-data"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "formdata",
+                          "formdata": [
+                            {
+                              "description": "(Required) SKILL.md, .zip, or .skill file content.",
+                              "key": "file",
+                              "type": "file"
+                            },
+                            {
+                              "description": "(Required) File parser to use. (This can only be one of md,zip)",
+                              "key": "fileType",
+                              "value": "md",
+                              "type": "text"
+                            },
+                            {
+                              "description": "Whether to create a Skill or update an editable Skill with the same slug. (This can only be one of create,upsert)",
+                              "key": "mode",
+                              "value": "create",
+                              "type": "text"
+                            },
+                            {
+                              "description": "JSON-encoded array of integration UUIDs.",
+                              "key": "integrationIds",
+                              "value": "<string>",
+                              "type": "text"
+                            }
+                          ]
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/skills/v1/import",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "skills",
+                            "v1",
+                            "import"
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": null,
+                      "createdAt": "2026-07-28T02:02:42.000Z",
+                      "updatedAt": "2026-07-28T02:02:42.000Z",
+                      "uid": "35240-4d1daf3a-6393-48bb-9da8-f408d9940a44"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:02:42.000Z",
+                  "updatedAt": "2026-07-28T02:02:42.000Z",
+                  "uid": "35240-1133a81b-1243-4c03-9e50-4bf732bf58f3"
+                }
+              ],
+              "id": "672c1ba2-d0ee-4b1a-81f7-26e54938b462",
+              "createdAt": "2026-07-28T02:02:42.000Z",
+              "updatedAt": "2026-07-28T02:02:42.000Z",
+              "uid": "35240-672c1ba2-d0ee-4b1a-81f7-26e54938b462"
+            },
+            {
+              "name": "List Skills",
+              "id": "e98d8970-24d3-4d49-9022-c254a5386862",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/skills/v1?limit=50&cursor=<uuid>&query=<string>&slug=31dds5",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "skills",
+                    "v1"
+                  ],
+                  "query": [
+                    {
+                      "description": "Number of Skills to return.",
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "description": "Cursor from the previous response for pagination.",
+                      "key": "cursor",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "Search query for matching Skills.",
+                      "key": "query",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter by Skill slug.",
+                      "key": "slug",
+                      "value": "31dds5"
+                    }
+                  ]
+                },
+                "description": "Returns Skills in your workspace."
+              },
+              "response": [
+                {
+                  "id": "21402d4f-ee6c-4c45-9cfd-c6feb3c6ec38",
+                  "name": "Skills returned successfully",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/skills/v1?limit=50&cursor=<uuid>&query=<string>&slug=31dds5",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "skills",
+                        "v1"
+                      ],
+                      "query": [
+                        {
+                          "description": "Number of Skills to return.",
+                          "key": "limit",
+                          "value": "50"
+                        },
+                        {
+                          "description": "Cursor from the previous response for pagination.",
+                          "key": "cursor",
+                          "value": "<uuid>"
+                        },
+                        {
+                          "description": "Search query for matching Skills.",
+                          "key": "query",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by Skill slug.",
+                          "key": "slug",
+                          "value": "31dds5"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"skills\": [\n    {\n      \"id\": \"<uuid>\",\n      \"name\": \"<string>\",\n      \"slug\": \"yv\",\n      \"description\": \"<string>\",\n      \"instructions\": \"<string>\",\n      \"integrationIds\": [\n        \"<uuid>\",\n        \"<uuid>\"\n      ],\n      \"createdAt\": \"<dateTime>\",\n      \"updatedAt\": \"<dateTime>\"\n    },\n    {\n      \"id\": \"<uuid>\",\n      \"name\": \"<string>\",\n      \"slug\": \"p\",\n      \"description\": \"<string>\",\n      \"instructions\": \"<string>\",\n      \"integrationIds\": [\n        \"<uuid>\",\n        \"<uuid>\"\n      ],\n      \"createdAt\": \"<dateTime>\",\n      \"updatedAt\": \"<dateTime>\"\n    }\n  ],\n  \"nextCursor\": \"<uuid>\"\n}",
+                  "createdAt": "2026-07-28T02:02:42.000Z",
+                  "updatedAt": "2026-07-28T02:02:42.000Z",
+                  "uid": "35240-21402d4f-ee6c-4c45-9cfd-c6feb3c6ec38"
+                },
+                {
+                  "id": "373ac7ae-b7a2-4866-b583-6765157117f9",
+                  "name": "Invalid query parameter",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/skills/v1?limit=50&cursor=<uuid>&query=<string>&slug=31dds5",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "skills",
+                        "v1"
+                      ],
+                      "query": [
+                        {
+                          "description": "Number of Skills to return.",
+                          "key": "limit",
+                          "value": "50"
+                        },
+                        {
+                          "description": "Cursor from the previous response for pagination.",
+                          "key": "cursor",
+                          "value": "<uuid>"
+                        },
+                        {
+                          "description": "Search query for matching Skills.",
+                          "key": "query",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by Skill slug.",
+                          "key": "slug",
+                          "value": "31dds5"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T02:02:42.000Z",
+                  "updatedAt": "2026-07-28T02:02:42.000Z",
+                  "uid": "35240-373ac7ae-b7a2-4866-b583-6765157117f9"
+                },
+                {
+                  "id": "eaa0a34e-0ece-4557-b7a3-b9d56ba1a2b2",
+                  "name": "Invalid or missing API key",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/skills/v1?limit=50&cursor=<uuid>&query=<string>&slug=31dds5",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "skills",
+                        "v1"
+                      ],
+                      "query": [
+                        {
+                          "description": "Number of Skills to return.",
+                          "key": "limit",
+                          "value": "50"
+                        },
+                        {
+                          "description": "Cursor from the previous response for pagination.",
+                          "key": "cursor",
+                          "value": "<uuid>"
+                        },
+                        {
+                          "description": "Search query for matching Skills.",
+                          "key": "query",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by Skill slug.",
+                          "key": "slug",
+                          "value": "31dds5"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T02:02:42.000Z",
+                  "updatedAt": "2026-07-28T02:02:42.000Z",
+                  "uid": "35240-eaa0a34e-0ece-4557-b7a3-b9d56ba1a2b2"
+                },
+                {
+                  "id": "4af1a7f7-72e8-402c-9ee1-798284fd968f",
+                  "name": "Missing required scope or access",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/skills/v1?limit=50&cursor=<uuid>&query=<string>&slug=31dds5",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "skills",
+                        "v1"
+                      ],
+                      "query": [
+                        {
+                          "description": "Number of Skills to return.",
+                          "key": "limit",
+                          "value": "50"
+                        },
+                        {
+                          "description": "Cursor from the previous response for pagination.",
+                          "key": "cursor",
+                          "value": "<uuid>"
+                        },
+                        {
+                          "description": "Search query for matching Skills.",
+                          "key": "query",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by Skill slug.",
+                          "key": "slug",
+                          "value": "31dds5"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T02:02:42.000Z",
+                  "updatedAt": "2026-07-28T02:02:42.000Z",
+                  "uid": "35240-4af1a7f7-72e8-402c-9ee1-798284fd968f"
+                },
+                {
+                  "id": "3cb590d4-9336-472a-a751-6caa02cc6ff5",
+                  "name": "Rate limit exceeded",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/skills/v1?limit=50&cursor=<uuid>&query=<string>&slug=31dds5",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "skills",
+                        "v1"
+                      ],
+                      "query": [
+                        {
+                          "description": "Number of Skills to return.",
+                          "key": "limit",
+                          "value": "50"
+                        },
+                        {
+                          "description": "Cursor from the previous response for pagination.",
+                          "key": "cursor",
+                          "value": "<uuid>"
+                        },
+                        {
+                          "description": "Search query for matching Skills.",
+                          "key": "query",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by Skill slug.",
+                          "key": "slug",
+                          "value": "31dds5"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T02:02:42.000Z",
+                  "updatedAt": "2026-07-28T02:02:42.000Z",
+                  "uid": "35240-3cb590d4-9336-472a-a751-6caa02cc6ff5"
+                },
+                {
+                  "id": "08768925-ee41-4559-b6cb-197e7a42071e",
+                  "name": "Internal server error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/skills/v1?limit=50&cursor=<uuid>&query=<string>&slug=31dds5",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "skills",
+                        "v1"
+                      ],
+                      "query": [
+                        {
+                          "description": "Number of Skills to return.",
+                          "key": "limit",
+                          "value": "50"
+                        },
+                        {
+                          "description": "Cursor from the previous response for pagination.",
+                          "key": "cursor",
+                          "value": "<uuid>"
+                        },
+                        {
+                          "description": "Search query for matching Skills.",
+                          "key": "query",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by Skill slug.",
+                          "key": "slug",
+                          "value": "31dds5"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T02:02:42.000Z",
+                  "updatedAt": "2026-07-28T02:02:42.000Z",
+                  "uid": "35240-08768925-ee41-4559-b6cb-197e7a42071e"
+                }
+              ],
+              "createdAt": "2026-07-28T02:02:42.000Z",
+              "updatedAt": "2026-07-28T02:02:42.000Z",
+              "uid": "35240-e98d8970-24d3-4d49-9022-c254a5386862"
+            },
+            {
+              "name": "Create a Skill",
+              "id": "b0c1b58f-384e-4ef6-8873-1dd8a16979e2",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"slug\": \"v1g\",\n  \"description\": \"<string>\",\n  \"integrationIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/skills/v1",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "skills",
+                    "v1"
+                  ]
+                },
+                "description": "Creates a Skill in your workspace."
+              },
+              "response": [
+                {
+                  "id": "dc517c0d-f4aa-4e0e-98a7-728d9f7f8609",
+                  "name": "Skill created successfully",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"slug\": \"v1g\",\n  \"description\": \"<string>\",\n  \"integrationIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/skills/v1",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "skills",
+                        "v1"
+                      ]
+                    }
+                  },
+                  "status": "Created",
+                  "code": 201,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"skill\": {\n    \"id\": \"<uuid>\",\n    \"name\": \"<string>\",\n    \"slug\": \"d9\",\n    \"description\": \"<string>\",\n    \"instructions\": \"<string>\",\n    \"integrationIds\": [\n      \"<uuid>\",\n      \"<uuid>\"\n    ],\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\"\n  }\n}",
+                  "createdAt": "2026-07-28T02:02:42.000Z",
+                  "updatedAt": "2026-07-28T02:02:42.000Z",
+                  "uid": "35240-dc517c0d-f4aa-4e0e-98a7-728d9f7f8609"
+                },
+                {
+                  "id": "ace0186b-be9c-499d-b1af-bab943b48288",
+                  "name": "Invalid request body",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"slug\": \"v1g\",\n  \"description\": \"<string>\",\n  \"integrationIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/skills/v1",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "skills",
+                        "v1"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T02:02:42.000Z",
+                  "updatedAt": "2026-07-28T02:02:42.000Z",
+                  "uid": "35240-ace0186b-be9c-499d-b1af-bab943b48288"
+                },
+                {
+                  "id": "6a251de1-6d06-4975-b97c-397d8a9aa04b",
+                  "name": "Invalid or missing API key",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"slug\": \"v1g\",\n  \"description\": \"<string>\",\n  \"integrationIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/skills/v1",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "skills",
+                        "v1"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T02:02:42.000Z",
+                  "updatedAt": "2026-07-28T02:02:42.000Z",
+                  "uid": "35240-6a251de1-6d06-4975-b97c-397d8a9aa04b"
+                },
+                {
+                  "id": "7616f6b9-c6e5-4c63-ac9b-a623e7e9f116",
+                  "name": "Missing required scope or create permission",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"slug\": \"v1g\",\n  \"description\": \"<string>\",\n  \"integrationIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/skills/v1",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "skills",
+                        "v1"
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T02:02:42.000Z",
+                  "updatedAt": "2026-07-28T02:02:42.000Z",
+                  "uid": "35240-7616f6b9-c6e5-4c63-ac9b-a623e7e9f116"
+                },
+                {
+                  "id": "d4449f7f-f3fe-4e26-a5c0-c7cb5e2dfccd",
+                  "name": "Skill slug conflict",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"slug\": \"v1g\",\n  \"description\": \"<string>\",\n  \"integrationIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/skills/v1",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "skills",
+                        "v1"
+                      ]
+                    }
+                  },
+                  "status": "Conflict",
+                  "code": 409,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T02:02:42.000Z",
+                  "updatedAt": "2026-07-28T02:02:42.000Z",
+                  "uid": "35240-d4449f7f-f3fe-4e26-a5c0-c7cb5e2dfccd"
+                },
+                {
+                  "id": "b175c0a9-2e6c-418a-be7a-fc96107209fb",
+                  "name": "Rate limit exceeded",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"slug\": \"v1g\",\n  \"description\": \"<string>\",\n  \"integrationIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/skills/v1",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "skills",
+                        "v1"
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T02:02:42.000Z",
+                  "updatedAt": "2026-07-28T02:02:42.000Z",
+                  "uid": "35240-b175c0a9-2e6c-418a-be7a-fc96107209fb"
+                },
+                {
+                  "id": "508ab075-cc52-4169-9fe6-2d7baa941670",
+                  "name": "Internal server error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"slug\": \"v1g\",\n  \"description\": \"<string>\",\n  \"integrationIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/skills/v1",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "skills",
+                        "v1"
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T02:02:42.000Z",
+                  "updatedAt": "2026-07-28T02:02:42.000Z",
+                  "uid": "35240-508ab075-cc52-4169-9fe6-2d7baa941670"
+                }
+              ],
+              "createdAt": "2026-07-28T02:02:42.000Z",
+              "updatedAt": "2026-07-28T02:02:42.000Z",
+              "uid": "35240-b0c1b58f-384e-4ef6-8873-1dd8a16979e2"
+            }
+          ],
+          "id": "90b60c65-0ef6-4d79-bc06-76f12de145f8",
+          "createdAt": "2026-07-28T02:02:42.000Z",
+          "updatedAt": "2026-07-28T02:02:42.000Z",
+          "uid": "35240-90b60c65-0ef6-4d79-bc06-76f12de145f8"
+        }
+      ],
+      "id": "3ee8696a-8f6f-4ea4-8970-f790128944cb",
+      "createdAt": "2026-07-28T02:02:42.000Z",
+      "updatedAt": "2026-07-28T02:02:42.000Z",
+      "uid": "35240-3ee8696a-8f6f-4ea4-8970-f790128944cb"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.langdock.com"
+    }
+  ]
+}

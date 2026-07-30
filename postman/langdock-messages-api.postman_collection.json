@@ -1,0 +1,259 @@
+{
+  "info": {
+    "_postman_id": "47eaeddf-d65a-4f5c-8d59-c24fa58bcdff",
+    "name": "Langdock Agent Messages API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:02:40.000Z",
+    "updatedAt": "2026-07-28T02:02:41.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-47eaeddf-d65a-4f5c-8d59-c24fa58bcdff"
+  },
+  "item": [
+    {
+      "name": "anthropic",
+      "item": [
+        {
+          "name": "{region}",
+          "item": [
+            {
+              "name": "v1",
+              "item": [
+                {
+                  "name": "messages",
+                  "item": [
+                    {
+                      "name": "Create a Message",
+                      "id": "cfde50b6-aacd-44bb-9218-2e418e45428e",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "auth": {
+                          "type": "bearer",
+                          "bearer": [
+                            {
+                              "key": "token",
+                              "value": "{{bearerToken}}",
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"model\": \"<string>\",\n  \"messages\": [\n    {\n      \"role\": \"agent\",\n      \"content\": \"<string>\"\n    },\n    {\n      \"role\": \"agent\",\n      \"content\": \"<string>\"\n    }\n  ],\n  \"max_tokens\": \"<integer>\",\n  \"stop_sequences\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"stream\": \"<boolean>\",\n  \"system\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"tool_choice\": {\n    \"type\": \"auto\"\n  },\n  \"tools\": [\n    {\n      \"name\": \"GHzhYQ3BLogokMNLJfUhkFgT7\",\n      \"input_schema\": {\n        \"type\": \"object\",\n        \"properties\": {}\n      },\n      \"description\": \"<string>\"\n    },\n    {\n      \"name\": \"569NHkx3Oaoq4VAVDXs9n_iSEBjw0Bp4wPLS3D5VY48\",\n      \"input_schema\": {\n        \"type\": \"object\",\n        \"properties\": {}\n      },\n      \"description\": \"<string>\"\n    }\n  ],\n  \"top_k\": \"<integer>\",\n  \"top_p\": \"<number>\",\n  \"thinking\": {\n    \"type\": \"enabled\",\n    \"budget_tokens\": \"<integer>\"\n  }\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/anthropic/:region/v1/messages",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "anthropic",
+                            ":region",
+                            "v1",
+                            "messages"
+                          ],
+                          "variable": [
+                            {
+                              "id": "29048139-55b4-4ccf-a7fe-56919f683190",
+                              "key": "region",
+                              "value": "eu",
+                              "description": "(Required) The region of the API to use."
+                            }
+                          ]
+                        },
+                        "description": "Create a Message.\n\nSend a structured list of input messages with text and/or image content, and the model will generate the next message in the conversation.\n\nThe Messages API can be used for either single queries or stateless multi-turn conversations."
+                      },
+                      "response": [
+                        {
+                          "id": "b8fddac8-e2bf-4f9b-86a9-5374ac8ea368",
+                          "name": "Message object.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"model\": \"<string>\",\n  \"messages\": [\n    {\n      \"role\": \"agent\",\n      \"content\": \"<string>\"\n    },\n    {\n      \"role\": \"agent\",\n      \"content\": \"<string>\"\n    }\n  ],\n  \"max_tokens\": \"<integer>\",\n  \"stop_sequences\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"stream\": \"<boolean>\",\n  \"system\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"tool_choice\": {\n    \"type\": \"auto\"\n  },\n  \"tools\": [\n    {\n      \"name\": \"GHzhYQ3BLogokMNLJfUhkFgT7\",\n      \"input_schema\": {\n        \"type\": \"object\",\n        \"properties\": {}\n      },\n      \"description\": \"<string>\"\n    },\n    {\n      \"name\": \"569NHkx3Oaoq4VAVDXs9n_iSEBjw0Bp4wPLS3D5VY48\",\n      \"input_schema\": {\n        \"type\": \"object\",\n        \"properties\": {}\n      },\n      \"description\": \"<string>\"\n    }\n  ],\n  \"top_k\": \"<integer>\",\n  \"top_p\": \"<number>\",\n  \"thinking\": {\n    \"type\": \"enabled\",\n    \"budget_tokens\": \"<integer>\"\n  }\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/anthropic/:region/v1/messages",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "anthropic",
+                                ":region",
+                                "v1",
+                                "messages"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "region"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"id\": \"<string>\",\n  \"type\": \"message\",\n  \"role\": \"assistant\",\n  \"content\": [\n    {\n      \"type\": \"text\",\n      \"text\": \"<string>\"\n    },\n    {\n      \"type\": \"text\",\n      \"text\": \"<string>\"\n    }\n  ],\n  \"model\": \"<string>\",\n  \"stop_reason\": \"stop_sequence\",\n  \"stop_sequence\": \"<string>\",\n  \"usage\": {\n    \"input_tokens\": \"<integer>\",\n    \"output_tokens\": \"<integer>\"\n  }\n}",
+                          "createdAt": "2026-07-28T02:02:41.000Z",
+                          "updatedAt": "2026-07-28T02:02:41.000Z",
+                          "uid": "35240-b8fddac8-e2bf-4f9b-86a9-5374ac8ea368"
+                        },
+                        {
+                          "id": "d71d2717-d19f-4ee2-9498-b98e842fdefe",
+                          "name": "Error response.\n\nSee Anthropic's [errors documentation](https://platform.claude.com/docs/en/api/errors) for more details.",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"model\": \"<string>\",\n  \"messages\": [\n    {\n      \"role\": \"agent\",\n      \"content\": \"<string>\"\n    },\n    {\n      \"role\": \"agent\",\n      \"content\": \"<string>\"\n    }\n  ],\n  \"max_tokens\": \"<integer>\",\n  \"stop_sequences\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"stream\": \"<boolean>\",\n  \"system\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"tool_choice\": {\n    \"type\": \"auto\"\n  },\n  \"tools\": [\n    {\n      \"name\": \"GHzhYQ3BLogokMNLJfUhkFgT7\",\n      \"input_schema\": {\n        \"type\": \"object\",\n        \"properties\": {}\n      },\n      \"description\": \"<string>\"\n    },\n    {\n      \"name\": \"569NHkx3Oaoq4VAVDXs9n_iSEBjw0Bp4wPLS3D5VY48\",\n      \"input_schema\": {\n        \"type\": \"object\",\n        \"properties\": {}\n      },\n      \"description\": \"<string>\"\n    }\n  ],\n  \"top_k\": \"<integer>\",\n  \"top_p\": \"<number>\",\n  \"thinking\": {\n    \"type\": \"enabled\",\n    \"budget_tokens\": \"<integer>\"\n  }\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/anthropic/:region/v1/messages",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "anthropic",
+                                ":region",
+                                "v1",
+                                "messages"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "region"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"invalid_request_error\",\n    \"message\": \"Invalid request\"\n  }\n}",
+                          "createdAt": "2026-07-28T02:02:41.000Z",
+                          "updatedAt": "2026-07-28T02:02:41.000Z",
+                          "uid": "35240-d71d2717-d19f-4ee2-9498-b98e842fdefe"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T02:02:41.000Z",
+                      "updatedAt": "2026-07-28T02:02:41.000Z",
+                      "uid": "35240-cfde50b6-aacd-44bb-9218-2e418e45428e"
+                    }
+                  ],
+                  "id": "f0a0b04f-ec73-4777-9495-26a12d5f1275",
+                  "createdAt": "2026-07-28T02:02:41.000Z",
+                  "updatedAt": "2026-07-28T02:02:41.000Z",
+                  "uid": "35240-f0a0b04f-ec73-4777-9495-26a12d5f1275"
+                }
+              ],
+              "id": "9428265e-f61c-4c49-9d71-5ddc34b0ce2e",
+              "createdAt": "2026-07-28T02:02:41.000Z",
+              "updatedAt": "2026-07-28T02:02:41.000Z",
+              "uid": "35240-9428265e-f61c-4c49-9d71-5ddc34b0ce2e"
+            }
+          ],
+          "id": "8d5f3999-a131-433a-a01e-a67581f36672",
+          "createdAt": "2026-07-28T02:02:41.000Z",
+          "updatedAt": "2026-07-28T02:02:41.000Z",
+          "uid": "35240-8d5f3999-a131-433a-a01e-a67581f36672"
+        }
+      ],
+      "id": "1c2bd7fc-147b-4e3c-a319-0b3f7d2416c7",
+      "createdAt": "2026-07-28T02:02:41.000Z",
+      "updatedAt": "2026-07-28T02:02:41.000Z",
+      "uid": "35240-1c2bd7fc-147b-4e3c-a319-0b3f7d2416c7"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.langdock.com"
+    }
+  ]
+}

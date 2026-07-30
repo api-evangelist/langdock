@@ -1,0 +1,623 @@
+{
+  "info": {
+    "_postman_id": "2e13113a-86b3-44f6-9ada-b5ff72e50a08",
+    "name": "Langdock Agent User Management API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:02:45.000Z",
+    "updatedAt": "2026-07-28T02:02:45.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-2e13113a-86b3-44f6-9ada-b5ff72e50a08"
+  },
+  "item": [
+    {
+      "name": "user-management",
+      "item": [
+        {
+          "name": "v1",
+          "item": [
+            {
+              "name": "invite",
+              "item": [
+                {
+                  "name": "Invite users to workspace",
+                  "id": "342a3cc3-c230-4d33-8312-1aa6f989542b",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"users\": [\n    {\n      \"email\": \"<email>\",\n      \"role\": \"admin\"\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/user-management/v1/invite",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "user-management",
+                        "v1",
+                        "invite"
+                      ]
+                    },
+                    "description": "Sends workspace invitations to one or more users by email. Each user can optionally\nbe assigned a specific role. If no role is specified, the default role `member` is used.\n\nUsers who are already members of the workspace are silently skipped. Users with pending\njoin requests are automatically approved. Invalid email addresses are reported in the\nresponse but do not cause the entire request to fail.\n\nAn invitation email is sent to each successfully invited user. If the workspace does not\nhave SAML enabled, the email includes a magic link for passwordless sign-in.\n"
+                  },
+                  "response": [
+                    {
+                      "id": "984749dd-27e5-4956-879f-7cf9edac1f17",
+                      "name": "Invitations processed successfully",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"users\": [\n    {\n      \"email\": \"<email>\",\n      \"role\": \"admin\"\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/user-management/v1/invite",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "user-management",
+                            "v1",
+                            "invite"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"status\": \"success\",\n  \"message\": \"<string>\",\n  \"successfulInvites\": [\n    \"<email>\",\n    \"<email>\"\n  ],\n  \"invalidEmails\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                      "createdAt": "2026-07-28T02:02:46.000Z",
+                      "updatedAt": "2026-07-28T02:02:46.000Z",
+                      "uid": "35240-984749dd-27e5-4956-879f-7cf9edac1f17"
+                    },
+                    {
+                      "id": "ecb11bd9-3b98-445d-9ace-314f400d3d91",
+                      "name": "Invalid request body",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"users\": [\n    {\n      \"email\": \"<email>\",\n      \"role\": \"admin\"\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/user-management/v1/invite",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "user-management",
+                            "v1",
+                            "invite"
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"error\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:02:46.000Z",
+                      "updatedAt": "2026-07-28T02:02:46.000Z",
+                      "uid": "35240-ecb11bd9-3b98-445d-9ace-314f400d3d91"
+                    },
+                    {
+                      "id": "9b71d6d6-3460-446f-b16c-a56d2feb8e76",
+                      "name": "Unauthorized - API key is missing, invalid, or the key creator was not found",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"users\": [\n    {\n      \"email\": \"<email>\",\n      \"role\": \"admin\"\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/user-management/v1/invite",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "user-management",
+                            "v1",
+                            "invite"
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"error\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:02:46.000Z",
+                      "updatedAt": "2026-07-28T02:02:46.000Z",
+                      "uid": "35240-9b71d6d6-3460-446f-b16c-a56d2feb8e76"
+                    },
+                    {
+                      "id": "54566e2b-2cb7-473d-bd72-c2f783aead91",
+                      "name": "Internal server error",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"users\": [\n    {\n      \"email\": \"<email>\",\n      \"role\": \"admin\"\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/user-management/v1/invite",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "user-management",
+                            "v1",
+                            "invite"
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\",\n  \"error\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:02:46.000Z",
+                      "updatedAt": "2026-07-28T02:02:46.000Z",
+                      "uid": "35240-54566e2b-2cb7-473d-bd72-c2f783aead91"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:02:46.000Z",
+                  "updatedAt": "2026-07-28T02:02:46.000Z",
+                  "uid": "35240-342a3cc3-c230-4d33-8312-1aa6f989542b"
+                }
+              ],
+              "id": "5a954123-3158-4649-8bc9-5d85b88d0036",
+              "createdAt": "2026-07-28T02:02:46.000Z",
+              "updatedAt": "2026-07-28T02:02:46.000Z",
+              "uid": "35240-5a954123-3158-4649-8bc9-5d85b88d0036"
+            },
+            {
+              "name": "deactivate-user",
+              "item": [
+                {
+                  "name": "Deactivate a workspace user",
+                  "id": "bb3c61cf-ab9a-4fa2-8ff8-95992472444d",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"email\": \"<email>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/user-management/v1/deactivate-user",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "user-management",
+                        "v1",
+                        "deactivate-user"
+                      ]
+                    },
+                    "description": "Removes a user from the workspace by email. The user immediately loses access,\nbut all their data (conversations, assistants, files, integrations) is preserved\nand restored if they are re-added later.\n"
+                  },
+                  "response": [
+                    {
+                      "id": "d8950871-5bb4-41c0-bceb-d971c8448bff",
+                      "name": "User deactivated successfully",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"email\": \"<email>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/user-management/v1/deactivate-user",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "user-management",
+                            "v1",
+                            "deactivate-user"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"status\": \"success\",\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:02:46.000Z",
+                      "updatedAt": "2026-07-28T02:02:46.000Z",
+                      "uid": "35240-d8950871-5bb4-41c0-bceb-d971c8448bff"
+                    },
+                    {
+                      "id": "84cccdb1-edfe-4441-a01a-2ebf07ddf32f",
+                      "name": "Unauthorized - API key is missing, invalid, or the key creator was not found",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"email\": \"<email>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/user-management/v1/deactivate-user",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "user-management",
+                            "v1",
+                            "deactivate-user"
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:02:46.000Z",
+                      "updatedAt": "2026-07-28T02:02:46.000Z",
+                      "uid": "35240-84cccdb1-edfe-4441-a01a-2ebf07ddf32f"
+                    },
+                    {
+                      "id": "0c42289a-a04c-429c-a830-a2db12fd170a",
+                      "name": "User not found or not an active member",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"email\": \"<email>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/user-management/v1/deactivate-user",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "user-management",
+                            "v1",
+                            "deactivate-user"
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:02:46.000Z",
+                      "updatedAt": "2026-07-28T02:02:46.000Z",
+                      "uid": "35240-0c42289a-a04c-429c-a830-a2db12fd170a"
+                    },
+                    {
+                      "id": "37671622-7c84-41c5-adf7-984715010279",
+                      "name": "Internal server error",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"email\": \"<email>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/user-management/v1/deactivate-user",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "user-management",
+                            "v1",
+                            "deactivate-user"
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:02:46.000Z",
+                      "updatedAt": "2026-07-28T02:02:46.000Z",
+                      "uid": "35240-37671622-7c84-41c5-adf7-984715010279"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:02:46.000Z",
+                  "updatedAt": "2026-07-28T02:02:46.000Z",
+                  "uid": "35240-bb3c61cf-ab9a-4fa2-8ff8-95992472444d"
+                }
+              ],
+              "id": "0991d951-1a26-4353-a56b-ef098e099bc5",
+              "createdAt": "2026-07-28T02:02:46.000Z",
+              "updatedAt": "2026-07-28T02:02:46.000Z",
+              "uid": "35240-0991d951-1a26-4353-a56b-ef098e099bc5"
+            }
+          ],
+          "id": "7a63da50-f121-472b-acc2-1d5ae6c0d347",
+          "createdAt": "2026-07-28T02:02:46.000Z",
+          "updatedAt": "2026-07-28T02:02:46.000Z",
+          "uid": "35240-7a63da50-f121-472b-acc2-1d5ae6c0d347"
+        }
+      ],
+      "id": "e486368d-8886-4ca4-a0e2-c9767ac2063e",
+      "createdAt": "2026-07-28T02:02:46.000Z",
+      "updatedAt": "2026-07-28T02:02:46.000Z",
+      "uid": "35240-e486368d-8886-4ca4-a0e2-c9767ac2063e"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.langdock.com"
+    }
+  ]
+}

@@ -1,0 +1,1210 @@
+{
+  "info": {
+    "_postman_id": "fc7ae7f7-1c55-4a24-a8fc-c2c5853737f2",
+    "name": "Langdock Agent Assistant Build API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:02:31.000Z",
+    "updatedAt": "2026-07-28T02:02:31.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-fc7ae7f7-1c55-4a24-a8fc-c2c5853737f2"
+  },
+  "item": [
+    {
+      "name": "assistant",
+      "item": [
+        {
+          "name": "v1",
+          "item": [
+            {
+              "name": "create",
+              "item": [
+                {
+                  "name": "[Deprecated] Creates a new assistant",
+                  "id": "f8b3d023-10f5-4d55-9b95-1342d8870d86",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"emoji\": \"<string>\",\n  \"instruction\": \"<string>\",\n  \"inputType\": \"PROMPT\",\n  \"model\": \"<string>\",\n  \"creativity\": 0.3,\n  \"conversationStarters\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"actions\": [\n    {\n      \"actionId\": \"<uuid>\",\n      \"requiresConfirmation\": false\n    },\n    {\n      \"actionId\": \"<uuid>\",\n      \"requiresConfirmation\": false\n    }\n  ],\n  \"inputFields\": [\n    {\n      \"slug\": \"<string>\",\n      \"type\": \"CHECKBOX\",\n      \"label\": \"<string>\",\n      \"order\": \"<integer>\",\n      \"description\": \"<string>\",\n      \"required\": false,\n      \"options\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fileTypes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"slug\": \"<string>\",\n      \"type\": \"DATE\",\n      \"label\": \"<string>\",\n      \"order\": \"<integer>\",\n      \"description\": \"<string>\",\n      \"required\": false,\n      \"options\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fileTypes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"attachments\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"webSearch\": false,\n  \"imageGeneration\": false,\n  \"dataAnalyst\": false,\n  \"canvas\": false\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/assistant/v1/create",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "assistant",
+                        "v1",
+                        "create"
+                      ]
+                    },
+                    "description": "This endpoint is deprecated. Please use /agent/v1/create for new integrations. Creates a new assistant in your workspace programmatically."
+                  },
+                  "response": [
+                    {
+                      "id": "00e9bedc-cc19-4004-8264-9b4bef2833fb",
+                      "name": "Agent created successfully",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"emoji\": \"<string>\",\n  \"instruction\": \"<string>\",\n  \"inputType\": \"PROMPT\",\n  \"model\": \"<string>\",\n  \"creativity\": 0.3,\n  \"conversationStarters\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"actions\": [\n    {\n      \"actionId\": \"<uuid>\",\n      \"requiresConfirmation\": false\n    },\n    {\n      \"actionId\": \"<uuid>\",\n      \"requiresConfirmation\": false\n    }\n  ],\n  \"inputFields\": [\n    {\n      \"slug\": \"<string>\",\n      \"type\": \"CHECKBOX\",\n      \"label\": \"<string>\",\n      \"order\": \"<integer>\",\n      \"description\": \"<string>\",\n      \"required\": false,\n      \"options\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fileTypes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"slug\": \"<string>\",\n      \"type\": \"DATE\",\n      \"label\": \"<string>\",\n      \"order\": \"<integer>\",\n      \"description\": \"<string>\",\n      \"required\": false,\n      \"options\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fileTypes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"attachments\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"webSearch\": false,\n  \"imageGeneration\": false,\n  \"dataAnalyst\": false,\n  \"canvas\": false\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/assistant/v1/create",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "assistant",
+                            "v1",
+                            "create"
+                          ]
+                        }
+                      },
+                      "status": "Created",
+                      "code": 201,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"status\": \"success\",\n  \"message\": \"<string>\",\n  \"assistant\": {\n    \"id\": \"<uuid>\",\n    \"name\": \"<string>\",\n    \"emojiIcon\": \"<string>\",\n    \"model\": \"<string>\",\n    \"temperature\": \"<number>\",\n    \"inputType\": \"PROMPT\",\n    \"webSearchEnabled\": \"<boolean>\",\n    \"imageGenerationEnabled\": \"<boolean>\",\n    \"canvasEnabled\": \"<boolean>\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\",\n    \"description\": \"<string>\",\n    \"instruction\": \"<string>\",\n    \"conversationStarters\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"extendedThinking\": \"<boolean>\",\n    \"actions\": [\n      {\n        \"actionId\": \"<uuid>\",\n        \"requiresConfirmation\": \"<boolean>\"\n      },\n      {\n        \"actionId\": \"<uuid>\",\n        \"requiresConfirmation\": \"<boolean>\"\n      }\n    ],\n    \"inputFields\": [\n      {\n        \"slug\": \"<string>\",\n        \"type\": \"TEXT\",\n        \"label\": \"<string>\",\n        \"required\": \"<boolean>\",\n        \"order\": \"<integer>\",\n        \"description\": \"<string>\",\n        \"options\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"fileTypes\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      {\n        \"slug\": \"<string>\",\n        \"type\": \"DATE\",\n        \"label\": \"<string>\",\n        \"required\": \"<boolean>\",\n        \"order\": \"<integer>\",\n        \"description\": \"<string>\",\n        \"options\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"fileTypes\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    ],\n    \"attachments\": [\n      \"<uuid>\",\n      \"<uuid>\"\n    ]\n  }\n}",
+                      "createdAt": "2026-07-28T02:02:31.000Z",
+                      "updatedAt": "2026-07-28T02:02:31.000Z",
+                      "uid": "35240-00e9bedc-cc19-4004-8264-9b4bef2833fb"
+                    },
+                    {
+                      "id": "2f1837d4-470e-4308-afe9-c00ca2921945",
+                      "name": "Invalid request parameters",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"emoji\": \"<string>\",\n  \"instruction\": \"<string>\",\n  \"inputType\": \"PROMPT\",\n  \"model\": \"<string>\",\n  \"creativity\": 0.3,\n  \"conversationStarters\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"actions\": [\n    {\n      \"actionId\": \"<uuid>\",\n      \"requiresConfirmation\": false\n    },\n    {\n      \"actionId\": \"<uuid>\",\n      \"requiresConfirmation\": false\n    }\n  ],\n  \"inputFields\": [\n    {\n      \"slug\": \"<string>\",\n      \"type\": \"CHECKBOX\",\n      \"label\": \"<string>\",\n      \"order\": \"<integer>\",\n      \"description\": \"<string>\",\n      \"required\": false,\n      \"options\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fileTypes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"slug\": \"<string>\",\n      \"type\": \"DATE\",\n      \"label\": \"<string>\",\n      \"order\": \"<integer>\",\n      \"description\": \"<string>\",\n      \"required\": false,\n      \"options\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fileTypes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"attachments\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"webSearch\": false,\n  \"imageGeneration\": false,\n  \"dataAnalyst\": false,\n  \"canvas\": false\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/assistant/v1/create",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "assistant",
+                            "v1",
+                            "create"
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:02:31.000Z",
+                      "updatedAt": "2026-07-28T02:02:31.000Z",
+                      "uid": "35240-2f1837d4-470e-4308-afe9-c00ca2921945"
+                    },
+                    {
+                      "id": "ee4e6082-1a63-4b51-a4e8-f0c93f34a892",
+                      "name": "Invalid or missing API key",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"emoji\": \"<string>\",\n  \"instruction\": \"<string>\",\n  \"inputType\": \"PROMPT\",\n  \"model\": \"<string>\",\n  \"creativity\": 0.3,\n  \"conversationStarters\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"actions\": [\n    {\n      \"actionId\": \"<uuid>\",\n      \"requiresConfirmation\": false\n    },\n    {\n      \"actionId\": \"<uuid>\",\n      \"requiresConfirmation\": false\n    }\n  ],\n  \"inputFields\": [\n    {\n      \"slug\": \"<string>\",\n      \"type\": \"CHECKBOX\",\n      \"label\": \"<string>\",\n      \"order\": \"<integer>\",\n      \"description\": \"<string>\",\n      \"required\": false,\n      \"options\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fileTypes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"slug\": \"<string>\",\n      \"type\": \"DATE\",\n      \"label\": \"<string>\",\n      \"order\": \"<integer>\",\n      \"description\": \"<string>\",\n      \"required\": false,\n      \"options\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fileTypes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"attachments\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"webSearch\": false,\n  \"imageGeneration\": false,\n  \"dataAnalyst\": false,\n  \"canvas\": false\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/assistant/v1/create",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "assistant",
+                            "v1",
+                            "create"
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:02:31.000Z",
+                      "updatedAt": "2026-07-28T02:02:31.000Z",
+                      "uid": "35240-ee4e6082-1a63-4b51-a4e8-f0c93f34a892"
+                    },
+                    {
+                      "id": "427f37ad-d7fb-4773-bb2c-0a7502acbf72",
+                      "name": "Insufficient permissions - requires AGENT_API scope",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"emoji\": \"<string>\",\n  \"instruction\": \"<string>\",\n  \"inputType\": \"PROMPT\",\n  \"model\": \"<string>\",\n  \"creativity\": 0.3,\n  \"conversationStarters\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"actions\": [\n    {\n      \"actionId\": \"<uuid>\",\n      \"requiresConfirmation\": false\n    },\n    {\n      \"actionId\": \"<uuid>\",\n      \"requiresConfirmation\": false\n    }\n  ],\n  \"inputFields\": [\n    {\n      \"slug\": \"<string>\",\n      \"type\": \"CHECKBOX\",\n      \"label\": \"<string>\",\n      \"order\": \"<integer>\",\n      \"description\": \"<string>\",\n      \"required\": false,\n      \"options\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fileTypes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"slug\": \"<string>\",\n      \"type\": \"DATE\",\n      \"label\": \"<string>\",\n      \"order\": \"<integer>\",\n      \"description\": \"<string>\",\n      \"required\": false,\n      \"options\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fileTypes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"attachments\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"webSearch\": false,\n  \"imageGeneration\": false,\n  \"dataAnalyst\": false,\n  \"canvas\": false\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/assistant/v1/create",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "assistant",
+                            "v1",
+                            "create"
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:02:31.000Z",
+                      "updatedAt": "2026-07-28T02:02:31.000Z",
+                      "uid": "35240-427f37ad-d7fb-4773-bb2c-0a7502acbf72"
+                    },
+                    {
+                      "id": "20a912a8-c549-405e-be7f-9ddf1177ebbf",
+                      "name": "Resource not found (model, action, or attachment)",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"emoji\": \"<string>\",\n  \"instruction\": \"<string>\",\n  \"inputType\": \"PROMPT\",\n  \"model\": \"<string>\",\n  \"creativity\": 0.3,\n  \"conversationStarters\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"actions\": [\n    {\n      \"actionId\": \"<uuid>\",\n      \"requiresConfirmation\": false\n    },\n    {\n      \"actionId\": \"<uuid>\",\n      \"requiresConfirmation\": false\n    }\n  ],\n  \"inputFields\": [\n    {\n      \"slug\": \"<string>\",\n      \"type\": \"CHECKBOX\",\n      \"label\": \"<string>\",\n      \"order\": \"<integer>\",\n      \"description\": \"<string>\",\n      \"required\": false,\n      \"options\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fileTypes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"slug\": \"<string>\",\n      \"type\": \"DATE\",\n      \"label\": \"<string>\",\n      \"order\": \"<integer>\",\n      \"description\": \"<string>\",\n      \"required\": false,\n      \"options\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fileTypes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"attachments\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"webSearch\": false,\n  \"imageGeneration\": false,\n  \"dataAnalyst\": false,\n  \"canvas\": false\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/assistant/v1/create",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "assistant",
+                            "v1",
+                            "create"
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:02:31.000Z",
+                      "updatedAt": "2026-07-28T02:02:31.000Z",
+                      "uid": "35240-20a912a8-c549-405e-be7f-9ddf1177ebbf"
+                    },
+                    {
+                      "id": "cd8d10c9-08ec-4f06-8dce-cb0a78c3ac20",
+                      "name": "Internal server error",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"emoji\": \"<string>\",\n  \"instruction\": \"<string>\",\n  \"inputType\": \"PROMPT\",\n  \"model\": \"<string>\",\n  \"creativity\": 0.3,\n  \"conversationStarters\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"actions\": [\n    {\n      \"actionId\": \"<uuid>\",\n      \"requiresConfirmation\": false\n    },\n    {\n      \"actionId\": \"<uuid>\",\n      \"requiresConfirmation\": false\n    }\n  ],\n  \"inputFields\": [\n    {\n      \"slug\": \"<string>\",\n      \"type\": \"CHECKBOX\",\n      \"label\": \"<string>\",\n      \"order\": \"<integer>\",\n      \"description\": \"<string>\",\n      \"required\": false,\n      \"options\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fileTypes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"slug\": \"<string>\",\n      \"type\": \"DATE\",\n      \"label\": \"<string>\",\n      \"order\": \"<integer>\",\n      \"description\": \"<string>\",\n      \"required\": false,\n      \"options\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fileTypes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"attachments\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"webSearch\": false,\n  \"imageGeneration\": false,\n  \"dataAnalyst\": false,\n  \"canvas\": false\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/assistant/v1/create",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "assistant",
+                            "v1",
+                            "create"
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:02:31.000Z",
+                      "updatedAt": "2026-07-28T02:02:31.000Z",
+                      "uid": "35240-cd8d10c9-08ec-4f06-8dce-cb0a78c3ac20"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:02:31.000Z",
+                  "updatedAt": "2026-07-28T02:02:31.000Z",
+                  "uid": "35240-f8b3d023-10f5-4d55-9b95-1342d8870d86"
+                }
+              ],
+              "id": "3a0211c3-7a4d-4efb-b57b-6527f7789fd4",
+              "createdAt": "2026-07-28T02:02:31.000Z",
+              "updatedAt": "2026-07-28T02:02:31.000Z",
+              "uid": "35240-3a0211c3-7a4d-4efb-b57b-6527f7789fd4"
+            },
+            {
+              "name": "update",
+              "item": [
+                {
+                  "name": "[Deprecated] Updates an existing assistant",
+                  "id": "95f0b0c7-a120-4dcb-987c-de749f0a983a",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"assistantId\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"emoji\": \"<string>\",\n  \"instruction\": \"<string>\",\n  \"inputType\": \"PROMPT\",\n  \"model\": \"<string>\",\n  \"creativity\": \"<number>\",\n  \"conversationStarters\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"actions\": [\n    {\n      \"actionId\": \"<uuid>\",\n      \"requiresConfirmation\": false\n    },\n    {\n      \"actionId\": \"<uuid>\",\n      \"requiresConfirmation\": false\n    }\n  ],\n  \"inputFields\": [\n    {\n      \"slug\": \"<string>\",\n      \"type\": \"NUMBER\",\n      \"label\": \"<string>\",\n      \"order\": \"<integer>\",\n      \"description\": \"<string>\",\n      \"required\": false,\n      \"options\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fileTypes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"slug\": \"<string>\",\n      \"type\": \"NUMBER\",\n      \"label\": \"<string>\",\n      \"order\": \"<integer>\",\n      \"description\": \"<string>\",\n      \"required\": false,\n      \"options\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fileTypes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"attachments\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"webSearch\": \"<boolean>\",\n  \"imageGeneration\": \"<boolean>\",\n  \"dataAnalyst\": \"<boolean>\",\n  \"canvas\": \"<boolean>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/assistant/v1/update",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "assistant",
+                        "v1",
+                        "update"
+                      ]
+                    },
+                    "description": "This endpoint is deprecated. Please use /agent/v1/update for new integrations. Updates an existing assistant in your workspace. Only provided fields will be updated."
+                  },
+                  "response": [
+                    {
+                      "id": "fa26b2d8-d8df-405a-915e-24dde06a8fca",
+                      "name": "Agent updated successfully",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"assistantId\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"emoji\": \"<string>\",\n  \"instruction\": \"<string>\",\n  \"inputType\": \"PROMPT\",\n  \"model\": \"<string>\",\n  \"creativity\": \"<number>\",\n  \"conversationStarters\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"actions\": [\n    {\n      \"actionId\": \"<uuid>\",\n      \"requiresConfirmation\": false\n    },\n    {\n      \"actionId\": \"<uuid>\",\n      \"requiresConfirmation\": false\n    }\n  ],\n  \"inputFields\": [\n    {\n      \"slug\": \"<string>\",\n      \"type\": \"NUMBER\",\n      \"label\": \"<string>\",\n      \"order\": \"<integer>\",\n      \"description\": \"<string>\",\n      \"required\": false,\n      \"options\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fileTypes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"slug\": \"<string>\",\n      \"type\": \"NUMBER\",\n      \"label\": \"<string>\",\n      \"order\": \"<integer>\",\n      \"description\": \"<string>\",\n      \"required\": false,\n      \"options\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fileTypes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"attachments\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"webSearch\": \"<boolean>\",\n  \"imageGeneration\": \"<boolean>\",\n  \"dataAnalyst\": \"<boolean>\",\n  \"canvas\": \"<boolean>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/assistant/v1/update",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "assistant",
+                            "v1",
+                            "update"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"status\": \"success\",\n  \"message\": \"<string>\",\n  \"assistant\": {\n    \"id\": \"<uuid>\",\n    \"name\": \"<string>\",\n    \"emojiIcon\": \"<string>\",\n    \"model\": \"<string>\",\n    \"temperature\": \"<number>\",\n    \"inputType\": \"STRUCTURED\",\n    \"webSearchEnabled\": \"<boolean>\",\n    \"imageGenerationEnabled\": \"<boolean>\",\n    \"canvasEnabled\": \"<boolean>\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\",\n    \"description\": \"<string>\",\n    \"instruction\": \"<string>\",\n    \"conversationStarters\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"extendedThinking\": \"<boolean>\",\n    \"actions\": [\n      {\n        \"actionId\": \"<uuid>\",\n        \"requiresConfirmation\": \"<boolean>\"\n      },\n      {\n        \"actionId\": \"<uuid>\",\n        \"requiresConfirmation\": \"<boolean>\"\n      }\n    ],\n    \"inputFields\": [\n      {\n        \"slug\": \"<string>\",\n        \"type\": \"TEXT\",\n        \"label\": \"<string>\",\n        \"required\": \"<boolean>\",\n        \"order\": \"<integer>\",\n        \"description\": \"<string>\",\n        \"options\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"fileTypes\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      {\n        \"slug\": \"<string>\",\n        \"type\": \"NUMBER\",\n        \"label\": \"<string>\",\n        \"required\": \"<boolean>\",\n        \"order\": \"<integer>\",\n        \"description\": \"<string>\",\n        \"options\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"fileTypes\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    ],\n    \"attachments\": [\n      \"<uuid>\",\n      \"<uuid>\"\n    ]\n  }\n}",
+                      "createdAt": "2026-07-28T02:02:31.000Z",
+                      "updatedAt": "2026-07-28T02:02:31.000Z",
+                      "uid": "35240-fa26b2d8-d8df-405a-915e-24dde06a8fca"
+                    },
+                    {
+                      "id": "1f49bb01-07e0-4316-a3c8-6177075bdc32",
+                      "name": "Invalid request parameters",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"assistantId\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"emoji\": \"<string>\",\n  \"instruction\": \"<string>\",\n  \"inputType\": \"PROMPT\",\n  \"model\": \"<string>\",\n  \"creativity\": \"<number>\",\n  \"conversationStarters\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"actions\": [\n    {\n      \"actionId\": \"<uuid>\",\n      \"requiresConfirmation\": false\n    },\n    {\n      \"actionId\": \"<uuid>\",\n      \"requiresConfirmation\": false\n    }\n  ],\n  \"inputFields\": [\n    {\n      \"slug\": \"<string>\",\n      \"type\": \"NUMBER\",\n      \"label\": \"<string>\",\n      \"order\": \"<integer>\",\n      \"description\": \"<string>\",\n      \"required\": false,\n      \"options\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fileTypes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"slug\": \"<string>\",\n      \"type\": \"NUMBER\",\n      \"label\": \"<string>\",\n      \"order\": \"<integer>\",\n      \"description\": \"<string>\",\n      \"required\": false,\n      \"options\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fileTypes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"attachments\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"webSearch\": \"<boolean>\",\n  \"imageGeneration\": \"<boolean>\",\n  \"dataAnalyst\": \"<boolean>\",\n  \"canvas\": \"<boolean>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/assistant/v1/update",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "assistant",
+                            "v1",
+                            "update"
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:02:31.000Z",
+                      "updatedAt": "2026-07-28T02:02:31.000Z",
+                      "uid": "35240-1f49bb01-07e0-4316-a3c8-6177075bdc32"
+                    },
+                    {
+                      "id": "24193fdb-2c72-41cc-831c-c55488c09c44",
+                      "name": "Invalid or missing API key",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"assistantId\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"emoji\": \"<string>\",\n  \"instruction\": \"<string>\",\n  \"inputType\": \"PROMPT\",\n  \"model\": \"<string>\",\n  \"creativity\": \"<number>\",\n  \"conversationStarters\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"actions\": [\n    {\n      \"actionId\": \"<uuid>\",\n      \"requiresConfirmation\": false\n    },\n    {\n      \"actionId\": \"<uuid>\",\n      \"requiresConfirmation\": false\n    }\n  ],\n  \"inputFields\": [\n    {\n      \"slug\": \"<string>\",\n      \"type\": \"NUMBER\",\n      \"label\": \"<string>\",\n      \"order\": \"<integer>\",\n      \"description\": \"<string>\",\n      \"required\": false,\n      \"options\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fileTypes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"slug\": \"<string>\",\n      \"type\": \"NUMBER\",\n      \"label\": \"<string>\",\n      \"order\": \"<integer>\",\n      \"description\": \"<string>\",\n      \"required\": false,\n      \"options\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fileTypes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"attachments\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"webSearch\": \"<boolean>\",\n  \"imageGeneration\": \"<boolean>\",\n  \"dataAnalyst\": \"<boolean>\",\n  \"canvas\": \"<boolean>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/assistant/v1/update",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "assistant",
+                            "v1",
+                            "update"
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:02:31.000Z",
+                      "updatedAt": "2026-07-28T02:02:31.000Z",
+                      "uid": "35240-24193fdb-2c72-41cc-831c-c55488c09c44"
+                    },
+                    {
+                      "id": "2db2c9d5-7742-4685-9084-63f481f90ffa",
+                      "name": "Insufficient permissions - no access to this agent",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"assistantId\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"emoji\": \"<string>\",\n  \"instruction\": \"<string>\",\n  \"inputType\": \"PROMPT\",\n  \"model\": \"<string>\",\n  \"creativity\": \"<number>\",\n  \"conversationStarters\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"actions\": [\n    {\n      \"actionId\": \"<uuid>\",\n      \"requiresConfirmation\": false\n    },\n    {\n      \"actionId\": \"<uuid>\",\n      \"requiresConfirmation\": false\n    }\n  ],\n  \"inputFields\": [\n    {\n      \"slug\": \"<string>\",\n      \"type\": \"NUMBER\",\n      \"label\": \"<string>\",\n      \"order\": \"<integer>\",\n      \"description\": \"<string>\",\n      \"required\": false,\n      \"options\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fileTypes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"slug\": \"<string>\",\n      \"type\": \"NUMBER\",\n      \"label\": \"<string>\",\n      \"order\": \"<integer>\",\n      \"description\": \"<string>\",\n      \"required\": false,\n      \"options\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fileTypes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"attachments\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"webSearch\": \"<boolean>\",\n  \"imageGeneration\": \"<boolean>\",\n  \"dataAnalyst\": \"<boolean>\",\n  \"canvas\": \"<boolean>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/assistant/v1/update",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "assistant",
+                            "v1",
+                            "update"
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:02:31.000Z",
+                      "updatedAt": "2026-07-28T02:02:31.000Z",
+                      "uid": "35240-2db2c9d5-7742-4685-9084-63f481f90ffa"
+                    },
+                    {
+                      "id": "252fbb1a-15cb-44ed-8470-8fa180d16c91",
+                      "name": "Agent not found or resource not found (model, action, attachment)",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"assistantId\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"emoji\": \"<string>\",\n  \"instruction\": \"<string>\",\n  \"inputType\": \"PROMPT\",\n  \"model\": \"<string>\",\n  \"creativity\": \"<number>\",\n  \"conversationStarters\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"actions\": [\n    {\n      \"actionId\": \"<uuid>\",\n      \"requiresConfirmation\": false\n    },\n    {\n      \"actionId\": \"<uuid>\",\n      \"requiresConfirmation\": false\n    }\n  ],\n  \"inputFields\": [\n    {\n      \"slug\": \"<string>\",\n      \"type\": \"NUMBER\",\n      \"label\": \"<string>\",\n      \"order\": \"<integer>\",\n      \"description\": \"<string>\",\n      \"required\": false,\n      \"options\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fileTypes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"slug\": \"<string>\",\n      \"type\": \"NUMBER\",\n      \"label\": \"<string>\",\n      \"order\": \"<integer>\",\n      \"description\": \"<string>\",\n      \"required\": false,\n      \"options\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fileTypes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"attachments\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"webSearch\": \"<boolean>\",\n  \"imageGeneration\": \"<boolean>\",\n  \"dataAnalyst\": \"<boolean>\",\n  \"canvas\": \"<boolean>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/assistant/v1/update",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "assistant",
+                            "v1",
+                            "update"
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:02:31.000Z",
+                      "updatedAt": "2026-07-28T02:02:31.000Z",
+                      "uid": "35240-252fbb1a-15cb-44ed-8470-8fa180d16c91"
+                    },
+                    {
+                      "id": "b9737a5d-1a10-4bb8-89b2-3119625acce9",
+                      "name": "Internal server error",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"assistantId\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"emoji\": \"<string>\",\n  \"instruction\": \"<string>\",\n  \"inputType\": \"PROMPT\",\n  \"model\": \"<string>\",\n  \"creativity\": \"<number>\",\n  \"conversationStarters\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"actions\": [\n    {\n      \"actionId\": \"<uuid>\",\n      \"requiresConfirmation\": false\n    },\n    {\n      \"actionId\": \"<uuid>\",\n      \"requiresConfirmation\": false\n    }\n  ],\n  \"inputFields\": [\n    {\n      \"slug\": \"<string>\",\n      \"type\": \"NUMBER\",\n      \"label\": \"<string>\",\n      \"order\": \"<integer>\",\n      \"description\": \"<string>\",\n      \"required\": false,\n      \"options\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fileTypes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"slug\": \"<string>\",\n      \"type\": \"NUMBER\",\n      \"label\": \"<string>\",\n      \"order\": \"<integer>\",\n      \"description\": \"<string>\",\n      \"required\": false,\n      \"options\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fileTypes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"attachments\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"webSearch\": \"<boolean>\",\n  \"imageGeneration\": \"<boolean>\",\n  \"dataAnalyst\": \"<boolean>\",\n  \"canvas\": \"<boolean>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/assistant/v1/update",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "assistant",
+                            "v1",
+                            "update"
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:02:31.000Z",
+                      "updatedAt": "2026-07-28T02:02:31.000Z",
+                      "uid": "35240-b9737a5d-1a10-4bb8-89b2-3119625acce9"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:02:31.000Z",
+                  "updatedAt": "2026-07-28T02:02:31.000Z",
+                  "uid": "35240-95f0b0c7-a120-4dcb-987c-de749f0a983a"
+                }
+              ],
+              "id": "28c2937e-1732-48e0-9f33-8449148c243f",
+              "createdAt": "2026-07-28T02:02:31.000Z",
+              "updatedAt": "2026-07-28T02:02:31.000Z",
+              "uid": "35240-28c2937e-1732-48e0-9f33-8449148c243f"
+            },
+            {
+              "name": "get",
+              "item": [
+                {
+                  "name": "[Deprecated] Retrieves details of an existing assistant",
+                  "id": "2a87c7b4-bbad-4e00-9b3a-578cc2af4ca8",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/assistant/v1/get?assistantId=<uuid>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "assistant",
+                        "v1",
+                        "get"
+                      ],
+                      "query": [
+                        {
+                          "description": "(Required) UUID of the agent to retrieve",
+                          "key": "assistantId",
+                          "value": "<uuid>"
+                        }
+                      ]
+                    },
+                    "description": "This endpoint is deprecated. Please use /agent/v1/get for new integrations. Retrieves the complete configuration and details of an existing assistant."
+                  },
+                  "response": [
+                    {
+                      "id": "b9817668-3696-4c1c-9b01-552fdacecc6c",
+                      "name": "Agent details retrieved successfully",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/assistant/v1/get?assistantId=<uuid>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "assistant",
+                            "v1",
+                            "get"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) UUID of the agent to retrieve",
+                              "key": "assistantId",
+                              "value": "<uuid>"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"status\": \"success\",\n  \"assistant\": {\n    \"id\": \"<uuid>\",\n    \"name\": \"<string>\",\n    \"emojiIcon\": \"<string>\",\n    \"model\": \"<string>\",\n    \"temperature\": \"<number>\",\n    \"inputType\": \"PROMPT\",\n    \"webSearchEnabled\": \"<boolean>\",\n    \"imageGenerationEnabled\": \"<boolean>\",\n    \"canvasEnabled\": \"<boolean>\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\",\n    \"description\": \"<string>\",\n    \"instruction\": \"<string>\",\n    \"conversationStarters\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"extendedThinking\": \"<boolean>\",\n    \"actions\": [\n      {\n        \"actionId\": \"<uuid>\",\n        \"requiresConfirmation\": \"<boolean>\"\n      },\n      {\n        \"actionId\": \"<uuid>\",\n        \"requiresConfirmation\": \"<boolean>\"\n      }\n    ],\n    \"inputFields\": [\n      {\n        \"slug\": \"<string>\",\n        \"type\": \"FILE\",\n        \"label\": \"<string>\",\n        \"required\": \"<boolean>\",\n        \"order\": \"<integer>\",\n        \"description\": \"<string>\",\n        \"options\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"fileTypes\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      {\n        \"slug\": \"<string>\",\n        \"type\": \"CHECKBOX\",\n        \"label\": \"<string>\",\n        \"required\": \"<boolean>\",\n        \"order\": \"<integer>\",\n        \"description\": \"<string>\",\n        \"options\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"fileTypes\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    ],\n    \"attachments\": [\n      \"<uuid>\",\n      \"<uuid>\"\n    ]\n  }\n}",
+                      "createdAt": "2026-07-28T02:02:31.000Z",
+                      "updatedAt": "2026-07-28T02:02:31.000Z",
+                      "uid": "35240-b9817668-3696-4c1c-9b01-552fdacecc6c"
+                    },
+                    {
+                      "id": "4880d382-a364-4687-ba57-9b31dbb20097",
+                      "name": "Invalid assistant ID format",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/assistant/v1/get?assistantId=<uuid>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "assistant",
+                            "v1",
+                            "get"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) UUID of the agent to retrieve",
+                              "key": "assistantId",
+                              "value": "<uuid>"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:02:31.000Z",
+                      "updatedAt": "2026-07-28T02:02:31.000Z",
+                      "uid": "35240-4880d382-a364-4687-ba57-9b31dbb20097"
+                    },
+                    {
+                      "id": "84379289-7294-46aa-87fa-3938c7628c96",
+                      "name": "Invalid or missing API key",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/assistant/v1/get?assistantId=<uuid>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "assistant",
+                            "v1",
+                            "get"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) UUID of the agent to retrieve",
+                              "key": "assistantId",
+                              "value": "<uuid>"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:02:31.000Z",
+                      "updatedAt": "2026-07-28T02:02:31.000Z",
+                      "uid": "35240-84379289-7294-46aa-87fa-3938c7628c96"
+                    },
+                    {
+                      "id": "fdeb42a1-471f-4e6e-9b5d-bd1e2a6e7408",
+                      "name": "Insufficient permissions - no access to this agent",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/assistant/v1/get?assistantId=<uuid>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "assistant",
+                            "v1",
+                            "get"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) UUID of the agent to retrieve",
+                              "key": "assistantId",
+                              "value": "<uuid>"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Forbidden",
+                      "code": 403,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:02:31.000Z",
+                      "updatedAt": "2026-07-28T02:02:31.000Z",
+                      "uid": "35240-fdeb42a1-471f-4e6e-9b5d-bd1e2a6e7408"
+                    },
+                    {
+                      "id": "95c18b0b-8b31-4b25-ae94-f3866a6ba851",
+                      "name": "Agent not found",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/assistant/v1/get?assistantId=<uuid>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "assistant",
+                            "v1",
+                            "get"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) UUID of the agent to retrieve",
+                              "key": "assistantId",
+                              "value": "<uuid>"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:02:31.000Z",
+                      "updatedAt": "2026-07-28T02:02:31.000Z",
+                      "uid": "35240-95c18b0b-8b31-4b25-ae94-f3866a6ba851"
+                    },
+                    {
+                      "id": "60fbcc74-68d0-4b1a-a377-c46b584204ef",
+                      "name": "Internal server error",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/assistant/v1/get?assistantId=<uuid>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "assistant",
+                            "v1",
+                            "get"
+                          ],
+                          "query": [
+                            {
+                              "description": "(Required) UUID of the agent to retrieve",
+                              "key": "assistantId",
+                              "value": "<uuid>"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Internal Server Error",
+                      "code": 500,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"message\": \"<string>\"\n}",
+                      "createdAt": "2026-07-28T02:02:31.000Z",
+                      "updatedAt": "2026-07-28T02:02:31.000Z",
+                      "uid": "35240-60fbcc74-68d0-4b1a-a377-c46b584204ef"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:02:31.000Z",
+                  "updatedAt": "2026-07-28T02:02:31.000Z",
+                  "uid": "35240-2a87c7b4-bbad-4e00-9b3a-578cc2af4ca8"
+                }
+              ],
+              "id": "3956455b-8dd7-4670-90c2-1fd3af23a298",
+              "createdAt": "2026-07-28T02:02:31.000Z",
+              "updatedAt": "2026-07-28T02:02:31.000Z",
+              "uid": "35240-3956455b-8dd7-4670-90c2-1fd3af23a298"
+            }
+          ],
+          "id": "75a39288-c0ab-4a8e-989e-39e1d59a9dfa",
+          "createdAt": "2026-07-28T02:02:31.000Z",
+          "updatedAt": "2026-07-28T02:02:31.000Z",
+          "uid": "35240-75a39288-c0ab-4a8e-989e-39e1d59a9dfa"
+        }
+      ],
+      "id": "3669dfb8-4d64-4c4f-8e56-5693e1ec69e0",
+      "createdAt": "2026-07-28T02:02:31.000Z",
+      "updatedAt": "2026-07-28T02:02:31.000Z",
+      "uid": "35240-3669dfb8-4d64-4c4f-8e56-5693e1ec69e0"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.langdock.com"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+provider: Langdock
+providerId: langdock
+generated: '2026-07-19'
+method: searched
+created: '2026-07-19'
+modified: '2026-07-19'
+tags:
+- Rate Limiting
+- Artificial Intelligence
+description: >-
+  Langdock enforces default per-model rate limits on the public API expressed as both
+  a request-rate and a token-rate. Workspaces that bring their own model keys (BYOK)
+  can have admins configure custom per-model limits in Settings.
+sources:
+- https://docs.langdock.com/en/developer/overview/api-introduction
+responseCodes:
+  throttled: 429
+limits:
+- name: Requests per minute (default, per model)
+  scope: workspace
+  metric: requests_per_minute
+  limit: 500
+  timeFrame: minute
+- name: Tokens per minute (default, per model)
+  scope: workspace
+  metric: tokens_per_minute
+  limit: 60000
+  timeFrame: minute
+custom_limits:
+  supported: true
+  applies_to: BYOK workspaces
+  detail: Admins can configure custom limits per model in Settings.
+notes: >-
+  The 429 "Rate limit exceeded" response is declared on 11 operations in the OpenAPI
+  (openapi/langdock-openapi-original.yml), including the completion, embedding, agent,
+  skills, and audit-log endpoints. The spec does not declare RateLimit-* response
+  headers, so no header contract is recorded here.

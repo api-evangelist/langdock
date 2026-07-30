@@ -1,0 +1,275 @@
+{
+  "info": {
+    "_postman_id": "49f7bc42-a8c6-476e-910b-a9de3404b561",
+    "name": "Langdock Agent Google API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:02:38.000Z",
+    "updatedAt": "2026-07-28T02:02:38.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-49f7bc42-a8c6-476e-910b-a9de3404b561"
+  },
+  "item": [
+    {
+      "name": "google",
+      "item": [
+        {
+          "name": "{region}",
+          "item": [
+            {
+              "name": "v1beta",
+              "item": [
+                {
+                  "name": "models",
+                  "item": [
+                    {
+                      "name": "{model}:generateContent",
+                      "item": [
+                        {
+                          "name": "Generate Content",
+                          "id": "cab3a9fd-5a51-4eee-8e66-6f581fe84a85",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "auth": {
+                              "type": "bearer",
+                              "bearer": [
+                                {
+                                  "key": "token",
+                                  "value": "{{bearerToken}}",
+                                  "type": "string"
+                                }
+                              ]
+                            },
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"contents\": [\n    {\n      \"role\": \"model\",\n      \"parts\": [\n        {\n          \"text\": \"<string>\"\n        },\n        {\n          \"text\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"role\": \"user\",\n      \"parts\": [\n        {\n          \"text\": \"<string>\"\n        },\n        {\n          \"text\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/google/:region/v1beta/models/{{model}}:generateContent",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "google",
+                                ":region",
+                                "v1beta",
+                                "models",
+                                "{{model}}:generateContent"
+                              ],
+                              "variable": [
+                                {
+                                  "id": "346a1b9f-fea8-44df-968d-357d64943e8f",
+                                  "key": "region",
+                                  "value": "us",
+                                  "description": "(Required) The region of the API to use."
+                                }
+                              ]
+                            },
+                            "description": "Generate content using Google Gemini models.\nThis endpoint mirrors the structure of the official Vertex AI generateContent API while adding API-key based authentication and region selection."
+                          },
+                          "response": [
+                            {
+                              "id": "8be90124-c9c0-4cb5-ab6b-14cc943a2774",
+                              "name": "Successful Response",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"contents\": [\n    {\n      \"role\": \"model\",\n      \"parts\": [\n        {\n          \"text\": \"<string>\"\n        },\n        {\n          \"text\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"role\": \"user\",\n      \"parts\": [\n        {\n          \"text\": \"<string>\"\n        },\n        {\n          \"text\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/google/:region/v1beta/models/{{model}}:generateContent",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "google",
+                                    ":region",
+                                    "v1beta",
+                                    "models",
+                                    "{{model}}:generateContent"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "region"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"candidates\": [\n    {\n      \"content\": {},\n      \"finishReason\": \"<string>\"\n    },\n    {\n      \"content\": {},\n      \"finishReason\": \"<string>\"\n    }\n  ],\n  \"usageMetadata\": {}\n}",
+                              "createdAt": "2026-07-28T02:02:39.000Z",
+                              "updatedAt": "2026-07-28T02:02:39.000Z",
+                              "uid": "35240-8be90124-c9c0-4cb5-ab6b-14cc943a2774"
+                            },
+                            {
+                              "id": "74cbbef6-c3c8-461e-885f-1ead94ac494c",
+                              "name": "Error response",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"contents\": [\n    {\n      \"role\": \"model\",\n      \"parts\": [\n        {\n          \"text\": \"<string>\"\n        },\n        {\n          \"text\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"role\": \"user\",\n      \"parts\": [\n        {\n          \"text\": \"<string>\"\n        },\n        {\n          \"text\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/google/:region/v1beta/models/{{model}}:generateContent",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "google",
+                                    ":region",
+                                    "v1beta",
+                                    "models",
+                                    "{{model}}:generateContent"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "region"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Bad Request",
+                              "code": 400,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"invalid_request_error\",\n    \"message\": \"Invalid request\"\n  }\n}",
+                              "createdAt": "2026-07-28T02:02:39.000Z",
+                              "updatedAt": "2026-07-28T02:02:39.000Z",
+                              "uid": "35240-74cbbef6-c3c8-461e-885f-1ead94ac494c"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T02:02:39.000Z",
+                          "updatedAt": "2026-07-28T02:02:39.000Z",
+                          "uid": "35240-cab3a9fd-5a51-4eee-8e66-6f581fe84a85"
+                        }
+                      ],
+                      "id": "eacc319f-66a8-457f-82a3-cac9c1cc404e",
+                      "createdAt": "2026-07-28T02:02:39.000Z",
+                      "updatedAt": "2026-07-28T02:02:39.000Z",
+                      "uid": "35240-eacc319f-66a8-457f-82a3-cac9c1cc404e"
+                    }
+                  ],
+                  "id": "6b5d431e-8aa4-46c7-ac47-9158159766cd",
+                  "createdAt": "2026-07-28T02:02:39.000Z",
+                  "updatedAt": "2026-07-28T02:02:39.000Z",
+                  "uid": "35240-6b5d431e-8aa4-46c7-ac47-9158159766cd"
+                }
+              ],
+              "id": "66107a75-f5b4-4428-b69b-b3f302b249c6",
+              "createdAt": "2026-07-28T02:02:39.000Z",
+              "updatedAt": "2026-07-28T02:02:39.000Z",
+              "uid": "35240-66107a75-f5b4-4428-b69b-b3f302b249c6"
+            }
+          ],
+          "id": "0949eadd-efed-45aa-a811-31f996e8148d",
+          "createdAt": "2026-07-28T02:02:39.000Z",
+          "updatedAt": "2026-07-28T02:02:39.000Z",
+          "uid": "35240-0949eadd-efed-45aa-a811-31f996e8148d"
+        }
+      ],
+      "id": "4c4a413b-4232-48d2-a237-0f685b14b0de",
+      "createdAt": "2026-07-28T02:02:39.000Z",
+      "updatedAt": "2026-07-28T02:02:39.000Z",
+      "uid": "35240-4c4a413b-4232-48d2-a237-0f685b14b0de"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.langdock.com"
+    },
+    {
+      "key": "model",
+      "value": "<string>"
+    }
+  ]
+}

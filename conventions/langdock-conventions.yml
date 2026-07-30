@@ -1,0 +1,138 @@
+generated: '2026-07-19'
+method: searched
+source: >-
+  https://docs.langdock.com/en/developer/overview/api-introduction plus derivation
+  from openapi/langdock-openapi-original.yml — the cross-cutting request/response
+  conventions that apply across Langdock endpoints rather than to any single operation.
+description: >-
+  How the Langdock API behaves across operations: authentication style, the
+  provider-compatibility routing model, regional endpoints, pagination, versioning,
+  error envelopes, and rate-limit signaling. Langdock's defining convention is
+  provider-shape compatibility — its completion and embedding endpoints deliberately
+  mirror the OpenAI, Anthropic, Google Vertex AI, and Mistral wire formats so that
+  existing vendor SDKs work unchanged against a Langdock base URL.
+base_url: https://api.langdock.com
+dedicated_deployment_base_url: https://<your-domain>/api/public
+api_style: REST over HTTPS, JSON request and response bodies, multipart for file upload
+authentication:
+  scheme: HTTP Bearer — workspace API key
+  header: 'Authorization: Bearer YOUR_API_KEY'
+  key_prefix: sk-ld-
+  browser_calls: blocked — backend access only
+  detail: authentication/langdock-authentication.yml
+  docs: https://docs.langdock.com/en/developer/overview/api-introduction
+provider_compatibility:
+  description: >-
+    Model endpoints are namespaced by upstream provider and mirror that provider's
+    native request/response shape, so the official vendor SDK can be pointed at
+    Langdock by changing only the base URL and API key.
+  routes:
+  - provider: openai
+    path: /openai/{region}/v1/chat/completions, /openai/{region}/v1/embeddings
+    compatible_with: OpenAI SDKs
+  - provider: anthropic
+    path: /anthropic/{region}/v1/messages
+    compatible_with: Anthropic SDKs
+  - provider: google
+    path: /google/{region}/v1beta/models/{model}:generateContent
+    compatible_with: Official Vertex AI SDKs (Python / Node)
+  - provider: mistral
+    path: /mistral/{region}/v1/fim/completions
+    compatible_with: Mistral Codestral FIM
+  - provider: langdock
+    path: /agent/v1/chat/completions
+    compatible_with: Vercel AI SDK format
+regions:
+  supported: true
+  mechanism: '{region} path segment on every model endpoint'
+  values:
+  - eu
+  - us
+  notes: >-
+    /mistral/{region}/v1/fim/completions declares eu only; the OpenAI, Anthropic, and
+    Google routes declare both eu and us. Derived from the region path-parameter enums
+    in the OpenAPI.
+idempotency:
+  supported: false
+  detail: >-
+    Langdock documents no idempotency contract. There is no Idempotency-Key header or
+    parameter anywhere in the OpenAPI, and the term does not appear in the published
+    documentation index. No Idempotency pointer is emitted for this provider.
+pagination:
+  style: cursor
+  applies_to:
+  - GET /skills/v1
+  - GET /audit-logs/{workspace_id}
+  request_params:
+    cursor: opaque cursor marking the start of the next page
+    limit: page size
+  scope_note: >-
+    Pagination is only declared on the two list endpoints above. The knowledge-folder
+    list endpoint (GET /knowledge/{folderId}/list) declares no pagination parameters.
+  source: openapi/langdock-openapi-original.yml
+filtering:
+  description: Query-parameter filtering is declared on the paginated list endpoints.
+  params:
+    skills:
+    - query
+    - slug
+    audit_logs:
+    - from
+    - to
+    - entity_type
+    - actor_id
+field_expansion:
+  supported: false
+metadata:
+  supported: false
+request_tracing:
+  documented: false
+  detail: No request-id or correlation header is declared in the OpenAPI or documented.
+versioning:
+  scheme: uri-path, per product family
+  detail: >-
+    Version is carried in the path segment of first-party endpoints (/agent/v1,
+    /assistant/v1, /skills/v1, /attachment/v1, /user-management/v1). Provider-compatible
+    routes carry the upstream provider's own version segment (/v1, /v1beta). The
+    OpenAPI document itself declares info.version 3.0.0.
+  current:
+    agents: v1
+    skills: v1
+    attachments: v1
+    user_management: v1
+  legacy: /assistant/v1 is deprecated in favour of /agent/v1 — see lifecycle/langdock-lifecycle.yml
+error_envelope:
+  format: json
+  problem_json: false
+  detail: >-
+    Errors are provider-shaped JSON, not RFC 9457 application/problem+json. The
+    OpenAPI defines a family of named error schemas — ErrorResponse, APIError,
+    AuthenticationError, InvalidRequestError, NotFoundError, PermissionError,
+    RateLimitError, OverloadedError, UsageExportError, UserManagementError,
+    InviteUsersError. The Anthropic-compatible route defers to Anthropic's own error
+    documentation.
+  catalog: errors/langdock-problem-types.yml
+rate_limiting:
+  default_rpm: 500
+  default_tpm: 60000
+  scope: per model, per workspace
+  status_code: 429
+  headers_documented: false
+  custom_limits: BYOK workspaces can configure custom per-model limits in Settings.
+  detail: rate-limits/langdock-rate-limits.yml
+streaming:
+  supported: true
+  detail: >-
+    Completion endpoints support streaming responses; the OpenAPI defines
+    CompletionChunk / CompletionEvent / DeltaMessage streaming schemas.
+file_handling:
+  upload: POST /attachment/v1/upload (multipart) for agent attachments; POST /knowledge/{folderId}
+    for knowledge-base files
+  delete: DELETE /attachment/v1/delete, DELETE /knowledge/{folderId}/{attachmentId}
+  limits: POST /skills/v1/import returns 413 when the uploaded archive is too large.
+related:
+  authentication: authentication/langdock-authentication.yml
+  errors: errors/langdock-problem-types.yml
+  lifecycle: lifecycle/langdock-lifecycle.yml
+  rate_limits: rate-limits/langdock-rate-limits.yml
+  data_model: data-model/langdock-data-model.yml

@@ -1,0 +1,93 @@
+generated: '2026-07-19'
+method: searched
+source: >-
+  npm registry, PyPI, and the Langdock GitHub organization (github.com/Langdock)
+  were all probed for first-party client libraries.
+description: >-
+  Langdock ships NO first-party SDK. Its design choice is provider-SDK compatibility:
+  the completion and embedding endpoints are wire-compatible with the official OpenAI,
+  Anthropic, Google Vertex AI, and Mistral SDKs, so developers point an existing
+  vendor SDK at https://api.langdock.com/<provider>/<region> with a Langdock API key
+  as the bearer token. The packages below are therefore the THIRD-PARTY vendor SDKs
+  Langdock documents as compatible — none are published by Langdock and none are
+  marked official.
+packages: []
+compatible_third_party_sdks:
+- language: python
+  registry: pypi
+  name: openai
+  url: https://pypi.org/project/openai/
+  install: pip install openai
+  official: false
+  vendor: OpenAI
+  usage: Point base_url at https://api.langdock.com/openai/{region}/v1 with a Langdock
+    API key.
+  docs: https://docs.langdock.com/en/developer/completion-api/openai
+- language: python
+  registry: pypi
+  name: anthropic
+  url: https://pypi.org/project/anthropic/
+  install: pip install anthropic
+  official: false
+  vendor: Anthropic
+  usage: Point base_url at https://api.langdock.com/anthropic/{region} with a Langdock
+    API key.
+  docs: https://docs.langdock.com/en/developer/completion-api/anthropic
+- language: python
+  registry: pypi
+  name: google-cloud-aiplatform
+  url: https://pypi.org/project/google-cloud-aiplatform/
+  install: pip install google-cloud-aiplatform
+  official: false
+  vendor: Google
+  usage: Langdock's Google Completion API is documented as fully compatible with the
+    official Vertex AI SDKs (Python / Node).
+  docs: https://docs.langdock.com/en/developer/completion-api/google
+- language: javascript
+  registry: npm
+  name: openai
+  url: https://www.npmjs.com/package/openai
+  install: npm install openai
+  official: false
+  vendor: OpenAI
+  docs: https://docs.langdock.com/en/developer/completion-api/openai
+- language: javascript
+  registry: npm
+  name: '@anthropic-ai/sdk'
+  url: https://www.npmjs.com/package/@anthropic-ai/sdk
+  install: npm install @anthropic-ai/sdk
+  official: false
+  vendor: Anthropic
+  docs: https://docs.langdock.com/en/developer/completion-api/anthropic
+- language: javascript
+  registry: npm
+  name: ai
+  url: https://www.npmjs.com/package/ai
+  install: npm install ai
+  official: false
+  vendor: Vercel
+  usage: The Agents Completions API returns a Vercel AI SDK compatible format.
+  docs: https://docs.langdock.com/en/developer/agents-api/agent
+registries_probed:
+- registry: npm
+  query: langdock, @langdock/sdk
+  result: no first-party package found
+- registry: pypi
+  query: langdock
+  result: no package (pypi.org/simple/langdock/ returned 404)
+- registry: github
+  query: github.com/Langdock
+  result: >-
+    6 public repos, none a published client library. langdock-cookbook (TypeScript)
+    is a recipes repo; langdock-adk-a2a-agent (Python) is an agent example.
+first_party_repos:
+- name: langdock-cookbook
+  url: https://github.com/Langdock/langdock-cookbook
+  language: TypeScript
+  description: Recipes for building on top of langdock
+- name: langdock-adk-a2a-agent
+  url: https://github.com/Langdock/langdock-adk-a2a-agent
+  language: Python
+- name: custom-model-example
+  url: https://github.com/Langdock/custom-model-example
+  language: TypeScript

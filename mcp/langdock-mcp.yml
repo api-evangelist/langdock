@@ -1,0 +1,54 @@
+generated: '2026-07-19'
+method: searched
+status: published
+source: https://docs.langdock.com/en/using-langdock/guides/integrations/mcp/langdock-agent-mcp-server.md
+description: >-
+  Langdock operates an official hosted Model Context Protocol server — the Langdock
+  Agent MCP Server — that exposes the agents in a workspace as MCP tools to any
+  MCP-compatible client. Authentication reuses the same workspace API key as the REST
+  API; the key must carry the "Agent API" scope.
+server:
+  name: langdock
+  transport: http
+  url: https://api.langdock.com/mcp
+  dedicated_deployment_url: https://<your-domain>/api/public/mcp
+  authentication:
+    schemes:
+    - header: Authorization
+      format: Bearer <api-key>
+    - header: x-api-key
+      format: <api-key>
+    required_scope: Agent API
+    detail: authentication/langdock-authentication.yml
+tools:
+- name: find_agent
+  description: Search for an agent ID by name
+- name: ask_agent
+  description: Send a prompt to an agent specified by its ID
+  notes: >-
+    Supports multi-turn conversations via an optional messageHistory parameter
+    containing previous exchanges ordered chronologically.
+- name: ask_custom_agent
+  description: Configure and query a custom agent on-the-fly
+mcp_platform_features:
+  description: >-
+    Beyond publishing its own server, Langdock is also an MCP *host* — it consumes
+    external MCP servers as tools for its agents and chat.
+  capabilities:
+  - name: MCP client / integrations
+    docs: https://docs.langdock.com/en/using-langdock/guides/integrations/mcp/mcp
+  - name: MCP Server Directory
+    description: A curated directory of verified MCP servers, officially maintained
+      by their respective companies.
+    docs: https://docs.langdock.com/en/using-langdock/integrations/mcp-directory
+  - name: MCP file input
+    description: File references in MCP tool inputs are resolved into structured FileData
+      objects.
+    docs: https://docs.langdock.com/en/using-langdock/guides/integrations/mcp/mcp-file-input
+  - name: MCP file outputs
+    description: MCP resource content with text or base64 data becomes downloadable
+      file attachments.
+    docs: https://docs.langdock.com/en/using-langdock/guides/integrations/mcp/mcp-file-outputs
+  - name: MCP Apps (MCP-UI)
+    description: Servers can return interactive UIs rendered directly inside Langdock.
+    docs: https://docs.langdock.com/en/using-langdock/integrations/mcp-ui

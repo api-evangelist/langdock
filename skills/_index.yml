@@ -1,0 +1,66 @@
+generated: '2026-07-19'
+method: generated
+source: >-
+  Generated from openapi/langdock-openapi-original.yml and the Langdock developer
+  documentation. Every operationId referenced below was verified verbatim against the
+  spec; operations the spec leaves without an operationId are referenced by method +
+  path. No provider-published Agent Skills or AGENTS.md were found on the Langdock
+  docs surface or GitHub organization.
+description: >-
+  Packaged Agent Skills for the marquee Langdock API flows — Skills lifecycle, agent
+  build-and-publish, knowledge retrieval, and workspace audit/usage reporting. Each
+  skill carries the auth model, the pagination and error conventions, and the
+  provider-specific traps (no idempotency, casing split, mandatory resource sharing).
+skills:
+- file: langdock-manage-skills.md
+  name: Manage Langdock Skills
+  description: Create, find, update, import, and delete reusable Skill instruction packages.
+  api: openapi/langdock-openapi-original.yml
+  operations:
+  - listSkills
+  - createSkill
+  - getSkill
+  - updateSkill
+  - deleteSkill
+  - importSkill
+- file: langdock-build-and-publish-agent.md
+  name: Build and publish a Langdock agent
+  description: Create an agent, attach files and knowledge, update the draft, and publish
+    it as a new version.
+  api: openapi/langdock-openapi-original.yml
+  operations:
+  - createAgentV2
+  - getAgentV2
+  - updateAgentV2
+  - publishAgentV2
+  - uploadAttachment
+  - deleteAttachment
+- file: langdock-knowledge-search.md
+  name: Search and maintain Langdock knowledge bases
+  description: Upload, update, list, delete, and semantically search files in knowledge
+    folders shared with an API key.
+  api: openapi/langdock-openapi-original.yml
+  operations:
+  - POST /knowledge/search
+  - POST /knowledge/{folderId}
+  - PATCH /knowledge/{folderId}
+  - GET /knowledge/{folderId}/list
+  - DELETE /knowledge/{folderId}/{attachmentId}
+  note: These operations carry no operationId in the published spec.
+- file: langdock-audit-and-usage-reporting.md
+  name: Audit and usage reporting on a Langdock workspace
+  description: Page the workspace audit trail and export usage and cost by agent, user,
+    project, model, and API key.
+  api: openapi/langdock-openapi-original.yml
+  operations:
+  - listAuditLogs
+  - POST /export/assistants
+  - POST /export/users
+  - POST /export/projects
+  - POST /export/models
+  - POST /export/api-keys
+related:
+  conventions: conventions/langdock-conventions.yml
+  errors: errors/langdock-problem-types.yml
+  authentication: authentication/langdock-authentication.yml
+  mcp: mcp/langdock-mcp.yml

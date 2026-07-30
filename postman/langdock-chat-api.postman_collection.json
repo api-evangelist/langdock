@@ -1,0 +1,205 @@
+{
+  "info": {
+    "_postman_id": "c169cea4-5124-4f0a-8ed6-25769bd50371",
+    "name": "Langdock Agent Chat API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:02:36.000Z",
+    "updatedAt": "2026-07-28T02:02:36.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-c169cea4-5124-4f0a-8ed6-25769bd50371"
+  },
+  "item": [
+    {
+      "name": "openai",
+      "item": [
+        {
+          "name": "{region}",
+          "item": [
+            {
+              "name": "v1",
+              "item": [
+                {
+                  "name": "chat",
+                  "item": [
+                    {
+                      "name": "completions",
+                      "item": [
+                        {
+                          "name": "Creates a model response for the given chat conversation.",
+                          "id": "40c4b997-d7cf-4265-ba4d-06f99998ea99",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "auth": {
+                              "type": "bearer",
+                              "bearer": [
+                                {
+                                  "key": "token",
+                                  "value": "{{bearerToken}}",
+                                  "type": "string"
+                                }
+                              ]
+                            },
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"model\": \"<string>\",\n  \"messages\": [\n    {\n      \"content\": \"<string>\",\n      \"role\": \"system\",\n      \"name\": \"<string>\"\n    }\n  ],\n  \"frequency_penalty\": 0,\n  \"logit_bias\": null,\n  \"logprobs\": false,\n  \"top_logprobs\": \"<integer>\",\n  \"max_tokens\": \"<integer>\",\n  \"presence_penalty\": 0,\n  \"response_format\": {\n    \"type\": \"text\"\n  },\n  \"seed\": \"<integer>\",\n  \"stop\": \"<string>\",\n  \"stream\": false,\n  \"temperature\": 1,\n  \"top_p\": 1,\n  \"tools\": [\n    {\n      \"type\": \"function\",\n      \"function\": {\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"parameters\": {\n          \"nostrud_05\": 53376481.52292237\n        }\n      }\n    },\n    {\n      \"type\": \"function\",\n      \"function\": {\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"parameters\": {\n          \"esse_6e_\": \"ex Excepteur magna fugiat\",\n          \"in__\": \"occaecat nostrud reprehenderit\"\n        }\n      }\n    }\n  ],\n  \"tool_choice\": \"auto\",\n  \"reasoning_effort\": \"low\",\n  \"user\": \"<string>\",\n  \"function_call\": \"none\",\n  \"functions\": [\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"amet_976\": true,\n        \"esse7\": false\n      }\n    }\n  ]\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/openai/:region/v1/chat/completions",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "openai",
+                                ":region",
+                                "v1",
+                                "chat",
+                                "completions"
+                              ],
+                              "variable": [
+                                {
+                                  "id": "f65dc28a-8cd1-40b5-9c2f-648a169a54a4",
+                                  "key": "region",
+                                  "value": "eu",
+                                  "description": "(Required) The region of the API to use."
+                                }
+                              ]
+                            }
+                          },
+                          "response": [
+                            {
+                              "id": "d07f1478-c23d-4db7-b198-25a59a51b8ca",
+                              "name": "OK",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"model\": \"<string>\",\n  \"messages\": [\n    {\n      \"content\": \"<string>\",\n      \"role\": \"system\",\n      \"name\": \"<string>\"\n    }\n  ],\n  \"frequency_penalty\": 0,\n  \"logit_bias\": null,\n  \"logprobs\": false,\n  \"top_logprobs\": \"<integer>\",\n  \"max_tokens\": \"<integer>\",\n  \"presence_penalty\": 0,\n  \"response_format\": {\n    \"type\": \"text\"\n  },\n  \"seed\": \"<integer>\",\n  \"stop\": \"<string>\",\n  \"stream\": false,\n  \"temperature\": 1,\n  \"top_p\": 1,\n  \"tools\": [\n    {\n      \"type\": \"function\",\n      \"function\": {\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"parameters\": {\n          \"nostrud_05\": 53376481.52292237\n        }\n      }\n    },\n    {\n      \"type\": \"function\",\n      \"function\": {\n        \"name\": \"<string>\",\n        \"description\": \"<string>\",\n        \"parameters\": {\n          \"esse_6e_\": \"ex Excepteur magna fugiat\",\n          \"in__\": \"occaecat nostrud reprehenderit\"\n        }\n      }\n    }\n  ],\n  \"tool_choice\": \"auto\",\n  \"reasoning_effort\": \"low\",\n  \"user\": \"<string>\",\n  \"function_call\": \"none\",\n  \"functions\": [\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"parameters\": {\n        \"amet_976\": true,\n        \"esse7\": false\n      }\n    }\n  ]\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/openai/:region/v1/chat/completions",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "openai",
+                                    ":region",
+                                    "v1",
+                                    "chat",
+                                    "completions"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "region"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"choices\": [\n    {\n      \"finish_reason\": \"function_call\",\n      \"index\": \"<integer>\",\n      \"message\": {\n        \"role\": \"assistant\",\n        \"content\": \"<string>\",\n        \"tool_calls\": [\n          {\n            \"id\": \"<string>\",\n            \"type\": \"function\",\n            \"function\": {\n              \"name\": \"<string>\",\n              \"arguments\": \"<string>\"\n            }\n          },\n          {\n            \"id\": \"<string>\",\n            \"type\": \"function\",\n            \"function\": {\n              \"name\": \"<string>\",\n              \"arguments\": \"<string>\"\n            }\n          }\n        ],\n        \"function_call\": {\n          \"name\": \"<string>\",\n          \"arguments\": \"<string>\"\n        }\n      },\n      \"logprobs\": {\n        \"content\": [\n          {\n            \"token\": \"<string>\",\n            \"logprob\": \"<number>\",\n            \"bytes\": [\n              \"<integer>\",\n              \"<integer>\"\n            ],\n            \"top_logprobs\": [\n              {\n                \"token\": \"<string>\",\n                \"logprob\": \"<number>\",\n                \"bytes\": [\n                  \"<integer>\",\n                  \"<integer>\"\n                ]\n              },\n              {\n                \"token\": \"<string>\",\n                \"logprob\": \"<number>\",\n                \"bytes\": [\n                  \"<integer>\",\n                  \"<integer>\"\n                ]\n              }\n            ]\n          },\n          {\n            \"token\": \"<string>\",\n            \"logprob\": \"<number>\",\n            \"bytes\": [\n              \"<integer>\",\n              \"<integer>\"\n            ],\n            \"top_logprobs\": [\n              {\n                \"token\": \"<string>\",\n                \"logprob\": \"<number>\",\n                \"bytes\": [\n                  \"<integer>\",\n                  \"<integer>\"\n                ]\n              },\n              {\n                \"token\": \"<string>\",\n                \"logprob\": \"<number>\",\n                \"bytes\": [\n                  \"<integer>\",\n                  \"<integer>\"\n                ]\n              }\n            ]\n          }\n        ]\n      }\n    },\n    {\n      \"finish_reason\": \"stop\",\n      \"index\": \"<integer>\",\n      \"message\": {\n        \"role\": \"assistant\",\n        \"content\": \"<string>\",\n        \"tool_calls\": [\n          {\n            \"id\": \"<string>\",\n            \"type\": \"function\",\n            \"function\": {\n              \"name\": \"<string>\",\n              \"arguments\": \"<string>\"\n            }\n          },\n          {\n            \"id\": \"<string>\",\n            \"type\": \"function\",\n            \"function\": {\n              \"name\": \"<string>\",\n              \"arguments\": \"<string>\"\n            }\n          }\n        ],\n        \"function_call\": {\n          \"name\": \"<string>\",\n          \"arguments\": \"<string>\"\n        }\n      },\n      \"logprobs\": {\n        \"content\": [\n          {\n            \"token\": \"<string>\",\n            \"logprob\": \"<number>\",\n            \"bytes\": [\n              \"<integer>\",\n              \"<integer>\"\n            ],\n            \"top_logprobs\": [\n              {\n                \"token\": \"<string>\",\n                \"logprob\": \"<number>\",\n                \"bytes\": [\n                  \"<integer>\",\n                  \"<integer>\"\n                ]\n              },\n              {\n                \"token\": \"<string>\",\n                \"logprob\": \"<number>\",\n                \"bytes\": [\n                  \"<integer>\",\n                  \"<integer>\"\n                ]\n              }\n            ]\n          },\n          {\n            \"token\": \"<string>\",\n            \"logprob\": \"<number>\",\n            \"bytes\": [\n              \"<integer>\",\n              \"<integer>\"\n            ],\n            \"top_logprobs\": [\n              {\n                \"token\": \"<string>\",\n                \"logprob\": \"<number>\",\n                \"bytes\": [\n                  \"<integer>\",\n                  \"<integer>\"\n                ]\n              },\n              {\n                \"token\": \"<string>\",\n                \"logprob\": \"<number>\",\n                \"bytes\": [\n                  \"<integer>\",\n                  \"<integer>\"\n                ]\n              }\n            ]\n          }\n        ]\n      }\n    }\n  ],\n  \"created\": \"<integer>\",\n  \"id\": \"<string>\",\n  \"model\": \"<string>\",\n  \"object\": \"chat.completion\",\n  \"system_fingerprint\": \"<string>\",\n  \"usage\": {\n    \"prompt_tokens\": \"<integer>\",\n    \"completion_tokens\": \"<integer>\",\n    \"total_tokens\": \"<integer>\"\n  }\n}",
+                              "createdAt": "2026-07-28T02:02:36.000Z",
+                              "updatedAt": "2026-07-28T02:02:36.000Z",
+                              "uid": "35240-d07f1478-c23d-4db7-b198-25a59a51b8ca"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T02:02:36.000Z",
+                          "updatedAt": "2026-07-28T02:02:36.000Z",
+                          "uid": "35240-40c4b997-d7cf-4265-ba4d-06f99998ea99"
+                        }
+                      ],
+                      "id": "21978673-476b-4cb1-b6e2-36c09895d23d",
+                      "createdAt": "2026-07-28T02:02:36.000Z",
+                      "updatedAt": "2026-07-28T02:02:36.000Z",
+                      "uid": "35240-21978673-476b-4cb1-b6e2-36c09895d23d"
+                    }
+                  ],
+                  "id": "e3ed3ddd-7e83-4f86-9267-9469c5a068f1",
+                  "createdAt": "2026-07-28T02:02:36.000Z",
+                  "updatedAt": "2026-07-28T02:02:36.000Z",
+                  "uid": "35240-e3ed3ddd-7e83-4f86-9267-9469c5a068f1"
+                }
+              ],
+              "id": "ee2fcdbb-db18-4081-9f61-29a3f2b6e755",
+              "createdAt": "2026-07-28T02:02:36.000Z",
+              "updatedAt": "2026-07-28T02:02:36.000Z",
+              "uid": "35240-ee2fcdbb-db18-4081-9f61-29a3f2b6e755"
+            }
+          ],
+          "id": "e1bc50fa-b58d-4d1f-9601-db2dccf828c9",
+          "createdAt": "2026-07-28T02:02:36.000Z",
+          "updatedAt": "2026-07-28T02:02:36.000Z",
+          "uid": "35240-e1bc50fa-b58d-4d1f-9601-db2dccf828c9"
+        }
+      ],
+      "id": "6e357ec8-9bc1-49cf-ab0a-7ca374629380",
+      "createdAt": "2026-07-28T02:02:36.000Z",
+      "updatedAt": "2026-07-28T02:02:36.000Z",
+      "uid": "35240-6e357ec8-9bc1-49cf-ab0a-7ca374629380"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.langdock.com"
+    }
+  ]
+}

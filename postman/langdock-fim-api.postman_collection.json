@@ -1,0 +1,196 @@
+{
+  "info": {
+    "_postman_id": "6c737d74-fab1-4fb6-a4af-1c5a8af8c871",
+    "name": "Langdock Agent fim API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:02:37.000Z",
+    "updatedAt": "2026-07-28T02:02:38.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-6c737d74-fab1-4fb6-a4af-1c5a8af8c871"
+  },
+  "item": [
+    {
+      "name": "mistral",
+      "item": [
+        {
+          "name": "{region}",
+          "item": [
+            {
+              "name": "v1",
+              "item": [
+                {
+                  "name": "fim",
+                  "item": [
+                    {
+                      "name": "completions",
+                      "item": [
+                        {
+                          "name": "Fim Completion",
+                          "id": "f15a7111-2128-49e9-bbb2-9653ce140000",
+                          "protocolProfileBehavior": {
+                            "disableBodyPruning": true
+                          },
+                          "request": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"prompt\": \"<string>\",\n  \"model\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"top_p\": 1,\n  \"max_tokens\": \"<integer>\",\n  \"stream\": false,\n  \"stop\": \"<string>\",\n  \"random_seed\": \"<integer>\",\n  \"suffix\": \"<string>\",\n  \"min_tokens\": \"<integer>\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/mistral/:region/v1/fim/completions",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "mistral",
+                                ":region",
+                                "v1",
+                                "fim",
+                                "completions"
+                              ],
+                              "variable": [
+                                {
+                                  "id": "50b0222f-0acb-4a33-ba94-43268fb2ab8f",
+                                  "key": "region",
+                                  "value": "eu",
+                                  "description": "(Required) The region of the API to use."
+                                }
+                              ]
+                            },
+                            "description": "FIM completion."
+                          },
+                          "response": [
+                            {
+                              "id": "cffde82d-a414-4092-b52e-6cdec90a2d51",
+                              "name": "Successful Response",
+                              "originalRequest": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "description": "Added as a part of security scheme: bearer",
+                                    "key": "Authorization",
+                                    "value": "Bearer <token>"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"prompt\": \"<string>\",\n  \"model\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"top_p\": 1,\n  \"max_tokens\": \"<integer>\",\n  \"stream\": false,\n  \"stop\": \"<string>\",\n  \"random_seed\": \"<integer>\",\n  \"suffix\": \"<string>\",\n  \"min_tokens\": \"<integer>\"\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/mistral/:region/v1/fim/completions",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "mistral",
+                                    ":region",
+                                    "v1",
+                                    "fim",
+                                    "completions"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "region"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "json",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "application/json"
+                                }
+                              ],
+                              "cookie": [],
+                              "responseTime": null,
+                              "body": "{\n  \"id\": \"<string>\",\n  \"object\": \"<string>\",\n  \"model\": \"<string>\",\n  \"usage\": {\n    \"prompt_tokens\": \"<integer>\",\n    \"completion_tokens\": \"<integer>\",\n    \"total_tokens\": \"<integer>\"\n  },\n  \"created\": \"<integer>\",\n  \"choices\": [\n    {\n      \"index\": \"<integer>\",\n      \"finish_reason\": \"model_length\",\n      \"message\": {\n        \"content\": \"<string>\",\n        \"tool_calls\": [\n          {\n            \"function\": {\n              \"name\": \"<string>\",\n              \"arguments\": {\n                \"dolor5\": -63371504.11446011\n              }\n            },\n            \"id\": \"null\",\n            \"type\": \"function\"\n          },\n          {\n            \"function\": {\n              \"name\": \"<string>\",\n              \"arguments\": {\n                \"aliquipd\": -40832590.526102886,\n                \"aliquip_cc\": -24194177.65129879\n              }\n            },\n            \"id\": \"null\",\n            \"type\": \"function\"\n          }\n        ],\n        \"prefix\": false,\n        \"role\": \"assistant\"\n      }\n    },\n    {\n      \"index\": \"<integer>\",\n      \"finish_reason\": \"tool_calls\",\n      \"message\": {\n        \"content\": \"<string>\",\n        \"tool_calls\": [\n          {\n            \"function\": {\n              \"name\": \"<string>\",\n              \"arguments\": {\n                \"dolored\": false,\n                \"enim_1\": -9284901.2881933\n              }\n            },\n            \"id\": \"null\",\n            \"type\": \"function\"\n          },\n          {\n            \"function\": {\n              \"name\": \"<string>\",\n              \"arguments\": {\n                \"elit_32\": -47342790.36546605\n              }\n            },\n            \"id\": \"null\",\n            \"type\": \"function\"\n          }\n        ],\n        \"prefix\": false,\n        \"role\": \"assistant\"\n      }\n    }\n  ]\n}",
+                              "createdAt": "2026-07-28T02:02:38.000Z",
+                              "updatedAt": "2026-07-28T02:02:38.000Z",
+                              "uid": "35240-cffde82d-a414-4092-b52e-6cdec90a2d51"
+                            }
+                          ],
+                          "createdAt": "2026-07-28T02:02:38.000Z",
+                          "updatedAt": "2026-07-28T02:02:38.000Z",
+                          "uid": "35240-f15a7111-2128-49e9-bbb2-9653ce140000"
+                        }
+                      ],
+                      "id": "f816c5c5-411d-4764-bede-6b1c6dac7e61",
+                      "createdAt": "2026-07-28T02:02:38.000Z",
+                      "updatedAt": "2026-07-28T02:02:38.000Z",
+                      "uid": "35240-f816c5c5-411d-4764-bede-6b1c6dac7e61"
+                    }
+                  ],
+                  "id": "b79ba79d-5daa-4f74-97a2-f945e2c308ca",
+                  "createdAt": "2026-07-28T02:02:38.000Z",
+                  "updatedAt": "2026-07-28T02:02:38.000Z",
+                  "uid": "35240-b79ba79d-5daa-4f74-97a2-f945e2c308ca"
+                }
+              ],
+              "id": "08b5e4d5-5b8a-4661-899c-61c892ac48ac",
+              "createdAt": "2026-07-28T02:02:38.000Z",
+              "updatedAt": "2026-07-28T02:02:38.000Z",
+              "uid": "35240-08b5e4d5-5b8a-4661-899c-61c892ac48ac"
+            }
+          ],
+          "id": "adc34cb2-860c-480e-9be1-ae31a371b60e",
+          "createdAt": "2026-07-28T02:02:38.000Z",
+          "updatedAt": "2026-07-28T02:02:38.000Z",
+          "uid": "35240-adc34cb2-860c-480e-9be1-ae31a371b60e"
+        }
+      ],
+      "id": "18cfc926-0880-41f8-b59b-1945348e1686",
+      "createdAt": "2026-07-28T02:02:38.000Z",
+      "updatedAt": "2026-07-28T02:02:38.000Z",
+      "uid": "35240-18cfc926-0880-41f8-b59b-1945348e1686"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.langdock.com"
+    }
+  ]
+}

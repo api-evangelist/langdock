@@ -1,0 +1,564 @@
+{
+  "info": {
+    "_postman_id": "d8cc518d-d7db-4195-b3cf-17c0a25e9e28",
+    "name": "Langdock Agent Audit Logs API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:02:35.000Z",
+    "updatedAt": "2026-07-28T02:02:35.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-d8cc518d-d7db-4195-b3cf-17c0a25e9e28"
+  },
+  "item": [
+    {
+      "name": "audit-logs",
+      "item": [
+        {
+          "name": "{workspace_id}",
+          "item": [
+            {
+              "name": "List audit logs",
+              "id": "6cd5e800-9655-4f04-884e-0ac2e0077bae",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/audit-logs/:workspace_id?cursor=<uuid>&limit=50&from=<dateTime>&to=<dateTime>&entity_type=<string>&actor_id=<uuid>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "audit-logs",
+                    ":workspace_id"
+                  ],
+                  "query": [
+                    {
+                      "description": "Cursor for pagination (ID of last item from previous page)",
+                      "key": "cursor",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "Maximum number of items to return (default 50, max 50)",
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "description": "Start of date range filter (ISO 8601)",
+                      "key": "from",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "description": "End of date range filter (ISO 8601)",
+                      "key": "to",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "description": "Filter by entity type (e.g. \"User\", \"Workspace\")",
+                      "key": "entity_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Filter by actor UUID",
+                      "key": "actor_id",
+                      "value": "<uuid>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "id": "8553b37a-01a7-46e3-82c4-2929a1311cba",
+                      "key": "workspace_id",
+                      "value": "<uuid>",
+                      "description": "(Required) Workspace UUID. Must match the workspace associated with the API key; requests with a mismatched workspace_id are rejected with 403.\n"
+                    }
+                  ]
+                },
+                "description": "Returns audit log entries for a workspace with cursor-based pagination.\nRequires an API key with the `AUDIT_LOG_API` scope.\n"
+              },
+              "response": [
+                {
+                  "id": "d2818197-02af-4fa9-976a-d15d572569c2",
+                  "name": "Paginated list of audit log entries",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/audit-logs/:workspace_id?cursor=<uuid>&limit=50&from=<dateTime>&to=<dateTime>&entity_type=<string>&actor_id=<uuid>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "audit-logs",
+                        ":workspace_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Cursor for pagination (ID of last item from previous page)",
+                          "key": "cursor",
+                          "value": "<uuid>"
+                        },
+                        {
+                          "description": "Maximum number of items to return (default 50, max 50)",
+                          "key": "limit",
+                          "value": "50"
+                        },
+                        {
+                          "description": "Start of date range filter (ISO 8601)",
+                          "key": "from",
+                          "value": "<dateTime>"
+                        },
+                        {
+                          "description": "End of date range filter (ISO 8601)",
+                          "key": "to",
+                          "value": "<dateTime>"
+                        },
+                        {
+                          "description": "Filter by entity type (e.g. \"User\", \"Workspace\")",
+                          "key": "entity_type",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by actor UUID",
+                          "key": "actor_id",
+                          "value": "<uuid>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "workspace_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"data\": [\n    {\n      \"id\": \"<uuid>\",\n      \"created_at\": \"<dateTime>\",\n      \"actor_id\": \"<uuid>\",\n      \"actor_type\": \"SYSTEM\",\n      \"actor_name\": \"<string>\",\n      \"action\": \"<string>\",\n      \"entity_type\": \"<string>\",\n      \"entity_id\": \"<string>\",\n      \"ip_address\": \"<string>\",\n      \"user_agent\": \"<string>\",\n      \"changes\": {\n        \"before\": {},\n        \"after\": {}\n      },\n      \"snapshot\": {}\n    },\n    {\n      \"id\": \"<uuid>\",\n      \"created_at\": \"<dateTime>\",\n      \"actor_id\": \"<uuid>\",\n      \"actor_type\": \"USER\",\n      \"actor_name\": \"<string>\",\n      \"action\": \"<string>\",\n      \"entity_type\": \"<string>\",\n      \"entity_id\": \"<string>\",\n      \"ip_address\": \"<string>\",\n      \"user_agent\": \"<string>\",\n      \"changes\": {\n        \"before\": {},\n        \"after\": {}\n      },\n      \"snapshot\": {}\n    }\n  ],\n  \"next_cursor\": \"<uuid>\"\n}",
+                  "createdAt": "2026-07-28T02:02:35.000Z",
+                  "updatedAt": "2026-07-28T02:02:35.000Z",
+                  "uid": "35240-d2818197-02af-4fa9-976a-d15d572569c2"
+                },
+                {
+                  "id": "c5f24915-8812-477d-8ddc-87c8d1b7bd01",
+                  "name": "Invalid request parameters",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/audit-logs/:workspace_id?cursor=<uuid>&limit=50&from=<dateTime>&to=<dateTime>&entity_type=<string>&actor_id=<uuid>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "audit-logs",
+                        ":workspace_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Cursor for pagination (ID of last item from previous page)",
+                          "key": "cursor",
+                          "value": "<uuid>"
+                        },
+                        {
+                          "description": "Maximum number of items to return (default 50, max 50)",
+                          "key": "limit",
+                          "value": "50"
+                        },
+                        {
+                          "description": "Start of date range filter (ISO 8601)",
+                          "key": "from",
+                          "value": "<dateTime>"
+                        },
+                        {
+                          "description": "End of date range filter (ISO 8601)",
+                          "key": "to",
+                          "value": "<dateTime>"
+                        },
+                        {
+                          "description": "Filter by entity type (e.g. \"User\", \"Workspace\")",
+                          "key": "entity_type",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by actor UUID",
+                          "key": "actor_id",
+                          "value": "<uuid>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "workspace_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T02:02:35.000Z",
+                  "updatedAt": "2026-07-28T02:02:35.000Z",
+                  "uid": "35240-c5f24915-8812-477d-8ddc-87c8d1b7bd01"
+                },
+                {
+                  "id": "ebe6680a-b4ec-46d5-8d1a-70e7e7a328ac",
+                  "name": "Missing or invalid API key",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/audit-logs/:workspace_id?cursor=<uuid>&limit=50&from=<dateTime>&to=<dateTime>&entity_type=<string>&actor_id=<uuid>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "audit-logs",
+                        ":workspace_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Cursor for pagination (ID of last item from previous page)",
+                          "key": "cursor",
+                          "value": "<uuid>"
+                        },
+                        {
+                          "description": "Maximum number of items to return (default 50, max 50)",
+                          "key": "limit",
+                          "value": "50"
+                        },
+                        {
+                          "description": "Start of date range filter (ISO 8601)",
+                          "key": "from",
+                          "value": "<dateTime>"
+                        },
+                        {
+                          "description": "End of date range filter (ISO 8601)",
+                          "key": "to",
+                          "value": "<dateTime>"
+                        },
+                        {
+                          "description": "Filter by entity type (e.g. \"User\", \"Workspace\")",
+                          "key": "entity_type",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by actor UUID",
+                          "key": "actor_id",
+                          "value": "<uuid>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "workspace_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T02:02:35.000Z",
+                  "updatedAt": "2026-07-28T02:02:35.000Z",
+                  "uid": "35240-ebe6680a-b4ec-46d5-8d1a-70e7e7a328ac"
+                },
+                {
+                  "id": "ddf0a248-a76a-4676-8279-42e09ebabd29",
+                  "name": "Insufficient API key scopes or workspace_id does not match the API key's workspace",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/audit-logs/:workspace_id?cursor=<uuid>&limit=50&from=<dateTime>&to=<dateTime>&entity_type=<string>&actor_id=<uuid>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "audit-logs",
+                        ":workspace_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Cursor for pagination (ID of last item from previous page)",
+                          "key": "cursor",
+                          "value": "<uuid>"
+                        },
+                        {
+                          "description": "Maximum number of items to return (default 50, max 50)",
+                          "key": "limit",
+                          "value": "50"
+                        },
+                        {
+                          "description": "Start of date range filter (ISO 8601)",
+                          "key": "from",
+                          "value": "<dateTime>"
+                        },
+                        {
+                          "description": "End of date range filter (ISO 8601)",
+                          "key": "to",
+                          "value": "<dateTime>"
+                        },
+                        {
+                          "description": "Filter by entity type (e.g. \"User\", \"Workspace\")",
+                          "key": "entity_type",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by actor UUID",
+                          "key": "actor_id",
+                          "value": "<uuid>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "workspace_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T02:02:35.000Z",
+                  "updatedAt": "2026-07-28T02:02:35.000Z",
+                  "uid": "35240-ddf0a248-a76a-4676-8279-42e09ebabd29"
+                },
+                {
+                  "id": "6c6f3efa-336a-4376-84c4-aef7969d63f1",
+                  "name": "Rate limit exceeded",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/audit-logs/:workspace_id?cursor=<uuid>&limit=50&from=<dateTime>&to=<dateTime>&entity_type=<string>&actor_id=<uuid>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "audit-logs",
+                        ":workspace_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Cursor for pagination (ID of last item from previous page)",
+                          "key": "cursor",
+                          "value": "<uuid>"
+                        },
+                        {
+                          "description": "Maximum number of items to return (default 50, max 50)",
+                          "key": "limit",
+                          "value": "50"
+                        },
+                        {
+                          "description": "Start of date range filter (ISO 8601)",
+                          "key": "from",
+                          "value": "<dateTime>"
+                        },
+                        {
+                          "description": "End of date range filter (ISO 8601)",
+                          "key": "to",
+                          "value": "<dateTime>"
+                        },
+                        {
+                          "description": "Filter by entity type (e.g. \"User\", \"Workspace\")",
+                          "key": "entity_type",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by actor UUID",
+                          "key": "actor_id",
+                          "value": "<uuid>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "workspace_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T02:02:35.000Z",
+                  "updatedAt": "2026-07-28T02:02:35.000Z",
+                  "uid": "35240-6c6f3efa-336a-4376-84c4-aef7969d63f1"
+                },
+                {
+                  "id": "7abd1470-132c-4a0a-a83a-d4d119f52ccd",
+                  "name": "Internal server error",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/audit-logs/:workspace_id?cursor=<uuid>&limit=50&from=<dateTime>&to=<dateTime>&entity_type=<string>&actor_id=<uuid>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "audit-logs",
+                        ":workspace_id"
+                      ],
+                      "query": [
+                        {
+                          "description": "Cursor for pagination (ID of last item from previous page)",
+                          "key": "cursor",
+                          "value": "<uuid>"
+                        },
+                        {
+                          "description": "Maximum number of items to return (default 50, max 50)",
+                          "key": "limit",
+                          "value": "50"
+                        },
+                        {
+                          "description": "Start of date range filter (ISO 8601)",
+                          "key": "from",
+                          "value": "<dateTime>"
+                        },
+                        {
+                          "description": "End of date range filter (ISO 8601)",
+                          "key": "to",
+                          "value": "<dateTime>"
+                        },
+                        {
+                          "description": "Filter by entity type (e.g. \"User\", \"Workspace\")",
+                          "key": "entity_type",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Filter by actor UUID",
+                          "key": "actor_id",
+                          "value": "<uuid>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "workspace_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-07-28T02:02:35.000Z",
+                  "updatedAt": "2026-07-28T02:02:35.000Z",
+                  "uid": "35240-7abd1470-132c-4a0a-a83a-d4d119f52ccd"
+                }
+              ],
+              "createdAt": "2026-07-28T02:02:35.000Z",
+              "updatedAt": "2026-07-28T02:02:35.000Z",
+              "uid": "35240-6cd5e800-9655-4f04-884e-0ac2e0077bae"
+            }
+          ],
+          "id": "b6445199-0184-4a11-a7fa-67c292e684e2",
+          "createdAt": "2026-07-28T02:02:35.000Z",
+          "updatedAt": "2026-07-28T02:02:35.000Z",
+          "uid": "35240-b6445199-0184-4a11-a7fa-67c292e684e2"
+        }
+      ],
+      "id": "5d3baab1-9ba8-4e01-bf1d-af3540a3d92a",
+      "createdAt": "2026-07-28T02:02:35.000Z",
+      "updatedAt": "2026-07-28T02:02:35.000Z",
+      "uid": "35240-5d3baab1-9ba8-4e01-bf1d-af3540a3d92a"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.langdock.com"
+    }
+  ]
+}

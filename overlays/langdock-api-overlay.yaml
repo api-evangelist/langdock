@@ -1,0 +1,139 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Langdock API
+  version: 1.0.0
+extends: openapi/langdock-openapi-original.yml
+x-generated: '2026-07-19'
+x-method: generated
+x-source: >-
+  Generated from the harvested spec at https://docs.langdock.com/openapi.yaml plus the
+  artifacts in this repo. Captures API Evangelist enhancements without mutating the
+  original document. The published spec declares no tags and leaves 13 of 38
+  operations without an operationId; the actions below add tag taxonomy and cross-links
+  rather than inventing operation ids.
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: langdock
+    x-apievangelist-artifacts:
+      authentication: authentication/langdock-authentication.yml
+      conventions: conventions/langdock-conventions.yml
+      errors: errors/langdock-problem-types.yml
+      lifecycle: lifecycle/langdock-lifecycle.yml
+      rate-limits: rate-limits/langdock-rate-limits.yml
+      data-model: data-model/langdock-data-model.yml
+      mcp: mcp/langdock-mcp.yml
+      conformance: conformance/langdock-conformance.yml
+    description: >-
+      The Langdock public API. Provider-compatible completion and embedding endpoints
+      routed by region, plus first-party Agents, Skills, Knowledge Folder, Attachments,
+      Audit Logs, Usage Export, and User Management APIs. Authenticated with a
+      workspace API key as a bearer token.
+    contact:
+      name: Langdock
+      url: https://docs.langdock.com/en/developer/overview/api-introduction
+    x-logo:
+      url: https://www.langdock.com/favicon.ico
+- target: $
+  update:
+    tags:
+    - name: Completions
+      description: Provider-compatible chat, message, and FIM completion endpoints.
+    - name: Embeddings
+      description: Vector embedding generation.
+    - name: Agents
+      description: Create, update, publish, and query Langdock agents.
+    - name: Assistants (deprecated)
+      description: Legacy assistant surface, superseded by Agents.
+    - name: Skills
+      description: Create, import, and manage reusable Skill instruction packages.
+    - name: Knowledge
+      description: Upload, update, list, delete, and semantically search knowledge-folder
+        files.
+    - name: Attachments
+      description: Upload and delete files used by agents.
+    - name: Audit Logs
+      description: Paginated workspace audit trail.
+    - name: Usage Export
+      description: Export workspace usage and cost data as CSV or JSON.
+    - name: User Management
+      description: Invite and deactivate workspace users.
+    externalDocs:
+      description: Langdock developer documentation
+      url: https://docs.langdock.com/en/developer/overview/api-introduction
+- target: $.servers
+  update:
+  - url: https://api.langdock.com
+    description: Production (Langdock Cloud)
+  - url: https://{customerDomain}/api/public
+    description: Dedicated / single-tenant deployment
+    variables:
+      customerDomain:
+        default: your-domain.example.com
+        description: The hostname of your dedicated Langdock deployment.
+- target: $.components.securitySchemes.bearerAuth
+  update:
+    x-key-prefix: sk-ld-
+    x-key-management: https://app.langdock.com/settings/workspace/products/api
+    x-rotation-guidance: Rotate keys at least every 90 days, or immediately on suspected
+      compromise.
+    x-scopes-observed:
+    - AGENT_API
+    - AUDIT_LOG_API
+    x-browser-calls: blocked — backend access only
+- target: $.paths['/skills/v1'].get
+  update:
+    tags:
+    - Skills
+    x-pagination:
+      style: cursor
+      cursor_param: cursor
+      limit_param: limit
+      next_cursor_field: nextCursor
+- target: $.paths['/audit-logs/{workspace_id}'].get
+  update:
+    tags:
+    - Audit Logs
+    x-pagination:
+      style: cursor
+      cursor_param: cursor
+      limit_param: limit
+      next_cursor_field: next_cursor
+    x-required-scope: AUDIT_LOG_API
+- target: $.paths['/agent/v1/chat/completions'].post
+  update:
+    tags:
+    - Agents
+    x-required-scope: AGENT_API
+    x-response-format: Vercel AI SDK compatible
+- target: $.paths['/openai/{region}/v1/chat/completions'].post
+  update:
+    tags:
+    - Completions
+    x-provider-compatibility: OpenAI SDKs — set base_url to https://api.langdock.com/openai/{region}/v1
+- target: $.paths['/anthropic/{region}/v1/messages'].post
+  update:
+    tags:
+    - Completions
+    x-provider-compatibility: Anthropic SDKs
+- target: $.paths['/google/{region}/v1beta/models/{model}:generateContent'].post
+  update:
+    tags:
+    - Completions
+    x-provider-compatibility: Official Vertex AI SDKs (Python / Node)
+- target: $.paths['/mistral/{region}/v1/fim/completions'].post
+  update:
+    tags:
+    - Completions
+    x-provider-compatibility: Mistral Codestral FIM
+    x-regions:
+    - eu
+- target: $.paths['/openai/{region}/v1/embeddings'].post
+  update:
+    tags:
+    - Embeddings
+- target: $.paths['/knowledge/search'].post
+  update:
+    tags:
+    - Knowledge
+    x-access-note: The knowledge folder must be explicitly shared with the API key.

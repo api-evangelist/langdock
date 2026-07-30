@@ -1,0 +1,408 @@
+{
+  "info": {
+    "_postman_id": "11b178d1-13b2-482a-95ea-aa49730dbb1f",
+    "name": "Langdock Agent API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:02:28.000Z",
+    "updatedAt": "2026-07-28T02:02:28.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-11b178d1-13b2-482a-95ea-aa49730dbb1f"
+  },
+  "item": [
+    {
+      "name": "agent",
+      "item": [
+        {
+          "name": "v1",
+          "item": [
+            {
+              "name": "chat",
+              "item": [
+                {
+                  "name": "completions",
+                  "item": [
+                    {
+                      "name": "Creates a chat completion with an agent (Vercel AI SDK compatible)",
+                      "id": "fae57167-57c2-4014-aa00-a7e7b8da0866",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"agentId\": \"<string>\",\n  \"messages\": [\n    {\n      \"id\": \"<string>\",\n      \"role\": \"assistant\",\n      \"parts\": [\n        {\n          \"type\": \"file\",\n          \"text\": \"<string>\",\n          \"url\": \"<string>\",\n          \"name\": \"<string>\",\n          \"mimeType\": \"<string>\",\n          \"toolCallId\": \"<string>\",\n          \"toolName\": \"<string>\",\n          \"args\": {},\n          \"result\": {}\n        },\n        {\n          \"type\": \"file\",\n          \"text\": \"<string>\",\n          \"url\": \"<string>\",\n          \"name\": \"<string>\",\n          \"mimeType\": \"<string>\",\n          \"toolCallId\": \"<string>\",\n          \"toolName\": \"<string>\",\n          \"args\": {},\n          \"result\": {}\n        }\n      ]\n    },\n    {\n      \"id\": \"<string>\",\n      \"role\": \"assistant\",\n      \"parts\": [\n        {\n          \"type\": \"text\",\n          \"text\": \"<string>\",\n          \"url\": \"<string>\",\n          \"name\": \"<string>\",\n          \"mimeType\": \"<string>\",\n          \"toolCallId\": \"<string>\",\n          \"toolName\": \"<string>\",\n          \"args\": {},\n          \"result\": {}\n        },\n        {\n          \"type\": \"file\",\n          \"text\": \"<string>\",\n          \"url\": \"<string>\",\n          \"name\": \"<string>\",\n          \"mimeType\": \"<string>\",\n          \"toolCallId\": \"<string>\",\n          \"toolName\": \"<string>\",\n          \"args\": {},\n          \"result\": {}\n        }\n      ]\n    }\n  ],\n  \"stream\": false,\n  \"output\": {\n    \"type\": \"enum\",\n    \"enum\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"imageResponseFormat\": \"url\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/agent/v1/chat/completions",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "agent",
+                            "v1",
+                            "chat",
+                            "completions"
+                          ]
+                        },
+                        "description": "Creates a model response using Vercel AI SDK compatible UIMessage format"
+                      },
+                      "response": [
+                        {
+                          "id": "ded2952e-afc4-4a2a-9aba-35614789a264",
+                          "name": "Successful chat completion",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"agentId\": \"<string>\",\n  \"messages\": [\n    {\n      \"id\": \"<string>\",\n      \"role\": \"assistant\",\n      \"parts\": [\n        {\n          \"type\": \"file\",\n          \"text\": \"<string>\",\n          \"url\": \"<string>\",\n          \"name\": \"<string>\",\n          \"mimeType\": \"<string>\",\n          \"toolCallId\": \"<string>\",\n          \"toolName\": \"<string>\",\n          \"args\": {},\n          \"result\": {}\n        },\n        {\n          \"type\": \"file\",\n          \"text\": \"<string>\",\n          \"url\": \"<string>\",\n          \"name\": \"<string>\",\n          \"mimeType\": \"<string>\",\n          \"toolCallId\": \"<string>\",\n          \"toolName\": \"<string>\",\n          \"args\": {},\n          \"result\": {}\n        }\n      ]\n    },\n    {\n      \"id\": \"<string>\",\n      \"role\": \"assistant\",\n      \"parts\": [\n        {\n          \"type\": \"text\",\n          \"text\": \"<string>\",\n          \"url\": \"<string>\",\n          \"name\": \"<string>\",\n          \"mimeType\": \"<string>\",\n          \"toolCallId\": \"<string>\",\n          \"toolName\": \"<string>\",\n          \"args\": {},\n          \"result\": {}\n        },\n        {\n          \"type\": \"file\",\n          \"text\": \"<string>\",\n          \"url\": \"<string>\",\n          \"name\": \"<string>\",\n          \"mimeType\": \"<string>\",\n          \"toolCallId\": \"<string>\",\n          \"toolName\": \"<string>\",\n          \"args\": {},\n          \"result\": {}\n        }\n      ]\n    }\n  ],\n  \"stream\": false,\n  \"output\": {\n    \"type\": \"enum\",\n    \"enum\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"imageResponseFormat\": \"url\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/agent/v1/chat/completions",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "agent",
+                                "v1",
+                                "chat",
+                                "completions"
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"id\": \"<string>\",\n  \"role\": \"assistant\",\n  \"parts\": [],\n  \"output\": {\n    \"description\": \"Structured output if requested\"\n  }\n}",
+                          "createdAt": "2026-07-28T02:02:28.000Z",
+                          "updatedAt": "2026-07-28T02:02:28.000Z",
+                          "uid": "35240-ded2952e-afc4-4a2a-9aba-35614789a264"
+                        },
+                        {
+                          "id": "7ba15956-714e-454f-944a-c23d43f2c2bf",
+                          "name": "Invalid request parameters",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"agentId\": \"<string>\",\n  \"messages\": [\n    {\n      \"id\": \"<string>\",\n      \"role\": \"assistant\",\n      \"parts\": [\n        {\n          \"type\": \"file\",\n          \"text\": \"<string>\",\n          \"url\": \"<string>\",\n          \"name\": \"<string>\",\n          \"mimeType\": \"<string>\",\n          \"toolCallId\": \"<string>\",\n          \"toolName\": \"<string>\",\n          \"args\": {},\n          \"result\": {}\n        },\n        {\n          \"type\": \"file\",\n          \"text\": \"<string>\",\n          \"url\": \"<string>\",\n          \"name\": \"<string>\",\n          \"mimeType\": \"<string>\",\n          \"toolCallId\": \"<string>\",\n          \"toolName\": \"<string>\",\n          \"args\": {},\n          \"result\": {}\n        }\n      ]\n    },\n    {\n      \"id\": \"<string>\",\n      \"role\": \"assistant\",\n      \"parts\": [\n        {\n          \"type\": \"text\",\n          \"text\": \"<string>\",\n          \"url\": \"<string>\",\n          \"name\": \"<string>\",\n          \"mimeType\": \"<string>\",\n          \"toolCallId\": \"<string>\",\n          \"toolName\": \"<string>\",\n          \"args\": {},\n          \"result\": {}\n        },\n        {\n          \"type\": \"file\",\n          \"text\": \"<string>\",\n          \"url\": \"<string>\",\n          \"name\": \"<string>\",\n          \"mimeType\": \"<string>\",\n          \"toolCallId\": \"<string>\",\n          \"toolName\": \"<string>\",\n          \"args\": {},\n          \"result\": {}\n        }\n      ]\n    }\n  ],\n  \"stream\": false,\n  \"output\": {\n    \"type\": \"enum\",\n    \"enum\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"imageResponseFormat\": \"url\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/agent/v1/chat/completions",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "agent",
+                                "v1",
+                                "chat",
+                                "completions"
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-07-28T02:02:28.000Z",
+                          "updatedAt": "2026-07-28T02:02:28.000Z",
+                          "uid": "35240-7ba15956-714e-454f-944a-c23d43f2c2bf"
+                        },
+                        {
+                          "id": "f8f941c9-6fe9-4b08-a02a-b8e6ec15485a",
+                          "name": "Rate limit exceeded",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"agentId\": \"<string>\",\n  \"messages\": [\n    {\n      \"id\": \"<string>\",\n      \"role\": \"assistant\",\n      \"parts\": [\n        {\n          \"type\": \"file\",\n          \"text\": \"<string>\",\n          \"url\": \"<string>\",\n          \"name\": \"<string>\",\n          \"mimeType\": \"<string>\",\n          \"toolCallId\": \"<string>\",\n          \"toolName\": \"<string>\",\n          \"args\": {},\n          \"result\": {}\n        },\n        {\n          \"type\": \"file\",\n          \"text\": \"<string>\",\n          \"url\": \"<string>\",\n          \"name\": \"<string>\",\n          \"mimeType\": \"<string>\",\n          \"toolCallId\": \"<string>\",\n          \"toolName\": \"<string>\",\n          \"args\": {},\n          \"result\": {}\n        }\n      ]\n    },\n    {\n      \"id\": \"<string>\",\n      \"role\": \"assistant\",\n      \"parts\": [\n        {\n          \"type\": \"text\",\n          \"text\": \"<string>\",\n          \"url\": \"<string>\",\n          \"name\": \"<string>\",\n          \"mimeType\": \"<string>\",\n          \"toolCallId\": \"<string>\",\n          \"toolName\": \"<string>\",\n          \"args\": {},\n          \"result\": {}\n        },\n        {\n          \"type\": \"file\",\n          \"text\": \"<string>\",\n          \"url\": \"<string>\",\n          \"name\": \"<string>\",\n          \"mimeType\": \"<string>\",\n          \"toolCallId\": \"<string>\",\n          \"toolName\": \"<string>\",\n          \"args\": {},\n          \"result\": {}\n        }\n      ]\n    }\n  ],\n  \"stream\": false,\n  \"output\": {\n    \"type\": \"enum\",\n    \"enum\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"imageResponseFormat\": \"url\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/agent/v1/chat/completions",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "agent",
+                                "v1",
+                                "chat",
+                                "completions"
+                              ]
+                            }
+                          },
+                          "status": "Too Many Requests",
+                          "code": 429,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-07-28T02:02:28.000Z",
+                          "updatedAt": "2026-07-28T02:02:28.000Z",
+                          "uid": "35240-f8f941c9-6fe9-4b08-a02a-b8e6ec15485a"
+                        },
+                        {
+                          "id": "70650c71-39cc-41b0-8d0d-ddb3dcb9b430",
+                          "name": "Internal server error",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: bearer",
+                                "key": "Authorization",
+                                "value": "Bearer <token>"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"agentId\": \"<string>\",\n  \"messages\": [\n    {\n      \"id\": \"<string>\",\n      \"role\": \"assistant\",\n      \"parts\": [\n        {\n          \"type\": \"file\",\n          \"text\": \"<string>\",\n          \"url\": \"<string>\",\n          \"name\": \"<string>\",\n          \"mimeType\": \"<string>\",\n          \"toolCallId\": \"<string>\",\n          \"toolName\": \"<string>\",\n          \"args\": {},\n          \"result\": {}\n        },\n        {\n          \"type\": \"file\",\n          \"text\": \"<string>\",\n          \"url\": \"<string>\",\n          \"name\": \"<string>\",\n          \"mimeType\": \"<string>\",\n          \"toolCallId\": \"<string>\",\n          \"toolName\": \"<string>\",\n          \"args\": {},\n          \"result\": {}\n        }\n      ]\n    },\n    {\n      \"id\": \"<string>\",\n      \"role\": \"assistant\",\n      \"parts\": [\n        {\n          \"type\": \"text\",\n          \"text\": \"<string>\",\n          \"url\": \"<string>\",\n          \"name\": \"<string>\",\n          \"mimeType\": \"<string>\",\n          \"toolCallId\": \"<string>\",\n          \"toolName\": \"<string>\",\n          \"args\": {},\n          \"result\": {}\n        },\n        {\n          \"type\": \"file\",\n          \"text\": \"<string>\",\n          \"url\": \"<string>\",\n          \"name\": \"<string>\",\n          \"mimeType\": \"<string>\",\n          \"toolCallId\": \"<string>\",\n          \"toolName\": \"<string>\",\n          \"args\": {},\n          \"result\": {}\n        }\n      ]\n    }\n  ],\n  \"stream\": false,\n  \"output\": {\n    \"type\": \"enum\",\n    \"enum\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"imageResponseFormat\": \"url\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/agent/v1/chat/completions",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "agent",
+                                "v1",
+                                "chat",
+                                "completions"
+                              ]
+                            }
+                          },
+                          "status": "Internal Server Error",
+                          "code": 500,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": null,
+                          "createdAt": "2026-07-28T02:02:28.000Z",
+                          "updatedAt": "2026-07-28T02:02:28.000Z",
+                          "uid": "35240-70650c71-39cc-41b0-8d0d-ddb3dcb9b430"
+                        }
+                      ],
+                      "createdAt": "2026-07-28T02:02:28.000Z",
+                      "updatedAt": "2026-07-28T02:02:28.000Z",
+                      "uid": "35240-fae57167-57c2-4014-aa00-a7e7b8da0866"
+                    }
+                  ],
+                  "id": "d3e18fe9-6575-479e-bcca-00ab0d08ed6d",
+                  "createdAt": "2026-07-28T02:02:28.000Z",
+                  "updatedAt": "2026-07-28T02:02:28.000Z",
+                  "uid": "35240-d3e18fe9-6575-479e-bcca-00ab0d08ed6d"
+                }
+              ],
+              "id": "1ff9b1c6-7d14-420d-8294-48106be80bd6",
+              "createdAt": "2026-07-28T02:02:28.000Z",
+              "updatedAt": "2026-07-28T02:02:28.000Z",
+              "uid": "35240-1ff9b1c6-7d14-420d-8294-48106be80bd6"
+            },
+            {
+              "name": "models",
+              "item": [
+                {
+                  "name": "Lists the available models",
+                  "id": "ddd413e4-1445-40b1-8bad-694222150a70",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/agent/v1/models",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "agent",
+                        "v1",
+                        "models"
+                      ]
+                    },
+                    "description": "Returns a list of models that are available for use with the API."
+                  },
+                  "response": [
+                    {
+                      "id": "3aa9c36f-813a-4cde-b28a-b8af97e1efcc",
+                      "name": "List of available models",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/agent/v1/models",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "agent",
+                            "v1",
+                            "models"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"id\": \"<string>\",\n      \"object\": \"<string>\",\n      \"created\": \"<integer>\",\n      \"owned_by\": \"<string>\"\n    },\n    {\n      \"id\": \"<string>\",\n      \"object\": \"<string>\",\n      \"created\": \"<integer>\",\n      \"owned_by\": \"<string>\"\n    }\n  ]\n}",
+                      "createdAt": "2026-07-28T02:02:28.000Z",
+                      "updatedAt": "2026-07-28T02:02:28.000Z",
+                      "uid": "35240-3aa9c36f-813a-4cde-b28a-b8af97e1efcc"
+                    }
+                  ],
+                  "createdAt": "2026-07-28T02:02:28.000Z",
+                  "updatedAt": "2026-07-28T02:02:28.000Z",
+                  "uid": "35240-ddd413e4-1445-40b1-8bad-694222150a70"
+                }
+              ],
+              "id": "aa1f382b-91af-425d-9dc5-7f06e43b12bc",
+              "createdAt": "2026-07-28T02:02:28.000Z",
+              "updatedAt": "2026-07-28T02:02:28.000Z",
+              "uid": "35240-aa1f382b-91af-425d-9dc5-7f06e43b12bc"
+            }
+          ],
+          "id": "ab8186e6-28cb-4d05-95d9-ce01887e9780",
+          "createdAt": "2026-07-28T02:02:28.000Z",
+          "updatedAt": "2026-07-28T02:02:28.000Z",
+          "uid": "35240-ab8186e6-28cb-4d05-95d9-ce01887e9780"
+        }
+      ],
+      "id": "aa00758a-0c54-4de8-a6aa-389c9511ca07",
+      "createdAt": "2026-07-28T02:02:28.000Z",
+      "updatedAt": "2026-07-28T02:02:28.000Z",
+      "uid": "35240-aa00758a-0c54-4de8-a6aa-389c9511ca07"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.langdock.com"
+    }
+  ]
+}
