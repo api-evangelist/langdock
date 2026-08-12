@@ -194,6 +194,8 @@ apis:
   - type: OpenAPI
     url: openapi/langdock-user-management-api-openapi.yml
 common:
+- type: Overlay
+  url: overlays/langdock-api-overlay.yaml
 - type: PostmanWorkspace
   url: https://www.postman.com/kinlaneapi/langdock/overview
 - type: TrustCenter
