@@ -1,0 +1,73 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Langdock Agent Assistant Build API",
+    "version": "3.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Assistant Build",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "[Deprecated] Creates a new assistant",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.langdock.com/assistant/v1/create",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This endpoint is deprecated. Please use /agent/v1/create for new integrations. Creates a new assistant in your workspace programmatically."
+        },
+        {
+          "info": {
+            "name": "[Deprecated] Updates an existing assistant",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.langdock.com/assistant/v1/update",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This endpoint is deprecated. Please use /agent/v1/update for new integrations. Updates an existing assistant in your workspace. Only provided fields will be updated."
+        },
+        {
+          "info": {
+            "name": "[Deprecated] Retrieves details of an existing assistant",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.langdock.com/assistant/v1/get",
+            "params": [
+              {
+                "name": "assistantId",
+                "value": "",
+                "type": "query",
+                "description": "UUID of the agent to retrieve"
+              }
+            ]
+          },
+          "docs": "This endpoint is deprecated. Please use /agent/v1/get for new integrations. Retrieves the complete configuration and details of an existing assistant."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,99 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Langdock Agent Usage Export API",
+    "version": "3.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Usage Export",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Export assistant usage data",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.langdock.com/export/assistants",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Export detailed usage data for all assistants in the workspace"
+        },
+        {
+          "info": {
+            "name": "Export user usage data",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.langdock.com/export/users",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Export detailed usage data for all users in the workspace (subject to privacy settings)"
+        },
+        {
+          "info": {
+            "name": "Export project usage data",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.langdock.com/export/projects",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Export detailed usage data for all projects in the workspace"
+        },
+        {
+          "info": {
+            "name": "Export model usage data",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.langdock.com/export/models",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Export detailed usage data for all AI models used in the workspace"
+        },
+        {
+          "info": {
+            "name": "Export API key usage data",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.langdock.com/export/api-keys",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Export detailed usage and cost data grouped by API key"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

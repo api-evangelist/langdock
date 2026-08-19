@@ -1,0 +1,152 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Langdock Agent Skills API",
+    "version": "3.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Skills",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Skills",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.langdock.com/skills/v1",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of Skills to return."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Cursor from the previous response for pagination."
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Search query for matching Skills."
+              },
+              {
+                "name": "slug",
+                "value": "",
+                "type": "query",
+                "description": "Filter by Skill slug."
+              }
+            ]
+          },
+          "docs": "Returns Skills in your workspace."
+        },
+        {
+          "info": {
+            "name": "Create a Skill",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.langdock.com/skills/v1",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a Skill in your workspace."
+        },
+        {
+          "info": {
+            "name": "Get a Skill",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.langdock.com/skills/v1/:skillId",
+            "params": [
+              {
+                "name": "skillId",
+                "value": "",
+                "type": "path",
+                "description": "UUID of the Skill."
+              }
+            ]
+          },
+          "docs": "Retrieves a Skill by ID from your workspace."
+        },
+        {
+          "info": {
+            "name": "Update a Skill",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.langdock.com/skills/v1/:skillId",
+            "params": [
+              {
+                "name": "skillId",
+                "value": "",
+                "type": "path",
+                "description": "UUID of the Skill."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing Skill in your workspace."
+        },
+        {
+          "info": {
+            "name": "Delete a Skill",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.langdock.com/skills/v1/:skillId",
+            "params": [
+              {
+                "name": "skillId",
+                "value": "",
+                "type": "path",
+                "description": "UUID of the Skill."
+              }
+            ]
+          },
+          "docs": "Permanently deletes a Skill from your workspace."
+        },
+        {
+          "info": {
+            "name": "Import a Skill",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.langdock.com/skills/v1/import",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Creates or updates a Skill from a SKILL.md file or zip archive."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,1121 @@
+{
+  "item": [
+    {
+      "id": "5771b90b-c7e7-4eab-9d2e-bd82ebbf9f13",
+      "name": "Assistant Build",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a216519b-19ba-4c7f-b687-bd2d548c3bfd",
+          "name": "[Deprecated] Creates a new assistant",
+          "request": {
+            "name": "[Deprecated] Creates a new assistant",
+            "description": {
+              "content": "This endpoint is deprecated. Please use /agent/v1/create for new integrations. Creates a new assistant in your workspace programmatically.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "assistant",
+                "v1",
+                "create"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"emoji\": \"<string>\",\n  \"instruction\": \"<string>\",\n  \"inputType\": \"PROMPT\",\n  \"model\": \"<string>\",\n  \"creativity\": 0.3,\n  \"conversationStarters\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"actions\": [\n    {\n      \"actionId\": \"<uuid>\",\n      \"requiresConfirmation\": false\n    },\n    {\n      \"actionId\": \"<uuid>\",\n      \"requiresConfirmation\": false\n    }\n  ],\n  \"inputFields\": [\n    {\n      \"slug\": \"<string>\",\n      \"type\": \"<string>\",\n      \"label\": \"<string>\",\n      \"order\": \"<integer>\",\n      \"description\": \"<string>\",\n      \"required\": false,\n      \"options\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fileTypes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"slug\": \"<string>\",\n      \"type\": \"<string>\",\n      \"label\": \"<string>\",\n      \"order\": \"<integer>\",\n      \"description\": \"<string>\",\n      \"required\": false,\n      \"options\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fileTypes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"attachments\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"webSearch\": false,\n  \"imageGeneration\": false,\n  \"dataAnalyst\": false,\n  \"canvas\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "03dd1bfb-9f8a-4ca5-b2e8-1dc88f685a59",
+              "name": "Agent created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "assistant",
+                    "v1",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Document Analyzer\",\n  \"description\": \"Analyzes and summarizes documents\",\n  \"emoji\": \"📄\",\n  \"instruction\": \"You are a helpful agent that analyzes documents.\",\n  \"creativity\": 0.5\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"message\": \"Assistant created successfully\",\n  \"assistant\": {\n    \"id\": \"02d1f6c4-8c42-291d-19d4-df4751c2ef67\",\n    \"name\": \"string\",\n    \"emojiIcon\": \"string\",\n    \"model\": \"string\",\n    \"temperature\": 0.5522383602046838,\n    \"inputType\": \"STRUCTURED\",\n    \"webSearchEnabled\": true,\n    \"imageGenerationEnabled\": false,\n    \"canvasEnabled\": false,\n    \"createdAt\": \"1952-03-17T00:11:53.910Z\",\n    \"updatedAt\": \"2011-08-07T10:42:02.805Z\",\n    \"description\": \"string\",\n    \"instruction\": \"string\",\n    \"conversationStarters\": [\n      \"string\",\n      \"string\"\n    ],\n    \"extendedThinking\": true,\n    \"actions\": [\n      {\n        \"actionId\": \"bb3c85dd-a20c-605f-4c61-a794e3d08b10\",\n        \"requiresConfirmation\": true\n      },\n      {\n        \"actionId\": \"8321f043-07f0-ac40-f855-0a54c513e7dc\",\n        \"requiresConfirmation\": true\n      }\n    ],\n    \"inputFields\": [\n      {\n        \"slug\": \"string\",\n        \"type\": \"FILE\",\n        \"label\": \"string\",\n        \"required\": true,\n        \"order\": 6807,\n        \"description\": \"string\",\n        \"options\": [\n          \"string\",\n          \"string\"\n        ],\n        \"fileTypes\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      {\n        \"slug\": \"string\",\n        \"type\": \"NUMBER\",\n        \"label\": \"string\",\n        \"required\": false,\n        \"order\": 997,\n        \"description\": \"string\",\n        \"options\": [\n          \"string\",\n          \"string\"\n        ],\n        \"fileTypes\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    ],\n    \"attachments\": [\n      \"e5dc7823-6480-c6bb-9b9e-121478585b94\",\n      \"d97d3aac-347c-fcd5-28a5-3af29b817f13\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cce06397-0062-4917-8438-a37e208a0559",
+              "name": "Invalid request parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "assistant",
+                    "v1",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Document Analyzer\",\n  \"description\": \"Analyzes and summarizes documents\",\n  \"emoji\": \"📄\",\n  \"instruction\": \"You are a helpful agent that analyzes documents.\",\n  \"creativity\": 0.5\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "009488db-f24c-4ff4-9e1e-8a99a0c67741",
+              "name": "Invalid or missing API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "assistant",
+                    "v1",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Document Analyzer\",\n  \"description\": \"Analyzes and summarizes documents\",\n  \"emoji\": \"📄\",\n  \"instruction\": \"You are a helpful agent that analyzes documents.\",\n  \"creativity\": 0.5\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "32ed3d36-6a60-43b5-97ae-ea9d97dc4c93",
+              "name": "Insufficient permissions - requires AGENT_API scope",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "assistant",
+                    "v1",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Document Analyzer\",\n  \"description\": \"Analyzes and summarizes documents\",\n  \"emoji\": \"📄\",\n  \"instruction\": \"You are a helpful agent that analyzes documents.\",\n  \"creativity\": 0.5\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "160cdaea-647d-4f59-b727-45368a35a635",
+              "name": "Resource not found (model, action, or attachment)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "assistant",
+                    "v1",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Document Analyzer\",\n  \"description\": \"Analyzes and summarizes documents\",\n  \"emoji\": \"📄\",\n  \"instruction\": \"You are a helpful agent that analyzes documents.\",\n  \"creativity\": 0.5\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "50f65bfb-c30c-48b5-aae2-1377b88eabd8",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "assistant",
+                    "v1",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Document Analyzer\",\n  \"description\": \"Analyzes and summarizes documents\",\n  \"emoji\": \"📄\",\n  \"instruction\": \"You are a helpful agent that analyzes documents.\",\n  \"creativity\": 0.5\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "64e0b2f4-5c10-4128-bd40-81a1a65b7e82",
+          "name": "[Deprecated] Updates an existing assistant",
+          "request": {
+            "name": "[Deprecated] Updates an existing assistant",
+            "description": {
+              "content": "This endpoint is deprecated. Please use /agent/v1/update for new integrations. Updates an existing assistant in your workspace. Only provided fields will be updated.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "assistant",
+                "v1",
+                "update"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"assistantId\": \"<uuid>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"emoji\": \"<string>\",\n  \"instruction\": \"<string>\",\n  \"inputType\": \"<string>\",\n  \"model\": \"<string>\",\n  \"creativity\": \"<number>\",\n  \"conversationStarters\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"actions\": [\n    {\n      \"actionId\": \"<uuid>\",\n      \"requiresConfirmation\": false\n    },\n    {\n      \"actionId\": \"<uuid>\",\n      \"requiresConfirmation\": false\n    }\n  ],\n  \"inputFields\": [\n    {\n      \"slug\": \"<string>\",\n      \"type\": \"<string>\",\n      \"label\": \"<string>\",\n      \"order\": \"<integer>\",\n      \"description\": \"<string>\",\n      \"required\": false,\n      \"options\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fileTypes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"slug\": \"<string>\",\n      \"type\": \"<string>\",\n      \"label\": \"<string>\",\n      \"order\": \"<integer>\",\n      \"description\": \"<string>\",\n      \"required\": false,\n      \"options\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"fileTypes\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"attachments\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"webSearch\": \"<boolean>\",\n  \"imageGeneration\": \"<boolean>\",\n  \"dataAnalyst\": \"<boolean>\",\n  \"canvas\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4cc03028-e635-47a3-ab29-b736c255d4db",
+              "name": "Agent updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "assistant",
+                    "v1",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"assistantId\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"name\": \"Advanced Document Analyzer\",\n  \"description\": \"Analyzes documents with enhanced capabilities\",\n  \"creativity\": 0.7\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"message\": \"Assistant updated successfully\",\n  \"assistant\": {\n    \"id\": \"99cfcc1f-b250-022e-8e06-9ec302b69b0f\",\n    \"name\": \"string\",\n    \"emojiIcon\": \"string\",\n    \"model\": \"string\",\n    \"temperature\": 0.19478271835245398,\n    \"inputType\": \"STRUCTURED\",\n    \"webSearchEnabled\": true,\n    \"imageGenerationEnabled\": false,\n    \"canvasEnabled\": false,\n    \"createdAt\": \"1984-06-05T09:06:33.288Z\",\n    \"updatedAt\": \"1960-11-28T18:41:13.831Z\",\n    \"description\": \"string\",\n    \"instruction\": \"string\",\n    \"conversationStarters\": [\n      \"string\",\n      \"string\"\n    ],\n    \"extendedThinking\": true,\n    \"actions\": [\n      {\n        \"actionId\": \"f23f4a9b-d73a-b46d-8c42-09d2334abc55\",\n        \"requiresConfirmation\": true\n      },\n      {\n        \"actionId\": \"679ef755-16ac-6b5c-4b17-da8db5e71f64\",\n        \"requiresConfirmation\": true\n      }\n    ],\n    \"inputFields\": [\n      {\n        \"slug\": \"string\",\n        \"type\": \"CHECKBOX\",\n        \"label\": \"string\",\n        \"required\": true,\n        \"order\": 1072,\n        \"description\": \"string\",\n        \"options\": [\n          \"string\",\n          \"string\"\n        ],\n        \"fileTypes\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      {\n        \"slug\": \"string\",\n        \"type\": \"NUMBER\",\n        \"label\": \"string\",\n        \"required\": true,\n        \"order\": 630,\n        \"description\": \"string\",\n        \"options\": [\n          \"string\",\n          \"string\"\n        ],\n        \"fileTypes\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    ],\n    \"attachments\": [\n      \"42f96295-7766-a026-65c6-c0d1fbf98380\",\n      \"14cc480f-b876-d5a1-14a6-418c15c26db9\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "418c5021-33f9-4acd-b266-42bd67bbd34d",
+              "name": "Invalid request parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "assistant",
+                    "v1",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"assistantId\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"name\": \"Advanced Document Analyzer\",\n  \"description\": \"Analyzes documents with enhanced capabilities\",\n  \"creativity\": 0.7\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c4962cb9-f568-45cc-895b-52f6808ac5d8",
+              "name": "Invalid or missing API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "assistant",
+                    "v1",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"assistantId\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"name\": \"Advanced Document Analyzer\",\n  \"description\": \"Analyzes documents with enhanced capabilities\",\n  \"creativity\": 0.7\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "df991e73-9661-4542-b121-15d99ed8dcfa",
+              "name": "Insufficient permissions - no access to this agent",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "assistant",
+                    "v1",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"assistantId\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"name\": \"Advanced Document Analyzer\",\n  \"description\": \"Analyzes documents with enhanced capabilities\",\n  \"creativity\": 0.7\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d39405b7-e826-49bd-9bda-5e89bf7a0c14",
+              "name": "Agent not found or resource not found (model, action, attachment)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "assistant",
+                    "v1",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"assistantId\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"name\": \"Advanced Document Analyzer\",\n  \"description\": \"Analyzes documents with enhanced capabilities\",\n  \"creativity\": 0.7\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c89500fb-a075-486a-8fa7-d93d844b64ad",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "assistant",
+                    "v1",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"assistantId\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"name\": \"Advanced Document Analyzer\",\n  \"description\": \"Analyzes documents with enhanced capabilities\",\n  \"creativity\": 0.7\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "34787af9-6623-40e2-accb-be216d2e0819",
+          "name": "[Deprecated] Retrieves details of an existing assistant",
+          "request": {
+            "name": "[Deprecated] Retrieves details of an existing assistant",
+            "description": {
+              "content": "This endpoint is deprecated. Please use /agent/v1/get for new integrations. Retrieves the complete configuration and details of an existing assistant.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "assistant",
+                "v1",
+                "get"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "assistantId",
+                  "value": "<uuid>",
+                  "description": "(Required) UUID of the agent to retrieve"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "283f10ec-fe7d-4d3e-bb06-296fbb68f0a0",
+              "name": "Agent details retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "assistant",
+                    "v1",
+                    "get"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "assistantId",
+                      "value": "<uuid>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"success\",\n  \"assistant\": {\n    \"id\": \"8c85dc99-1b4e-3eb0-f0b9-98bd1cda0c66\",\n    \"name\": \"string\",\n    \"emojiIcon\": \"string\",\n    \"model\": \"string\",\n    \"temperature\": 0.14037896882759104,\n    \"inputType\": \"STRUCTURED\",\n    \"webSearchEnabled\": true,\n    \"imageGenerationEnabled\": true,\n    \"canvasEnabled\": true,\n    \"createdAt\": \"1948-04-13T20:16:44.592Z\",\n    \"updatedAt\": \"1990-10-08T09:07:37.652Z\",\n    \"description\": \"string\",\n    \"instruction\": \"string\",\n    \"conversationStarters\": [\n      \"string\",\n      \"string\"\n    ],\n    \"extendedThinking\": false,\n    \"actions\": [\n      {\n        \"actionId\": \"dafb3036-b3bd-9e7c-dfa9-e4aa39da6f50\",\n        \"requiresConfirmation\": true\n      },\n      {\n        \"actionId\": \"2cf9304e-5e16-7ce9-f841-974bc5cd7b20\",\n        \"requiresConfirmation\": false\n      }\n    ],\n    \"inputFields\": [\n      {\n        \"slug\": \"string\",\n        \"type\": \"NUMBER\",\n        \"label\": \"string\",\n        \"required\": true,\n        \"order\": 1494,\n        \"description\": \"string\",\n        \"options\": [\n          \"string\",\n          \"string\"\n        ],\n        \"fileTypes\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      {\n        \"slug\": \"string\",\n        \"type\": \"FILE\",\n        \"label\": \"string\",\n        \"required\": true,\n        \"order\": 3410,\n        \"description\": \"string\",\n        \"options\": [\n          \"string\",\n          \"string\"\n        ],\n        \"fileTypes\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    ],\n    \"attachments\": [\n      \"92e941a0-1e5f-c9f5-2ca8-635cd9e23aa7\",\n      \"e52aaf80-9c40-3a4a-58f7-1f76eb92bbe5\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "629e8626-4f4a-4c8e-8db1-5ae8842eeabc",
+              "name": "Invalid assistant ID format",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "assistant",
+                    "v1",
+                    "get"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "assistantId",
+                      "value": "<uuid>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1038d856-f150-4585-bc8c-7a72fc6430ea",
+              "name": "Invalid or missing API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "assistant",
+                    "v1",
+                    "get"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "assistantId",
+                      "value": "<uuid>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ea1e2bee-3e0d-4a09-bc23-18dee9fba648",
+              "name": "Insufficient permissions - no access to this agent",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "assistant",
+                    "v1",
+                    "get"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "assistantId",
+                      "value": "<uuid>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "72fce37b-2ad0-4249-ba82-ef07f274115f",
+              "name": "Agent not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "assistant",
+                    "v1",
+                    "get"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "assistantId",
+                      "value": "<uuid>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "053f9ac8-78d6-4244-902b-bba44b1044cd",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "assistant",
+                    "v1",
+                    "get"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "assistantId",
+                      "value": "<uuid>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.langdock.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "baffa99e-0c37-4663-90b8-65141cbf3a16",
+    "name": "Langdock Agent Assistant Build API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

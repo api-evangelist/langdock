@@ -1,0 +1,1326 @@
+{
+  "item": [
+    {
+      "id": "8ad4152a-9d30-4375-9803-a25e03d67262",
+      "name": "Usage Export",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0c250357-d78a-4a78-9406-fb556165769c",
+          "name": "Export assistant usage data",
+          "request": {
+            "name": "Export assistant usage data",
+            "description": {
+              "content": "Export detailed usage data for all assistants in the workspace",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "export",
+                "assistants"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"from\": {\n    \"date\": \"<dateTime>\",\n    \"timezone\": \"<string>\"\n  },\n  \"to\": {\n    \"date\": \"<dateTime>\",\n    \"timezone\": \"<string>\"\n  },\n  \"group_by\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "eea6595b-4f52-40fe-8974-a174d81e1fa8",
+              "name": "Export successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "export",
+                    "assistants"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"from\": {\n    \"date\": \"2024-01-01T00:00:00.000Z\",\n    \"timezone\": \"UTC\"\n  },\n  \"to\": {\n    \"date\": \"2024-01-31T23:59:59.999Z\",\n    \"timezone\": \"UTC\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"filePath\": \"assistants-usage/workspace-id/assistants-usage-2024-01-01-2024-01-31-abc12345.csv\",\n    \"downloadUrl\": \"https://storage.example.com/signed-url\",\n    \"dataType\": \"assistants\",\n    \"recordCount\": 1250,\n    \"dateRange\": {\n      \"from\": \"2024-01-01T00:00:00.000Z\",\n      \"to\": \"2024-01-31T23:59:59.999Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a8f75e51-dcca-4042-9e20-93912d53c042",
+              "name": "Bad Request - Export too large or invalid date range",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "export",
+                    "assistants"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"from\": {\n    \"date\": \"2024-01-01T00:00:00.000Z\",\n    \"timezone\": \"UTC\"\n  },\n  \"to\": {\n    \"date\": \"2024-01-31T23:59:59.999Z\",\n    \"timezone\": \"UTC\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Export too large\",\n  \"message\": \"Export too large: 1500000 rows exceeds limit of 1000000. Please narrow the date range.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "baa36440-8048-418f-b62b-7c6f1e88a9d7",
+              "name": "Unauthorized - Invalid or missing API key",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "export",
+                    "assistants"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"from\": {\n    \"date\": \"2024-01-01T00:00:00.000Z\",\n    \"timezone\": \"UTC\"\n  },\n  \"to\": {\n    \"date\": \"2024-01-31T23:59:59.999Z\",\n    \"timezone\": \"UTC\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Unauthorized\",\n  \"message\": \"Invalid or missing API key\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "708094cd-8927-4c50-b49f-ef5712517f46",
+              "name": "No data found for the selected period",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "export",
+                    "assistants"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"from\": {\n    \"date\": \"2024-01-01T00:00:00.000Z\",\n    \"timezone\": \"UTC\"\n  },\n  \"to\": {\n    \"date\": \"2024-01-31T23:59:59.999Z\",\n    \"timezone\": \"UTC\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"No data found\",\n  \"message\": \"No usage data found for the selected period\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f744cc80-25de-48ee-b02f-8e59d970e036",
+          "name": "Export user usage data",
+          "request": {
+            "name": "Export user usage data",
+            "description": {
+              "content": "Export detailed usage data for all users in the workspace (subject to privacy settings)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "export",
+                "users"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"from\": {\n    \"date\": \"<dateTime>\",\n    \"timezone\": \"<string>\"\n  },\n  \"to\": {\n    \"date\": \"<dateTime>\",\n    \"timezone\": \"<string>\"\n  },\n  \"group_by\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "136023e4-fa15-4e8a-b363-bd59c717b227",
+              "name": "Export successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "export",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"from\": {\n    \"date\": \"2024-01-01T00:00:00.000Z\",\n    \"timezone\": \"UTC\"\n  },\n  \"to\": {\n    \"date\": \"2024-01-31T23:59:59.999Z\",\n    \"timezone\": \"UTC\"\n  },\n  \"group_by\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"filePath\": \"agents-usage/workspace-id/agents-usage-2024-01-01-2024-01-31-abc12345.csv\",\n    \"downloadUrl\": \"https://storage.example.com/signed-url\",\n    \"dataType\": \"assistants\",\n    \"recordCount\": 1250,\n    \"dateRange\": {\n      \"from\": \"2024-01-01T00:00:00.000Z\",\n      \"to\": \"2024-01-31T23:59:59.999Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e969ce8e-53fa-4b49-8430-945d5c6a9472",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "export",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"from\": {\n    \"date\": \"2024-01-01T00:00:00.000Z\",\n    \"timezone\": \"UTC\"\n  },\n  \"to\": {\n    \"date\": \"2024-01-31T23:59:59.999Z\",\n    \"timezone\": \"UTC\"\n  },\n  \"group_by\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"No data found\",\n  \"message\": \"No usage data found for the selected period\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "79ddce02-9b72-4d07-9ef7-c16125f318d5",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "export",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"from\": {\n    \"date\": \"2024-01-01T00:00:00.000Z\",\n    \"timezone\": \"UTC\"\n  },\n  \"to\": {\n    \"date\": \"2024-01-31T23:59:59.999Z\",\n    \"timezone\": \"UTC\"\n  },\n  \"group_by\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"No data found\",\n  \"message\": \"No usage data found for the selected period\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d2bfec55-6296-476e-bf4f-62a3508856e3",
+              "name": "No data found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "export",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"from\": {\n    \"date\": \"2024-01-01T00:00:00.000Z\",\n    \"timezone\": \"UTC\"\n  },\n  \"to\": {\n    \"date\": \"2024-01-31T23:59:59.999Z\",\n    \"timezone\": \"UTC\"\n  },\n  \"group_by\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"No data found\",\n  \"message\": \"No usage data found for the selected period\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3db20f45-d546-4a6a-8222-5bfa88f8e106",
+          "name": "Export project usage data",
+          "request": {
+            "name": "Export project usage data",
+            "description": {
+              "content": "Export detailed usage data for all projects in the workspace",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "export",
+                "projects"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"from\": {\n    \"date\": \"<dateTime>\",\n    \"timezone\": \"<string>\"\n  },\n  \"to\": {\n    \"date\": \"<dateTime>\",\n    \"timezone\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ac859742-5ff7-48ea-ad4f-ef604808b1c2",
+              "name": "Export successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "export",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"from\": {\n    \"date\": \"2024-01-01T00:00:00.000Z\",\n    \"timezone\": \"UTC\"\n  },\n  \"to\": {\n    \"date\": \"2024-01-31T23:59:59.999Z\",\n    \"timezone\": \"UTC\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"filePath\": \"agents-usage/workspace-id/agents-usage-2024-01-01-2024-01-31-abc12345.csv\",\n    \"downloadUrl\": \"https://storage.example.com/signed-url\",\n    \"dataType\": \"assistants\",\n    \"recordCount\": 1250,\n    \"dateRange\": {\n      \"from\": \"2024-01-01T00:00:00.000Z\",\n      \"to\": \"2024-01-31T23:59:59.999Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "84d9ff65-3871-45fb-bdcc-3f4a4d4dbfba",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "export",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"from\": {\n    \"date\": \"2024-01-01T00:00:00.000Z\",\n    \"timezone\": \"UTC\"\n  },\n  \"to\": {\n    \"date\": \"2024-01-31T23:59:59.999Z\",\n    \"timezone\": \"UTC\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"No data found\",\n  \"message\": \"No usage data found for the selected period\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a6646fef-b53f-4a89-a0ed-4b238492b2c2",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "export",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"from\": {\n    \"date\": \"2024-01-01T00:00:00.000Z\",\n    \"timezone\": \"UTC\"\n  },\n  \"to\": {\n    \"date\": \"2024-01-31T23:59:59.999Z\",\n    \"timezone\": \"UTC\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"No data found\",\n  \"message\": \"No usage data found for the selected period\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "42d7b6f6-a7c5-493e-ad1e-fc650661f9b1",
+              "name": "No data found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "export",
+                    "projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"from\": {\n    \"date\": \"2024-01-01T00:00:00.000Z\",\n    \"timezone\": \"UTC\"\n  },\n  \"to\": {\n    \"date\": \"2024-01-31T23:59:59.999Z\",\n    \"timezone\": \"UTC\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"No data found\",\n  \"message\": \"No usage data found for the selected period\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d8456102-78d5-48f4-8a10-e9b030aa5f6b",
+          "name": "Export model usage data",
+          "request": {
+            "name": "Export model usage data",
+            "description": {
+              "content": "Export detailed usage data for all AI models used in the workspace",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "export",
+                "models"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"from\": {\n    \"date\": \"<dateTime>\",\n    \"timezone\": \"<string>\"\n  },\n  \"to\": {\n    \"date\": \"<dateTime>\",\n    \"timezone\": \"<string>\"\n  },\n  \"group_by\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "74a5618b-5d04-49bf-8e25-a3b5aa8f745f",
+              "name": "Export successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "export",
+                    "models"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"from\": {\n    \"date\": \"2024-01-01T00:00:00.000Z\",\n    \"timezone\": \"UTC\"\n  },\n  \"to\": {\n    \"date\": \"2024-01-31T23:59:59.999Z\",\n    \"timezone\": \"UTC\"\n  },\n  \"group_by\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"filePath\": \"agents-usage/workspace-id/agents-usage-2024-01-01-2024-01-31-abc12345.csv\",\n    \"downloadUrl\": \"https://storage.example.com/signed-url\",\n    \"dataType\": \"assistants\",\n    \"recordCount\": 1250,\n    \"dateRange\": {\n      \"from\": \"2024-01-01T00:00:00.000Z\",\n      \"to\": \"2024-01-31T23:59:59.999Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8093238d-b63a-4cc9-81ef-822d2548f63a",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "export",
+                    "models"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"from\": {\n    \"date\": \"2024-01-01T00:00:00.000Z\",\n    \"timezone\": \"UTC\"\n  },\n  \"to\": {\n    \"date\": \"2024-01-31T23:59:59.999Z\",\n    \"timezone\": \"UTC\"\n  },\n  \"group_by\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"No data found\",\n  \"message\": \"No usage data found for the selected period\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b84ed547-236b-4fe2-8e0f-780f478d2e5a",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "export",
+                    "models"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"from\": {\n    \"date\": \"2024-01-01T00:00:00.000Z\",\n    \"timezone\": \"UTC\"\n  },\n  \"to\": {\n    \"date\": \"2024-01-31T23:59:59.999Z\",\n    \"timezone\": \"UTC\"\n  },\n  \"group_by\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"No data found\",\n  \"message\": \"No usage data found for the selected period\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cfafd27c-cd25-401d-836b-0e5b82148b60",
+              "name": "No data found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "export",
+                    "models"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"from\": {\n    \"date\": \"2024-01-01T00:00:00.000Z\",\n    \"timezone\": \"UTC\"\n  },\n  \"to\": {\n    \"date\": \"2024-01-31T23:59:59.999Z\",\n    \"timezone\": \"UTC\"\n  },\n  \"group_by\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"No data found\",\n  \"message\": \"No usage data found for the selected period\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4ae78469-e585-40a2-ab77-69ab2e9cd6b7",
+          "name": "Export API key usage data",
+          "request": {
+            "name": "Export API key usage data",
+            "description": {
+              "content": "Export detailed usage and cost data grouped by API key",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "export",
+                "api-keys"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"from\": {\n    \"date\": \"<dateTime>\",\n    \"timezone\": \"<string>\"\n  },\n  \"to\": {\n    \"date\": \"<dateTime>\",\n    \"timezone\": \"<string>\"\n  },\n  \"group_by\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1d5d74b1-2171-4eb8-ac49-19f9834115e8",
+              "name": "Export successful",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "export",
+                    "api-keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"from\": {\n    \"date\": \"2024-01-01T00:00:00.000Z\",\n    \"timezone\": \"UTC\"\n  },\n  \"to\": {\n    \"date\": \"2024-01-31T23:59:59.999Z\",\n    \"timezone\": \"UTC\"\n  },\n  \"group_by\": \"model\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"data\": {\n    \"filePath\": \"agents-usage/workspace-id/agents-usage-2024-01-01-2024-01-31-abc12345.csv\",\n    \"downloadUrl\": \"https://storage.example.com/signed-url\",\n    \"dataType\": \"assistants\",\n    \"recordCount\": 1250,\n    \"dateRange\": {\n      \"from\": \"2024-01-01T00:00:00.000Z\",\n      \"to\": \"2024-01-31T23:59:59.999Z\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "47f4eee3-d0e2-42db-b532-30425f6d3a39",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "export",
+                    "api-keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"from\": {\n    \"date\": \"2024-01-01T00:00:00.000Z\",\n    \"timezone\": \"UTC\"\n  },\n  \"to\": {\n    \"date\": \"2024-01-31T23:59:59.999Z\",\n    \"timezone\": \"UTC\"\n  },\n  \"group_by\": \"model\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"No data found\",\n  \"message\": \"No usage data found for the selected period\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3abf81fe-bb2d-4be8-9e92-91ca53d819a1",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "export",
+                    "api-keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"from\": {\n    \"date\": \"2024-01-01T00:00:00.000Z\",\n    \"timezone\": \"UTC\"\n  },\n  \"to\": {\n    \"date\": \"2024-01-31T23:59:59.999Z\",\n    \"timezone\": \"UTC\"\n  },\n  \"group_by\": \"model\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"No data found\",\n  \"message\": \"No usage data found for the selected period\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8809ae10-2582-4e18-a15a-3661e161ec4d",
+              "name": "No data found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "export",
+                    "api-keys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"from\": {\n    \"date\": \"2024-01-01T00:00:00.000Z\",\n    \"timezone\": \"UTC\"\n  },\n  \"to\": {\n    \"date\": \"2024-01-31T23:59:59.999Z\",\n    \"timezone\": \"UTC\"\n  },\n  \"group_by\": \"model\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"No data found\",\n  \"message\": \"No usage data found for the selected period\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.langdock.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "dc12d0bb-326f-4d11-b55f-ea1fba0b3194",
+    "name": "Langdock Agent Usage Export API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

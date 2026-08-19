@@ -1,0 +1,534 @@
+{
+  "item": [
+    {
+      "id": "c73fd90c-0547-40cd-952b-d964525f5049",
+      "name": "Agent Build",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c294295c-b096-4e60-98d5-76893c33ef47",
+          "name": "Creates a new agent",
+          "request": {
+            "name": "Creates a new agent",
+            "description": {
+              "content": "Creates a new agent in your workspace programmatically.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "agent",
+                "v1",
+                "create"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"description\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"model\": \"<string>\",\n  \"capabilities\": {\n    \"webSearch\": \"<boolean>\",\n    \"dataAnalyst\": \"<boolean>\",\n    \"imageGeneration\": \"<boolean>\"\n  },\n  \"actions\": [\n    {\n      \"value\": \"reference #/components/schemas/Action not found in the OpenAPI spec\"\n    },\n    {\n      \"value\": \"reference #/components/schemas/Action not found in the OpenAPI spec\"\n    }\n  ],\n  \"vectorDb\": [\n    {\n      \"value\": \"reference #/components/schemas/VectorDb not found in the OpenAPI spec\"\n    },\n    {\n      \"value\": \"reference #/components/schemas/VectorDb not found in the OpenAPI spec\"\n    }\n  ],\n  \"knowledgeFolderIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"attachmentIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e1631bf3-58d1-4e20-a7e5-f55dbfc8cfdc",
+              "name": "Agent created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "agent",
+                    "v1",
+                    "create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"instructions\": \"<string>\",\n  \"description\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"model\": \"<string>\",\n  \"capabilities\": {\n    \"webSearch\": \"<boolean>\",\n    \"dataAnalyst\": \"<boolean>\",\n    \"imageGeneration\": \"<boolean>\"\n  },\n  \"actions\": [\n    {\n      \"value\": \"reference #/components/schemas/Action not found in the OpenAPI spec\"\n    },\n    {\n      \"value\": \"reference #/components/schemas/Action not found in the OpenAPI spec\"\n    }\n  ],\n  \"vectorDb\": [\n    {\n      \"value\": \"reference #/components/schemas/VectorDb not found in the OpenAPI spec\"\n    },\n    {\n      \"value\": \"reference #/components/schemas/VectorDb not found in the OpenAPI spec\"\n    }\n  ],\n  \"knowledgeFolderIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"attachmentIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"agent\": {\n    \"name\": \"<string>\",\n    \"instructions\": \"<string>\",\n    \"description\": \"<string>\",\n    \"temperature\": \"<number>\",\n    \"model\": \"<string>\",\n    \"capabilities\": {\n      \"webSearch\": \"<boolean>\",\n      \"dataAnalyst\": \"<boolean>\",\n      \"imageGeneration\": \"<boolean>\"\n    },\n    \"actions\": [\n      {\n        \"value\": \"reference #/components/schemas/Action not found in the OpenAPI spec\"\n      },\n      {\n        \"value\": \"reference #/components/schemas/Action not found in the OpenAPI spec\"\n      }\n    ],\n    \"vectorDb\": [\n      {\n        \"value\": \"reference #/components/schemas/VectorDb not found in the OpenAPI spec\"\n      },\n      {\n        \"value\": \"reference #/components/schemas/VectorDb not found in the OpenAPI spec\"\n      }\n    ],\n    \"knowledgeFolderIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"attachmentIds\": [\n      \"<uuid>\",\n      \"<uuid>\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c6750d38-8b36-4d80-9f68-b2cc1179084d",
+          "name": "Updates an existing agent",
+          "request": {
+            "name": "Updates an existing agent",
+            "description": {
+              "content": "Updates an existing agent in your workspace.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "agent",
+                "v1",
+                "update"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"agentId\": \"<uuid>\",\n  \"instructions\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"model\": \"<string>\",\n  \"capabilities\": {\n    \"webSearch\": \"<boolean>\",\n    \"dataAnalyst\": \"<boolean>\",\n    \"imageGeneration\": \"<boolean>\"\n  },\n  \"actions\": [\n    {\n      \"value\": \"reference #/components/schemas/Action not found in the OpenAPI spec\"\n    },\n    {\n      \"value\": \"reference #/components/schemas/Action not found in the OpenAPI spec\"\n    }\n  ],\n  \"vectorDb\": [\n    {\n      \"value\": \"reference #/components/schemas/VectorDb not found in the OpenAPI spec\"\n    },\n    {\n      \"value\": \"reference #/components/schemas/VectorDb not found in the OpenAPI spec\"\n    }\n  ],\n  \"knowledgeFolderIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"attachmentIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "37179db8-075a-4c8b-860c-058d704bfc1d",
+              "name": "Agent updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "agent",
+                    "v1",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"agentId\": \"<uuid>\",\n  \"instructions\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"model\": \"<string>\",\n  \"capabilities\": {\n    \"webSearch\": \"<boolean>\",\n    \"dataAnalyst\": \"<boolean>\",\n    \"imageGeneration\": \"<boolean>\"\n  },\n  \"actions\": [\n    {\n      \"value\": \"reference #/components/schemas/Action not found in the OpenAPI spec\"\n    },\n    {\n      \"value\": \"reference #/components/schemas/Action not found in the OpenAPI spec\"\n    }\n  ],\n  \"vectorDb\": [\n    {\n      \"value\": \"reference #/components/schemas/VectorDb not found in the OpenAPI spec\"\n    },\n    {\n      \"value\": \"reference #/components/schemas/VectorDb not found in the OpenAPI spec\"\n    }\n  ],\n  \"knowledgeFolderIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"attachmentIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ad414958-267b-48f9-82a2-3856574cdb02",
+          "name": "Publishes a draft agent as a new version",
+          "request": {
+            "name": "Publishes a draft agent as a new version",
+            "description": {
+              "content": "Publishes the current draft of an agent as a new version. Mirrors the \"Update\" button in the agent editor — only agents (not projects) are supported, and the draft must differ from the latest published version.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "agent",
+                "v1",
+                "publish"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"agentId\": \"<uuid>\",\n  \"description\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a5804f4b-91dd-48fa-8aac-8f4844c684cb",
+              "name": "Agent published successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "agent",
+                    "v1",
+                    "publish"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"agentId\": \"<uuid>\",\n  \"description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"version\": {\n    \"id\": \"923c7cb4-7638-fab7-536d-828679aaf954\",\n    \"version\": 1347,\n    \"createdAt\": \"1974-09-08T03:44:22.553Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7ec12f12-051b-49e3-886f-1370c4a606da",
+              "name": "API key lacks edit access, agent is in a different workspace, or the resource is a project",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "agent",
+                    "v1",
+                    "publish"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"agentId\": \"<uuid>\",\n  \"description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1a8779b8-2f18-4a0f-b1f4-8afb05a2ec1c",
+              "name": "No draft changes to publish",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "agent",
+                    "v1",
+                    "publish"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"agentId\": \"<uuid>\",\n  \"description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d36ca3d4-816a-44ea-9610-7a4939a9edc1",
+          "name": "Retrieves details of an existing agent",
+          "request": {
+            "name": "Retrieves details of an existing agent",
+            "description": {
+              "content": "Retrieves the complete configuration and details of an existing agent.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "agent",
+                "v1",
+                "get"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "agentId",
+                  "value": "<uuid>",
+                  "description": "(Required) "
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1bb16f84-007f-41c3-b8c8-087fe43a0ae7",
+              "name": "Agent retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "agent",
+                    "v1",
+                    "get"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "agentId",
+                      "value": "<uuid>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"agent\": {\n    \"name\": \"<string>\",\n    \"instructions\": \"<string>\",\n    \"description\": \"<string>\",\n    \"temperature\": \"<number>\",\n    \"model\": \"<string>\",\n    \"capabilities\": {\n      \"webSearch\": \"<boolean>\",\n      \"dataAnalyst\": \"<boolean>\",\n      \"imageGeneration\": \"<boolean>\"\n    },\n    \"actions\": [\n      {\n        \"value\": \"reference #/components/schemas/Action not found in the OpenAPI spec\"\n      },\n      {\n        \"value\": \"reference #/components/schemas/Action not found in the OpenAPI spec\"\n      }\n    ],\n    \"vectorDb\": [\n      {\n        \"value\": \"reference #/components/schemas/VectorDb not found in the OpenAPI spec\"\n      },\n      {\n        \"value\": \"reference #/components/schemas/VectorDb not found in the OpenAPI spec\"\n      }\n    ],\n    \"knowledgeFolderIds\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"attachmentIds\": [\n      \"<uuid>\",\n      \"<uuid>\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.langdock.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "744ffb70-ad00-4124-843e-8ac27c7a9d1a",
+    "name": "Langdock Agent Agent Build API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

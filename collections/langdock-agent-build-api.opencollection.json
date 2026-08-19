@@ -1,0 +1,87 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Langdock Agent Agent Build API",
+    "version": "3.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Agent Build",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Creates a new agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.langdock.com/agent/v1/create",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new agent in your workspace programmatically."
+        },
+        {
+          "info": {
+            "name": "Updates an existing agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.langdock.com/agent/v1/update",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing agent in your workspace."
+        },
+        {
+          "info": {
+            "name": "Publishes a draft agent as a new version",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.langdock.com/agent/v1/publish",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Publishes the current draft of an agent as a new version. Mirrors the \"Update\" button in the agent editor — only agents (not projects) are supported, and the draft must differ from the latest published version."
+        },
+        {
+          "info": {
+            "name": "Retrieves details of an existing agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.langdock.com/agent/v1/get",
+            "params": [
+              {
+                "name": "agentId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieves the complete configuration and details of an existing agent."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

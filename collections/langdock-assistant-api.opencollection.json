@@ -1,0 +1,50 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Langdock Agent Assistant API",
+    "version": "3.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Assistant",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "[Deprecated] Creates a chat completion with an assistant",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.langdock.com/assistant/v1/chat/completions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This endpoint is deprecated. Please use /agent/v1/chat/completions for new integrations."
+        },
+        {
+          "info": {
+            "name": "[Deprecated] Lists the available models",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.langdock.com/assistant/v1/models"
+          },
+          "docs": "This endpoint is deprecated. Please use /agent/v1/models for new integrations. Returns a list of models that are available for use with the API."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

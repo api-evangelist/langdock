@@ -1,0 +1,57 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Langdock Agent Google API",
+    "version": "3.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Google",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Generate Content",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.langdock.com/google/:region/v1beta/models/:model:generateContent",
+            "params": [
+              {
+                "name": "region",
+                "value": "",
+                "type": "path",
+                "description": "The region of the API to use."
+              },
+              {
+                "name": "model",
+                "value": "",
+                "type": "path",
+                "description": "The model ID (e.g., gemini-2.5-pro, gemini-2.5-flash)."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Generate content using Google Gemini models.\nThis endpoint mirrors the structure of the official Vertex AI generateContent API while adding API-key based authentication and region selection."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

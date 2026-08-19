@@ -1,0 +1,378 @@
+{
+  "item": [
+    {
+      "id": "63d50902-2f66-4f31-840d-c78b1611e2da",
+      "name": "Agent",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "41bbb90d-fb1c-4849-b814-147ebd30416e",
+          "name": "Creates a chat completion with an agent (Vercel AI SDK compatible)",
+          "request": {
+            "name": "Creates a chat completion with an agent (Vercel AI SDK compatible)",
+            "description": {
+              "content": "Creates a model response using Vercel AI SDK compatible UIMessage format",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "agent",
+                "v1",
+                "chat",
+                "completions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"agentId\": \"<string>\",\n  \"messages\": [\n    {\n      \"id\": \"<string>\",\n      \"role\": \"<string>\",\n      \"parts\": [\n        {\n          \"type\": \"<string>\",\n          \"text\": \"<string>\",\n          \"url\": \"<string>\",\n          \"name\": \"<string>\",\n          \"mimeType\": \"<string>\",\n          \"toolCallId\": \"<string>\",\n          \"toolName\": \"<string>\",\n          \"args\": \"<object>\",\n          \"result\": \"<object>\"\n        },\n        {\n          \"type\": \"<string>\",\n          \"text\": \"<string>\",\n          \"url\": \"<string>\",\n          \"name\": \"<string>\",\n          \"mimeType\": \"<string>\",\n          \"toolCallId\": \"<string>\",\n          \"toolName\": \"<string>\",\n          \"args\": \"<object>\",\n          \"result\": \"<object>\"\n        }\n      ]\n    },\n    {\n      \"id\": \"<string>\",\n      \"role\": \"<string>\",\n      \"parts\": [\n        {\n          \"type\": \"<string>\",\n          \"text\": \"<string>\",\n          \"url\": \"<string>\",\n          \"name\": \"<string>\",\n          \"mimeType\": \"<string>\",\n          \"toolCallId\": \"<string>\",\n          \"toolName\": \"<string>\",\n          \"args\": \"<object>\",\n          \"result\": \"<object>\"\n        },\n        {\n          \"type\": \"<string>\",\n          \"text\": \"<string>\",\n          \"url\": \"<string>\",\n          \"name\": \"<string>\",\n          \"mimeType\": \"<string>\",\n          \"toolCallId\": \"<string>\",\n          \"toolName\": \"<string>\",\n          \"args\": \"<object>\",\n          \"result\": \"<object>\"\n        }\n      ]\n    }\n  ],\n  \"stream\": false,\n  \"output\": {\n    \"type\": \"<string>\",\n    \"enum\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"imageResponseFormat\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "209890f5-8f2b-4bc4-865f-268a6931ac21",
+              "name": "Successful chat completion",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "agent",
+                    "v1",
+                    "chat",
+                    "completions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"agentId\": \"agent_123\",\n  \"messages\": [\n    {\n      \"id\": \"msg_1\",\n      \"role\": \"user\",\n      \"parts\": [\n        {\n          \"type\": \"text\",\n          \"text\": \"Hello, how can you help me?\"\n        }\n      ]\n    }\n  ],\n  \"stream\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"role\": \"assistant\",\n  \"parts\": [],\n  \"output\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "71528f53-a829-4320-9e8c-5fa793cce71e",
+              "name": "Invalid request parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "agent",
+                    "v1",
+                    "chat",
+                    "completions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"agentId\": \"agent_123\",\n  \"messages\": [\n    {\n      \"id\": \"msg_1\",\n      \"role\": \"user\",\n      \"parts\": [\n        {\n          \"type\": \"text\",\n          \"text\": \"Hello, how can you help me?\"\n        }\n      ]\n    }\n  ],\n  \"stream\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a32d0458-908d-40fe-9e2e-e5275e81c8f0",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "agent",
+                    "v1",
+                    "chat",
+                    "completions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"agentId\": \"agent_123\",\n  \"messages\": [\n    {\n      \"id\": \"msg_1\",\n      \"role\": \"user\",\n      \"parts\": [\n        {\n          \"type\": \"text\",\n          \"text\": \"Hello, how can you help me?\"\n        }\n      ]\n    }\n  ],\n  \"stream\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3da79ee1-356d-4433-8a22-ca3b772792e6",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "agent",
+                    "v1",
+                    "chat",
+                    "completions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"agentId\": \"agent_123\",\n  \"messages\": [\n    {\n      \"id\": \"msg_1\",\n      \"role\": \"user\",\n      \"parts\": [\n        {\n          \"type\": \"text\",\n          \"text\": \"Hello, how can you help me?\"\n        }\n      ]\n    }\n  ],\n  \"stream\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "667d9da8-9f2e-4b9c-9f80-2c3d6f6210c6",
+          "name": "Lists the available models",
+          "request": {
+            "name": "Lists the available models",
+            "description": {
+              "content": "Returns a list of models that are available for use with the API.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "agent",
+                "v1",
+                "models"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2dd7cca4-1675-49e6-ad42-f17d4baa8d58",
+              "name": "List of available models",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "agent",
+                    "v1",
+                    "models"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"list\",\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"object\": \"string\",\n      \"created\": 915,\n      \"owned_by\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"object\": \"string\",\n      \"created\": 7107,\n      \"owned_by\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.langdock.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "08b45177-de07-422e-8862-87979ef9a768",
+    "name": "Langdock Agent API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

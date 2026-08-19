@@ -1,0 +1,232 @@
+{
+  "item": [
+    {
+      "id": "c4b2ed1d-ae90-4a11-ad6e-f1959db0c166",
+      "name": "Messages",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "dc8a1da4-65cd-40a3-8ee9-a2fe26b0ed52",
+          "name": "Create a Message",
+          "request": {
+            "name": "Create a Message",
+            "description": {
+              "content": "Create a Message.\n\nSend a structured list of input messages with text and/or image content, and the model will generate the next message in the conversation.\n\nThe Messages API can be used for either single queries or stateless multi-turn conversations.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "anthropic",
+                ":region",
+                "v1",
+                "messages"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "region",
+                  "description": "(Required) The region of the API to use."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"<string>\",\n  \"messages\": [\n    {\n      \"role\": \"<string>\",\n      \"content\": \"<string>\"\n    },\n    {\n      \"role\": \"<string>\",\n      \"content\": \"<string>\"\n    }\n  ],\n  \"max_tokens\": \"<integer>\",\n  \"stop_sequences\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"stream\": \"<boolean>\",\n  \"system\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"tool_choice\": {\n    \"type\": \"<string>\"\n  },\n  \"tools\": [\n    {\n      \"name\": \"<string>\",\n      \"input_schema\": {\n        \"type\": \"<string>\",\n        \"properties\": \"<object>\"\n      },\n      \"description\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"input_schema\": {\n        \"type\": \"<string>\",\n        \"properties\": \"<object>\"\n      },\n      \"description\": \"<string>\"\n    }\n  ],\n  \"top_k\": \"<integer>\",\n  \"top_p\": \"<number>\",\n  \"thinking\": {\n    \"type\": \"<string>\",\n    \"budget_tokens\": \"<integer>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "891ce104-d43b-4493-8723-e0dc88d81ade",
+              "name": "Message object.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "anthropic",
+                    ":region",
+                    "v1",
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "region",
+                      "description": "(Required) The region of the API to use."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"messages\": [\n    {\n      \"role\": \"<string>\",\n      \"content\": \"<string>\"\n    },\n    {\n      \"role\": \"<string>\",\n      \"content\": \"<string>\"\n    }\n  ],\n  \"max_tokens\": \"<integer>\",\n  \"stop_sequences\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"stream\": \"<boolean>\",\n  \"system\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"tool_choice\": {\n    \"type\": \"<string>\"\n  },\n  \"tools\": [\n    {\n      \"description\": \"Get the current weather in a given location\",\n      \"input_schema\": {\n        \"properties\": {\n          \"location\": {\n            \"description\": \"The city and state, e.g. San Francisco, CA\",\n            \"type\": \"string\"\n          },\n          \"unit\": {\n            \"description\": \"Unit for the output - one of (celsius, fahrenheit)\",\n            \"type\": \"string\"\n          }\n        },\n        \"required\": [\n          \"location\"\n        ],\n        \"type\": \"object\"\n      },\n      \"name\": \"get_weather\"\n    }\n  ],\n  \"top_k\": \"<integer>\",\n  \"top_p\": \"<number>\",\n  \"thinking\": {\n    \"type\": \"<string>\",\n    \"budget_tokens\": \"<integer>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"type\": \"message\",\n  \"role\": \"assistant\",\n  \"content\": [\n    {\n      \"type\": \"text\",\n      \"text\": \"string\"\n    },\n    {\n      \"type\": \"text\",\n      \"text\": \"string\"\n    }\n  ],\n  \"model\": \"<string>\",\n  \"stop_reason\": \"stop_sequence\",\n  \"stop_sequence\": \"string\",\n  \"usage\": {\n    \"input_tokens\": 6098,\n    \"output_tokens\": 5023\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9d8bd3f7-83bd-41f7-b59d-f7192f7218bb",
+              "name": "Error response.\n\nSee Anthropic's [errors documentation](https://platform.claude.com/docs/en/api/errors) for more details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "anthropic",
+                    ":region",
+                    "v1",
+                    "messages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "region",
+                      "description": "(Required) The region of the API to use."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"<string>\",\n  \"messages\": [\n    {\n      \"role\": \"<string>\",\n      \"content\": \"<string>\"\n    },\n    {\n      \"role\": \"<string>\",\n      \"content\": \"<string>\"\n    }\n  ],\n  \"max_tokens\": \"<integer>\",\n  \"stop_sequences\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"stream\": \"<boolean>\",\n  \"system\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"tool_choice\": {\n    \"type\": \"<string>\"\n  },\n  \"tools\": [\n    {\n      \"description\": \"Get the current weather in a given location\",\n      \"input_schema\": {\n        \"properties\": {\n          \"location\": {\n            \"description\": \"The city and state, e.g. San Francisco, CA\",\n            \"type\": \"string\"\n          },\n          \"unit\": {\n            \"description\": \"Unit for the output - one of (celsius, fahrenheit)\",\n            \"type\": \"string\"\n          }\n        },\n        \"required\": [\n          \"location\"\n        ],\n        \"type\": \"object\"\n      },\n      \"name\": \"get_weather\"\n    }\n  ],\n  \"top_k\": \"<integer>\",\n  \"top_p\": \"<number>\",\n  \"thinking\": {\n    \"type\": \"<string>\",\n    \"budget_tokens\": \"<integer>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"type\": \"error\",\n  \"error\": {\n    \"type\": \"invalid_request_error\",\n    \"message\": \"Invalid request\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.langdock.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "d4d4a732-882a-48f0-b4d4-a4b3444b68a0",
+    "name": "Langdock Agent Messages API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

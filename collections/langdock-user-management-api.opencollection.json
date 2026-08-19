@@ -1,0 +1,54 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Langdock Agent User Management API",
+    "version": "3.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "User Management",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Invite users to workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.langdock.com/user-management/v1/invite",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sends workspace invitations to one or more users by email. Each user can optionally\nbe assigned a specific role. If no role is specified, the default role `member` is used.\n\nUsers who are already members of the workspace are silently skipped. Users with pending\njoin requests are automatically approved. Invalid email addresses are reported in the\nresponse but do not cause the entire request to fail.\n\nAn invitation email is sent to each successfully invited user. If the workspace does not\nhave SAM"
+        },
+        {
+          "info": {
+            "name": "Deactivate a workspace user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.langdock.com/user-management/v1/deactivate-user",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Removes a user from the workspace by email. The user immediately loses access,\nbut all their data (conversations, assistants, files, integrations) is preserved\nand restored if they are re-added later.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

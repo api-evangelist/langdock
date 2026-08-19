@@ -1,0 +1,164 @@
+{
+  "item": [
+    {
+      "id": "dca781c7-d8cf-4480-aceb-2a51f83084e0",
+      "name": "fim",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "077d51f4-c3a8-4546-af43-5690800e4445",
+          "name": "Fim Completion",
+          "request": {
+            "name": "Fim Completion",
+            "description": {
+              "content": "FIM completion.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "mistral",
+                ":region",
+                "v1",
+                "fim",
+                "completions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "region",
+                  "description": "(Required) The region of the API to use."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"prompt\": \"<string>\",\n  \"model\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"top_p\": 1,\n  \"max_tokens\": \"<integer>\",\n  \"stream\": false,\n  \"stop\": \"<string>\",\n  \"random_seed\": \"<integer>\",\n  \"suffix\": \"<string>\",\n  \"min_tokens\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f2c75cd4-a871-4b3f-80fc-a07140e2a45b",
+              "name": "Successful Response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "mistral",
+                    ":region",
+                    "v1",
+                    "fim",
+                    "completions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "region",
+                      "description": "(Required) The region of the API to use."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"codestral-2501\",\n  \"prompt\": \"function removeSpecialCharactersWithRegex(str: string) {\",\n  \"max_tokens\": 64\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": \"asd\",\n  \"id\": \"245c52bc936f53ba90327800c73d1c3e\",\n  \"object\": \"chat.completion\",\n  \"model\": \"codestral\",\n  \"usage\": {\n    \"prompt_tokens\": 16,\n    \"completion_tokens\": 102,\n    \"total_tokens\": 118\n  },\n  \"created\": 1732902806,\n  \"choices\": [\n    {\n      \"index\": 0,\n      \"message\": {\n        \"content\": \"\\n  // Use a regular expression to match any non-alphanumeric character and replace it with an empty string\\n  return str.replace(/[^a-zA-Z0-9]/g, '');\\n}\\n\\n// Test the function\\nconst inputString = \\\"Hello, World! 123\\\";\\nconst outputString = removeSpecialCharactersWithRegex(inputString);\\nconsole.log(outputString); // Output: \\\"HelloWorld123\\\"\",\n        \"prefix\": false,\n        \"role\": \"assistant\"\n      },\n      \"finish_reason\": \"stop\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.langdock.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "252b7800-7998-40a7-8955-276062546e4d",
+    "name": "Langdock Agent fim API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}
