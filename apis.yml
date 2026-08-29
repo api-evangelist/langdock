@@ -11,6 +11,18 @@ description: 'Langdock is an enterprise AI platform — "The Platform for AI Ado
   Folder, Integrations, Audit Logs, Usage Export, and User Management APIs, plus a
   hosted Model Context Protocol server that exposes workspace agents as MCP tools.'
 url: https://raw.githubusercontent.com/api-evangelist/langdock/refs/heads/main/apis.yml
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: self-serve
