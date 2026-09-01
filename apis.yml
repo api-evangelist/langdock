@@ -154,7 +154,7 @@ apis:
   humanURL: https://docs.langdock.com/en/developer/overview/api-introduction
   baseURL: https://api.langdock.com
   tags:
-  - fim
+  - FIM
   tags_raw:
   - fim
   properties:
