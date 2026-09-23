@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Langdock Agent Skills API
+  title: Langdock Skills API
   version: 3.0.0
 servers:
 - url: https://api.langdock.com
@@ -243,36 +243,6 @@ components:
         type: string
         format: uuid
   schemas:
-    UpdateSkillRequest:
-      type: object
-      minProperties: 1
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-          maxLength: 64
-          minLength: 1
-          description: Skill name.
-        slug:
-          type: string
-          maxLength: 100
-          pattern: ^[a-z0-9-]+$
-          description: Stable Skill slug.
-        description:
-          type: string
-          maxLength: 1024
-          description: Description used to explain when the Skill should apply.
-        instructions:
-          type: string
-          maxLength: 50000
-          minLength: 1
-          description: Skill instructions.
-        integrationIds:
-          type: array
-          items:
-            type: string
-            format: uuid
-          description: Integration IDs to attach to the Skill. Replaces the current integration list.
     Skill:
       type: object
       required:
@@ -320,39 +290,6 @@ components:
           type: string
           format: date-time
           description: ISO 8601 timestamp for the latest Skill update.
-    ImportedSkillFile:
-      type: object
-      required:
-      - path
-      - sizeBytes
-      - extension
-      - hasScript
-      properties:
-        path:
-          type: string
-          description: File path inside the imported Skill.
-        sizeBytes:
-          type: integer
-          description: File size in bytes.
-        extension:
-          type: string
-          description: File extension.
-        hasScript:
-          type: boolean
-          description: Whether the file is a script file.
-    ListSkillsResponse:
-      type: object
-      required:
-      - skills
-      properties:
-        skills:
-          type: array
-          items:
-            $ref: '#/components/schemas/Skill'
-        nextCursor:
-          type: string
-          format: uuid
-          description: Cursor for the next page, if more results are available.
     ImportSkillResponse:
       type: object
       required:
@@ -391,6 +328,19 @@ components:
         integrationIds:
           type: string
           description: JSON-encoded array of integration UUIDs.
+    ListSkillsResponse:
+      type: object
+      required:
+      - skills
+      properties:
+        skills:
+          type: array
+          items:
+            $ref: '#/components/schemas/Skill'
+        nextCursor:
+          type: string
+          format: uuid
+          description: Cursor for the next page, if more results are available.
     SkillResponse:
       type: object
       required:
@@ -398,6 +348,56 @@ components:
       properties:
         skill:
           $ref: '#/components/schemas/Skill'
+    UpdateSkillRequest:
+      type: object
+      minProperties: 1
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+          maxLength: 64
+          minLength: 1
+          description: Skill name.
+        slug:
+          type: string
+          maxLength: 100
+          pattern: ^[a-z0-9-]+$
+          description: Stable Skill slug.
+        description:
+          type: string
+          maxLength: 1024
+          description: Description used to explain when the Skill should apply.
+        instructions:
+          type: string
+          maxLength: 50000
+          minLength: 1
+          description: Skill instructions.
+        integrationIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: Integration IDs to attach to the Skill. Replaces the current integration list.
+    ImportedSkillFile:
+      type: object
+      required:
+      - path
+      - sizeBytes
+      - extension
+      - hasScript
+      properties:
+        path:
+          type: string
+          description: File path inside the imported Skill.
+        sizeBytes:
+          type: integer
+          description: File size in bytes.
+        extension:
+          type: string
+          description: File extension.
+        hasScript:
+          type: boolean
+          description: Whether the file is a script file.
     CreateSkillRequest:
       type: object
       required:

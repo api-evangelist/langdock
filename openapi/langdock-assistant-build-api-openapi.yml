@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Langdock Agent Assistant Build API
+  title: Langdock Assistant Build API
   version: 3.0.0
 servers:
 - url: https://api.langdock.com
@@ -327,18 +327,21 @@ paths:
                   maxLength: 255
                   description: Updated name
                 description:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   maxLength: 256
-                  nullable: true
                   description: Updated description (null to clear)
                 emoji:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                   description: Updated emoji icon (null to clear)
                 instruction:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   maxLength: 16384
-                  nullable: true
                   description: Updated system prompt (null to clear)
                 inputType:
                   type: string
@@ -606,16 +609,19 @@ components:
           type: string
           description: Name of the agent
         description:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: Description of what the agent does
         instruction:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: System prompt/instructions for the agent
         emojiIcon:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: Emoji icon for the agent
         model:
           type: string
@@ -708,10 +714,11 @@ components:
                   type: string
                 description: Options for SELECT type fields
               fileTypes:
-                type: array
+                type:
+                - array
+                - 'null'
                 items:
                   type: string
-                nullable: true
                 description: Allowed file types for FILE type fields
           description: Array of form field definitions (for STRUCTURED input type)
         attachments:

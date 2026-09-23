@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Langdock Agent Audit Logs API
+  title: Langdock Audit Logs API
   version: 3.0.0
 servers:
 - url: https://api.langdock.com
@@ -17,9 +17,7 @@ paths:
       summary: List audit logs
       description: 'Returns audit log entries for a workspace with cursor-based pagination.
 
-        Requires an API key with the `AUDIT_LOG_API` scope.
-
-        '
+        Requires an API key with the `AUDIT_LOG_API` scope.'
       operationId: listAuditLogs
       security:
       - bearerAuth: []
@@ -124,9 +122,10 @@ components:
           items:
             $ref: '#/components/schemas/AuditLog'
         next_cursor:
-          type: string
+          type:
+          - string
+          - 'null'
           format: uuid
-          nullable: true
           description: Cursor for the next page, null if no more results
     AuditLog:
       type: object
@@ -140,9 +139,10 @@ components:
           format: date-time
           description: When the event occurred
         actor_id:
-          type: string
+          type:
+          - string
+          - 'null'
           format: uuid
-          nullable: true
           description: ID of the actor who performed the action
         actor_type:
           type: string
@@ -153,8 +153,9 @@ components:
           - SCIM
           description: Type of actor
         actor_name:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: Human-readable actor name (e.g. email, API key name, "SCIM")
         action:
           type: string
@@ -177,16 +178,19 @@ components:
           type: string
           description: ID of the affected entity
         ip_address:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: IP address of the request
         user_agent:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: User-Agent header of the request
         changes:
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
           description: Structured diff with `before` and `after` objects containing only changed fields
           properties:
             before:
@@ -196,8 +200,9 @@ components:
               type: object
               description: Field values after the change
         snapshot:
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
           description: Full entity snapshot or additional event metadata (e.g. on delete/create events, or extra context like failed login details)
   securitySchemes:
     bearerAuth:

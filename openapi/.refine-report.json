@@ -1,21 +1,7 @@
 {
   "provider": "langdock",
   "sources": [
-    "langdock-agent-api-openapi.yml",
-    "langdock-agent-build-api-openapi.yml",
-    "langdock-assistant-api-openapi.yml",
-    "langdock-assistant-build-api-openapi.yml",
-    "langdock-attachments-api-openapi.yml",
-    "langdock-audit-logs-api-openapi.yml",
-    "langdock-chat-api-openapi.yml",
-    "langdock-embeddings-api-openapi.yml",
-    "langdock-fim-api-openapi.yml",
-    "langdock-google-api-openapi.yml",
-    "langdock-knowledge-api-openapi.yml",
-    "langdock-messages-api-openapi.yml",
-    "langdock-skills-api-openapi.yml",
-    "langdock-usage-export-api-openapi.yml",
-    "langdock-user-management-api-openapi.yml"
+    "_original/langdock-openapi-original.yml"
   ],
   "outputs": [
     "langdock-agent-api-openapi.yml",
@@ -26,22 +12,60 @@
     "langdock-audit-logs-api-openapi.yml",
     "langdock-chat-api-openapi.yml",
     "langdock-embeddings-api-openapi.yml",
-    "langdock-fim-api-openapi.yml",
     "langdock-google-api-openapi.yml",
     "langdock-knowledge-api-openapi.yml",
     "langdock-messages-api-openapi.yml",
     "langdock-skills-api-openapi.yml",
     "langdock-usage-export-api-openapi.yml",
-    "langdock-user-management-api-openapi.yml"
+    "langdock-user-management-api-openapi.yml",
+    "langdock-fim-api-openapi.yml"
   ],
   "archived": [],
   "errors": [
-    "langdock-agent-build-api-openapi.yml: dangling $ref: #/components/schemas/Action",
-    "langdock-agent-build-api-openapi.yml: dangling $ref: #/components/schemas/VectorDb",
-    "langdock-assistant-api-openapi.yml: dangling $ref: #/components/schemas/Action",
-    "langdock-assistant-api-openapi.yml: dangling $ref: #/components/schemas/VectorDb"
+    "langdock-openapi-original.yml: dangling $ref: #/components/schemas/Action",
+    "langdock-openapi-original.yml: dangling $ref: #/components/schemas/VectorDb"
   ],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "langdock-openapi-original.yml: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "langdock-openapi-original.yml: tagged paths POST /knowledge/search -> Knowledge",
+    "langdock-openapi-original.yml: tagged paths POST /knowledge/{folderId} -> Knowledge",
+    "langdock-openapi-original.yml: tagged paths PATCH /knowledge/{folderId} -> Knowledge",
+    "langdock-openapi-original.yml: tagged paths GET /knowledge/{folderId}/list -> Knowledge",
+    "langdock-openapi-original.yml: tagged paths DELETE /knowledge/{folderId}/{attachmentId} -> Knowledge",
+    "langdock-openapi-original.yml: declared missing tag: Agent",
+    "langdock-openapi-original.yml: declared missing tag: Agent Build",
+    "langdock-openapi-original.yml: declared missing tag: Assistant",
+    "langdock-openapi-original.yml: declared missing tag: Assistant Build",
+    "langdock-openapi-original.yml: declared missing tag: Attachments",
+    "langdock-openapi-original.yml: declared missing tag: Audit Logs",
+    "langdock-openapi-original.yml: declared missing tag: Chat",
+    "langdock-openapi-original.yml: declared missing tag: Embeddings",
+    "langdock-openapi-original.yml: declared missing tag: Google",
+    "langdock-openapi-original.yml: declared missing tag: Knowledge",
+    "langdock-openapi-original.yml: declared missing tag: Messages",
+    "langdock-openapi-original.yml: declared missing tag: Skills",
+    "langdock-openapi-original.yml: declared missing tag: Usage Export",
+    "langdock-openapi-original.yml: declared missing tag: User Management",
+    "langdock-openapi-original.yml: declared missing tag: fim",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "langdock-agent-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "langdock-agent-build-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "langdock-assistant-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "langdock-assistant-build-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "langdock-attachments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "langdock-audit-logs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "langdock-chat-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "langdock-embeddings-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "langdock-fim-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "langdock-google-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "langdock-knowledge-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "langdock-messages-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "langdock-skills-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "langdock-usage-export-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "langdock-user-management-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

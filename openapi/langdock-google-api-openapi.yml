@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Langdock Agent Google API
+  title: Langdock Google API
   version: 3.0.0
 servers:
 - url: https://api.langdock.com
@@ -96,22 +96,22 @@ paths:
       - bearerAuth: []
 components:
   schemas:
-    NotFoundError:
+    RateLimitError:
       properties:
         type:
-          default: not_found_error
+          default: rate_limit_error
           enum:
-          - not_found_error
+          - rate_limit_error
           title: Type
           type: string
         message:
-          default: Not found
+          default: Rate limited
           title: Message
           type: string
       required:
       - type
       - message
-      title: NotFoundError
+      title: RateLimitError
       type: object
     InvalidRequestError:
       properties:
@@ -130,23 +130,6 @@ components:
       - message
       title: InvalidRequestError
       type: object
-    AuthenticationError:
-      properties:
-        type:
-          default: authentication_error
-          enum:
-          - authentication_error
-          title: Type
-          type: string
-        message:
-          default: Authentication error
-          title: Message
-          type: string
-      required:
-      - type
-      - message
-      title: AuthenticationError
-      type: object
     PermissionError:
       properties:
         type:
@@ -164,22 +147,39 @@ components:
       - message
       title: PermissionError
       type: object
-    APIError:
+    AuthenticationError:
       properties:
         type:
-          default: api_error
+          default: authentication_error
           enum:
-          - api_error
+          - authentication_error
           title: Type
           type: string
         message:
-          default: Internal server error
+          default: Authentication error
           title: Message
           type: string
       required:
       - type
       - message
-      title: APIError
+      title: AuthenticationError
+      type: object
+    OverloadedError:
+      properties:
+        type:
+          default: overloaded_error
+          enum:
+          - overloaded_error
+          title: Type
+          type: string
+        message:
+          default: Overloaded
+          title: Message
+          type: string
+      required:
+      - type
+      - message
+      title: OverloadedError
       type: object
     ErrorResponse:
       properties:
@@ -214,39 +214,39 @@ components:
       - error
       title: ErrorResponse
       type: object
-    OverloadedError:
+    APIError:
       properties:
         type:
-          default: overloaded_error
+          default: api_error
           enum:
-          - overloaded_error
+          - api_error
           title: Type
           type: string
         message:
-          default: Overloaded
+          default: Internal server error
           title: Message
           type: string
       required:
       - type
       - message
-      title: OverloadedError
+      title: APIError
       type: object
-    RateLimitError:
+    NotFoundError:
       properties:
         type:
-          default: rate_limit_error
+          default: not_found_error
           enum:
-          - rate_limit_error
+          - not_found_error
           title: Type
           type: string
         message:
-          default: Rate limited
+          default: Not found
           title: Message
           type: string
       required:
       - type
       - message
-      title: RateLimitError
+      title: NotFoundError
       type: object
   securitySchemes:
     bearerAuth:
