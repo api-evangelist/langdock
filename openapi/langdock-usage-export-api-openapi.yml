@@ -246,16 +246,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    UsageExportModelGroupByRequest:
-      allOf:
-      - $ref: '#/components/schemas/UsageExportRequest'
-      - type: object
-        properties:
-          group_by:
-            type: string
-            description: Optional aggregation dimension.
-            enum:
-            - model
     UsageExportModelsRequest:
       allOf:
       - $ref: '#/components/schemas/UsageExportRequest'
@@ -267,45 +257,21 @@ components:
             enum:
             - source
             - deployment
-    UsageExportRequest:
+    UsageExportError:
       type: object
-      description: Request body for usage export endpoints
+      description: Error response from usage export endpoints
       properties:
-        from:
-          type: object
-          description: Start date and timezone for the export
-          properties:
-            date:
-              type: string
-              format: date-time
-              description: Start date in ISO 8601 format
-              example: '2024-01-01T00:00:00.000Z'
-            timezone:
-              type: string
-              description: Timezone for the date range
-              example: UTC
-          required:
-          - date
-          - timezone
-        to:
-          type: object
-          description: End date and timezone for the export
-          properties:
-            date:
-              type: string
-              format: date-time
-              description: End date in ISO 8601 format
-              example: '2024-01-31T23:59:59.999Z'
-            timezone:
-              type: string
-              description: Timezone for the date range
-              example: UTC
-          required:
-          - date
-          - timezone
+        error:
+          type: string
+          description: Error type
+          example: No data found
+        message:
+          type: string
+          description: Detailed error message
+          example: No usage data found for the selected period
       required:
-      - from
-      - to
+      - error
+      - message
     UsageExportResponse:
       type: object
       description: Successful response from usage export endpoints
@@ -368,21 +334,55 @@ components:
       required:
       - success
       - data
-    UsageExportError:
+    UsageExportModelGroupByRequest:
+      allOf:
+      - $ref: '#/components/schemas/UsageExportRequest'
+      - type: object
+        properties:
+          group_by:
+            type: string
+            description: Optional aggregation dimension.
+            enum:
+            - model
+    UsageExportRequest:
       type: object
-      description: Error response from usage export endpoints
+      description: Request body for usage export endpoints
       properties:
-        error:
-          type: string
-          description: Error type
-          example: No data found
-        message:
-          type: string
-          description: Detailed error message
-          example: No usage data found for the selected period
+        from:
+          type: object
+          description: Start date and timezone for the export
+          properties:
+            date:
+              type: string
+              format: date-time
+              description: Start date in ISO 8601 format
+              example: '2024-01-01T00:00:00.000Z'
+            timezone:
+              type: string
+              description: Timezone for the date range
+              example: UTC
+          required:
+          - date
+          - timezone
+        to:
+          type: object
+          description: End date and timezone for the export
+          properties:
+            date:
+              type: string
+              format: date-time
+              description: End date in ISO 8601 format
+              example: '2024-01-31T23:59:59.999Z'
+            timezone:
+              type: string
+              description: Timezone for the date range
+              example: UTC
+          required:
+          - date
+          - timezone
       required:
-      - error
-      - message
+      - from
+      - to
   securitySchemes:
     bearerAuth:
       type: http

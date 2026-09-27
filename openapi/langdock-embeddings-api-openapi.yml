@@ -147,6 +147,26 @@ components:
       required:
       - model
       - input
+    Embedding:
+      type: object
+      properties:
+        index:
+          type: integer
+          description: The index of the embedding in the list of embeddings.
+        embedding:
+          type: array
+          items:
+            type: number
+          description: The embedding vector, which is a list of floats. The length of vector depends on the model as listed in the [embedding guide](https://platform.openai.com/docs/guides/embeddings).
+        object:
+          type: string
+          enum:
+          - embedding
+          description: The object type, which is always "embedding".
+      required:
+      - index
+      - embedding
+      - object
     CreateEmbeddingResponse:
       type: object
       properties:
@@ -180,26 +200,6 @@ components:
       - model
       - object
       - usage
-    Embedding:
-      type: object
-      properties:
-        index:
-          type: integer
-          description: The index of the embedding in the list of embeddings.
-        embedding:
-          type: array
-          items:
-            type: number
-          description: The embedding vector, which is a list of floats. The length of vector depends on the model as listed in the [embedding guide](https://platform.openai.com/docs/guides/embeddings).
-        object:
-          type: string
-          enum:
-          - embedding
-          description: The object type, which is always "embedding".
-      required:
-      - index
-      - embedding
-      - object
   securitySchemes:
     bearerAuth:
       type: http

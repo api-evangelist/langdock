@@ -223,58 +223,6 @@ components:
       - message
       - successfulInvites
       - invalidEmails
-    UserManagementResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          enum:
-          - success
-          description: Always "success" when the request is processed
-          example: success
-        message:
-          type: string
-          description: Human-readable summary of the result
-          example: User deactivated
-      required:
-      - status
-      - message
-    UserManagementError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Error message
-          example: User not found or not an active member
-      required:
-      - message
-    InviteUsersError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Error message
-          example: Invalid request body
-        errors:
-          type: array
-          items:
-            type: object
-          description: Detailed validation errors (present on 400 responses)
-        error:
-          type: string
-          description: Additional error details (present on 500 responses)
-      required:
-      - message
-    UserEmailRequest:
-      type: object
-      required:
-      - email
-      properties:
-        email:
-          type: string
-          format: email
-          description: Email address of the user
-          example: user@example.com
     InviteUsersRequest:
       type: object
       required:
@@ -302,6 +250,58 @@ components:
                 - admin
                 description: Role to assign. If omitted, defaults to `member`.
                 example: member
+    UserEmailRequest:
+      type: object
+      required:
+      - email
+      properties:
+        email:
+          type: string
+          format: email
+          description: Email address of the user
+          example: user@example.com
+    UserManagementResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+          description: Always "success" when the request is processed
+          example: success
+        message:
+          type: string
+          description: Human-readable summary of the result
+          example: User deactivated
+      required:
+      - status
+      - message
+    InviteUsersError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Error message
+          example: Invalid request body
+        errors:
+          type: array
+          items:
+            type: object
+          description: Detailed validation errors (present on 400 responses)
+        error:
+          type: string
+          description: Additional error details (present on 500 responses)
+      required:
+      - message
+    UserManagementError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Error message
+          example: User not found or not an active member
+      required:
+      - message
   securitySchemes:
     bearerAuth:
       type: http

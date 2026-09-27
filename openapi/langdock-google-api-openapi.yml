@@ -96,22 +96,22 @@ paths:
       - bearerAuth: []
 components:
   schemas:
-    RateLimitError:
+    OverloadedError:
       properties:
         type:
-          default: rate_limit_error
+          default: overloaded_error
           enum:
-          - rate_limit_error
+          - overloaded_error
           title: Type
           type: string
         message:
-          default: Rate limited
+          default: Overloaded
           title: Message
           type: string
       required:
       - type
       - message
-      title: RateLimitError
+      title: OverloadedError
       type: object
     InvalidRequestError:
       properties:
@@ -130,23 +130,6 @@ components:
       - message
       title: InvalidRequestError
       type: object
-    PermissionError:
-      properties:
-        type:
-          default: permission_error
-          enum:
-          - permission_error
-          title: Type
-          type: string
-        message:
-          default: Permission denied
-          title: Message
-          type: string
-      required:
-      - type
-      - message
-      title: PermissionError
-      type: object
     AuthenticationError:
       properties:
         type:
@@ -163,23 +146,6 @@ components:
       - type
       - message
       title: AuthenticationError
-      type: object
-    OverloadedError:
-      properties:
-        type:
-          default: overloaded_error
-          enum:
-          - overloaded_error
-          title: Type
-          type: string
-        message:
-          default: Overloaded
-          title: Message
-          type: string
-      required:
-      - type
-      - message
-      title: OverloadedError
       type: object
     ErrorResponse:
       properties:
@@ -230,6 +196,40 @@ components:
       - type
       - message
       title: APIError
+      type: object
+    PermissionError:
+      properties:
+        type:
+          default: permission_error
+          enum:
+          - permission_error
+          title: Type
+          type: string
+        message:
+          default: Permission denied
+          title: Message
+          type: string
+      required:
+      - type
+      - message
+      title: PermissionError
+      type: object
+    RateLimitError:
+      properties:
+        type:
+          default: rate_limit_error
+          enum:
+          - rate_limit_error
+          title: Type
+          type: string
+        message:
+          default: Rate limited
+          title: Message
+          type: string
+      required:
+      - type
+      - message
+      title: RateLimitError
       type: object
     NotFoundError:
       properties:

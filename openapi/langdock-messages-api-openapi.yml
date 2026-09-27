@@ -59,6 +59,549 @@ paths:
       - bearerAuth: []
 components:
   schemas:
+    ToolChoiceTool:
+      additionalProperties: false
+      description: The model will use the specified tool with `tool_choice.name`.
+      properties:
+        type:
+          enum:
+          - tool
+          title: Type
+          type: string
+        name:
+          description: The name of the tool to use.
+          title: Name
+          type: string
+      required:
+      - type
+      - name
+      title: ToolChoiceTool
+      type: object
+    ResponseThinkingBlock:
+      type: object
+      description: A thinking content block containing Claude's reasoning process when extended thinking is enabled.
+      properties:
+        type:
+          type: string
+          enum:
+          - thinking
+          description: The type of content block.
+        thinking:
+          type: string
+          description: Claude's internal reasoning process.
+        signature:
+          type: string
+          description: A signature verifying the thinking block's authenticity.
+      required:
+      - type
+      - thinking
+    AuthenticationError:
+      properties:
+        type:
+          default: authentication_error
+          enum:
+          - authentication_error
+          title: Type
+          type: string
+        message:
+          default: Authentication error
+          title: Message
+          type: string
+      required:
+      - type
+      - message
+      title: AuthenticationError
+      type: object
+    RateLimitError:
+      properties:
+        type:
+          default: rate_limit_error
+          enum:
+          - rate_limit_error
+          title: Type
+          type: string
+        message:
+          default: Rate limited
+          title: Message
+          type: string
+      required:
+      - type
+      - message
+      title: RateLimitError
+      type: object
+    RequestToolUseBlock:
+      additionalProperties: false
+      properties:
+        type:
+          enum:
+          - tool_use
+          title: Type
+          type: string
+        id:
+          pattern: ^[a-zA-Z0-9_-]+$
+          title: Id
+          type: string
+        name:
+          maxLength: 64
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_-]{1,64}$
+          title: Name
+          type: string
+        input:
+          title: Input
+          type: object
+      required:
+      - type
+      - id
+      - name
+      - input
+      title: Tool Use
+      type: object
+    Usage:
+      properties:
+        input_tokens:
+          description: The number of input tokens which were used.
+          example:
+          - 2095
+          title: Input Tokens
+          type: integer
+        output_tokens:
+          description: The number of output tokens which were used.
+          example:
+          - 503
+          title: Output Tokens
+          type: integer
+      required:
+      - input_tokens
+      - output_tokens
+      title: Usage
+      type: object
+    RequestToolResultBlock:
+      additionalProperties: false
+      properties:
+        type:
+          enum:
+          - tool_result
+          title: Type
+          type: string
+        tool_use_id:
+          pattern: ^[a-zA-Z0-9_-]+$
+          title: Tool Use Id
+          type: string
+        is_error:
+          default: false
+          title: Is Error
+          type: boolean
+        content:
+          anyOf:
+          - type: string
+            x-stainless-skip:
+            - go
+          - items:
+              discriminator:
+                mapping:
+                  image: '#/components/schemas/RequestImageBlock'
+                  text: '#/components/schemas/RequestTextBlock'
+                propertyName: type
+              oneOf:
+              - $ref: '#/components/schemas/RequestTextBlock'
+              - $ref: '#/components/schemas/RequestImageBlock'
+            type: array
+            x-stainless-naming:
+              python:
+                type_name: Content
+          title: Content
+      required:
+      - type
+      - tool_use_id
+      title: Tool Result
+      type: object
+    ToolChoiceAuto:
+      additionalProperties: false
+      description: The model will automatically decide whether to use tools.
+      properties:
+        type:
+          enum:
+          - auto
+          title: Type
+          type: string
+      required:
+      - type
+      title: ToolChoiceAuto
+      type: object
+    ToolChoiceAny:
+      additionalProperties: false
+      description: The model will use any available tools.
+      properties:
+        type:
+          enum:
+          - any
+          title: Type
+          type: string
+      required:
+      - type
+      title: ToolChoiceAny
+      type: object
+    APIError:
+      properties:
+        type:
+          default: api_error
+          enum:
+          - api_error
+          title: Type
+          type: string
+        message:
+          default: Internal server error
+          title: Message
+          type: string
+      required:
+      - type
+      - message
+      title: APIError
+      type: object
+    RequestImageBlock:
+      additionalProperties: false
+      properties:
+        type:
+          enum:
+          - image
+          title: Type
+          type: string
+        source:
+          discriminator:
+            mapping:
+              base64: '#/components/schemas/Base64ImageSource'
+            propertyName: type
+          oneOf:
+          - $ref: '#/components/schemas/Base64ImageSource'
+          title: Source
+      required:
+      - type
+      - source
+      title: Image
+      type: object
+    PermissionError:
+      properties:
+        type:
+          default: permission_error
+          enum:
+          - permission_error
+          title: Type
+          type: string
+        message:
+          default: Permission denied
+          title: Message
+          type: string
+      required:
+      - type
+      - message
+      title: PermissionError
+      type: object
+    Base64ImageSource:
+      additionalProperties: false
+      properties:
+        type:
+          enum:
+          - base64
+          title: Type
+          type: string
+        media_type:
+          enum:
+          - image/jpeg
+          - image/png
+          - image/gif
+          - image/webp
+          title: Media Type
+          type: string
+        data:
+          format: byte
+          title: Data
+          type: string
+      required:
+      - type
+      - media_type
+      - data
+      title: Base64ImageSource
+      type: object
+    RequestTextBlock:
+      additionalProperties: false
+      properties:
+        type:
+          enum:
+          - text
+          title: Type
+          type: string
+        text:
+          minLength: 1
+          title: Text
+          type: string
+      required:
+      - type
+      - text
+      title: Text
+      type: object
+    OverloadedError:
+      properties:
+        type:
+          default: overloaded_error
+          enum:
+          - overloaded_error
+          title: Type
+          type: string
+        message:
+          default: Overloaded
+          title: Message
+          type: string
+      required:
+      - type
+      - message
+      title: OverloadedError
+      type: object
+    ThinkingConfig:
+      type: object
+      title: Thinking
+      description: 'Configuration for enabling Claude''s extended thinking. When enabled, responses include `thinking` content blocks showing Claude''s reasoning process before the final answer.
+
+
+        See [extended thinking](https://platform.claude.com/docs/en/build-with-claude/extended-thinking) for details.'
+      properties:
+        type:
+          type: string
+          enum:
+          - enabled
+          description: Must be "enabled" to activate extended thinking.
+        budget_tokens:
+          type: integer
+          minimum: 1024
+          description: Maximum number of tokens Claude can use for thinking. Must be ≥1024 and less than max_tokens.
+      required:
+      - type
+      - budget_tokens
+    Model:
+      title: Model
+      description: The model that will complete your prompt. See [models](https://platform.claude.com/docs/en/docs/models-overview) for additional details and options.
+      type: string
+    Tool:
+      additionalProperties: false
+      properties:
+        description:
+          description: 'Description of what this tool does.
+
+
+            Tool descriptions should be as detailed as possible. The more information that the model has about what the tool is and how to use it, the better it will perform. You can use natural language descriptions to reinforce important aspects of the tool input JSON schema.'
+          example:
+          - Get the current weather in a given location
+          title: Description
+          type: string
+        name:
+          maxLength: 64
+          minLength: 1
+          pattern: ^[a-zA-Z0-9_-]{1,64}$
+          title: Name
+          type: string
+        input_schema:
+          allOf:
+          - $ref: '#/components/schemas/InputSchema'
+          description: '[JSON schema](https://json-schema.org/) for this tool''s input.
+
+
+            This defines the shape of the `input` that your tool accepts and that the model will produce.'
+          example:
+          - properties:
+              location:
+                description: The city and state, e.g. San Francisco, CA
+                type: string
+              unit:
+                description: Unit for the output - one of (celsius, fahrenheit)
+                type: string
+            required:
+            - location
+            type: object
+      required:
+      - name
+      - input_schema
+      title: Tool
+      type: object
+    ResponseTextBlock:
+      properties:
+        type:
+          default: text
+          enum:
+          - text
+          title: Type
+          type: string
+        text:
+          maxLength: 5000000
+          minLength: 0
+          title: Text
+          type: string
+      required:
+      - type
+      - text
+      title: Text
+      type: object
+    NotFoundError:
+      properties:
+        type:
+          default: not_found_error
+          enum:
+          - not_found_error
+          title: Type
+          type: string
+        message:
+          default: Not found
+          title: Message
+          type: string
+      required:
+      - type
+      - message
+      title: NotFoundError
+      type: object
+    ContentBlock:
+      discriminator:
+        mapping:
+          text: '#/components/schemas/ResponseTextBlock'
+          tool_use: '#/components/schemas/ResponseToolUseBlock'
+          thinking: '#/components/schemas/ResponseThinkingBlock'
+        propertyName: type
+      oneOf:
+      - $ref: '#/components/schemas/ResponseTextBlock'
+      - $ref: '#/components/schemas/ResponseToolUseBlock'
+      - $ref: '#/components/schemas/ResponseThinkingBlock'
+    InputSchema:
+      additionalProperties: true
+      properties:
+        type:
+          enum:
+          - object
+          title: Type
+          type: string
+        properties:
+          anyOf:
+          - type: object
+          default: null
+          title: Properties
+      required:
+      - type
+      title: InputSchema
+      type: object
+    InputMessage:
+      additionalProperties: false
+      properties:
+        role:
+          enum:
+          - user
+          - agent
+          title: Role
+          type: string
+        content:
+          anyOf:
+          - type: string
+            x-stainless-skip:
+            - go
+          - items:
+              discriminator:
+                mapping:
+                  image: '#/components/schemas/RequestImageBlock'
+                  text: '#/components/schemas/RequestTextBlock'
+                  tool_result: '#/components/schemas/RequestToolResultBlock'
+                  tool_use: '#/components/schemas/RequestToolUseBlock'
+                propertyName: type
+              oneOf:
+              - $ref: '#/components/schemas/RequestTextBlock'
+              - $ref: '#/components/schemas/RequestImageBlock'
+              - $ref: '#/components/schemas/RequestToolUseBlock'
+              - $ref: '#/components/schemas/RequestToolResultBlock'
+              x-stainless-python-extend-union:
+              - ContentBlock
+              x-stainless-python-extend-union-imports:
+              - from .content_block import ContentBlock
+            type: array
+            example:
+            - type: text
+              text: What is a quaternion?
+          title: Content
+      required:
+      - role
+      - content
+      title: InputMessage
+      type: object
+    ResponseToolUseBlock:
+      properties:
+        type:
+          default: tool_use
+          enum:
+          - tool_use
+          title: Type
+          type: string
+        id:
+          pattern: ^[a-zA-Z0-9_-]+$
+          title: Id
+          type: string
+        name:
+          minLength: 1
+          title: Name
+          type: string
+        input:
+          title: Input
+          type: object
+      required:
+      - type
+      - id
+      - name
+      - input
+      title: Tool Use
+      type: object
+    InvalidRequestError:
+      properties:
+        type:
+          default: invalid_request_error
+          enum:
+          - invalid_request_error
+          title: Type
+          type: string
+        message:
+          default: Invalid request
+          title: Message
+          type: string
+      required:
+      - type
+      - message
+      title: InvalidRequestError
+      type: object
+    ErrorResponse:
+      properties:
+        type:
+          default: error
+          enum:
+          - error
+          title: Type
+          type: string
+        error:
+          discriminator:
+            mapping:
+              api_error: '#/components/schemas/APIError'
+              authentication_error: '#/components/schemas/AuthenticationError'
+              invalid_request_error: '#/components/schemas/InvalidRequestError'
+              not_found_error: '#/components/schemas/NotFoundError'
+              overloaded_error: '#/components/schemas/OverloadedError'
+              permission_error: '#/components/schemas/PermissionError'
+              rate_limit_error: '#/components/schemas/RateLimitError'
+            propertyName: type
+          oneOf:
+          - $ref: '#/components/schemas/InvalidRequestError'
+          - $ref: '#/components/schemas/AuthenticationError'
+          - $ref: '#/components/schemas/PermissionError'
+          - $ref: '#/components/schemas/NotFoundError'
+          - $ref: '#/components/schemas/RateLimitError'
+          - $ref: '#/components/schemas/APIError'
+          - $ref: '#/components/schemas/OverloadedError'
+          title: Error
+      required:
+      - type
+      - error
+      title: ErrorResponse
+      type: object
     CreateMessageParams:
       additionalProperties: false
       example:
@@ -207,124 +750,6 @@ components:
       - max_tokens
       title: CreateMessageParams
       type: object
-    RequestToolUseBlock:
-      additionalProperties: false
-      properties:
-        type:
-          enum:
-          - tool_use
-          title: Type
-          type: string
-        id:
-          pattern: ^[a-zA-Z0-9_-]+$
-          title: Id
-          type: string
-        name:
-          maxLength: 64
-          minLength: 1
-          pattern: ^[a-zA-Z0-9_-]{1,64}$
-          title: Name
-          type: string
-        input:
-          title: Input
-          type: object
-      required:
-      - type
-      - id
-      - name
-      - input
-      title: Tool Use
-      type: object
-    ToolChoiceAny:
-      additionalProperties: false
-      description: The model will use any available tools.
-      properties:
-        type:
-          enum:
-          - any
-          title: Type
-          type: string
-      required:
-      - type
-      title: ToolChoiceAny
-      type: object
-    ResponseToolUseBlock:
-      properties:
-        type:
-          default: tool_use
-          enum:
-          - tool_use
-          title: Type
-          type: string
-        id:
-          pattern: ^[a-zA-Z0-9_-]+$
-          title: Id
-          type: string
-        name:
-          minLength: 1
-          title: Name
-          type: string
-        input:
-          title: Input
-          type: object
-      required:
-      - type
-      - id
-      - name
-      - input
-      title: Tool Use
-      type: object
-    APIError:
-      properties:
-        type:
-          default: api_error
-          enum:
-          - api_error
-          title: Type
-          type: string
-        message:
-          default: Internal server error
-          title: Message
-          type: string
-      required:
-      - type
-      - message
-      title: APIError
-      type: object
-    InvalidRequestError:
-      properties:
-        type:
-          default: invalid_request_error
-          enum:
-          - invalid_request_error
-          title: Type
-          type: string
-        message:
-          default: Invalid request
-          title: Message
-          type: string
-      required:
-      - type
-      - message
-      title: InvalidRequestError
-      type: object
-    RequestTextBlock:
-      additionalProperties: false
-      properties:
-        type:
-          enum:
-          - text
-          title: Type
-          type: string
-        text:
-          minLength: 1
-          title: Text
-          type: string
-      required:
-      - type
-      - text
-      title: Text
-      type: object
     Message:
       example:
       - content:
@@ -439,431 +864,6 @@ components:
       type: object
       x-stainless-python-custom-imports:
       - from .content_block import ContentBlock as ContentBlock
-    ToolChoiceAuto:
-      additionalProperties: false
-      description: The model will automatically decide whether to use tools.
-      properties:
-        type:
-          enum:
-          - auto
-          title: Type
-          type: string
-      required:
-      - type
-      title: ToolChoiceAuto
-      type: object
-    ResponseThinkingBlock:
-      type: object
-      description: A thinking content block containing Claude's reasoning process when extended thinking is enabled.
-      properties:
-        type:
-          type: string
-          enum:
-          - thinking
-          description: The type of content block.
-        thinking:
-          type: string
-          description: Claude's internal reasoning process.
-        signature:
-          type: string
-          description: A signature verifying the thinking block's authenticity.
-      required:
-      - type
-      - thinking
-    PermissionError:
-      properties:
-        type:
-          default: permission_error
-          enum:
-          - permission_error
-          title: Type
-          type: string
-        message:
-          default: Permission denied
-          title: Message
-          type: string
-      required:
-      - type
-      - message
-      title: PermissionError
-      type: object
-    OverloadedError:
-      properties:
-        type:
-          default: overloaded_error
-          enum:
-          - overloaded_error
-          title: Type
-          type: string
-        message:
-          default: Overloaded
-          title: Message
-          type: string
-      required:
-      - type
-      - message
-      title: OverloadedError
-      type: object
-    ErrorResponse:
-      properties:
-        type:
-          default: error
-          enum:
-          - error
-          title: Type
-          type: string
-        error:
-          discriminator:
-            mapping:
-              api_error: '#/components/schemas/APIError'
-              authentication_error: '#/components/schemas/AuthenticationError'
-              invalid_request_error: '#/components/schemas/InvalidRequestError'
-              not_found_error: '#/components/schemas/NotFoundError'
-              overloaded_error: '#/components/schemas/OverloadedError'
-              permission_error: '#/components/schemas/PermissionError'
-              rate_limit_error: '#/components/schemas/RateLimitError'
-            propertyName: type
-          oneOf:
-          - $ref: '#/components/schemas/InvalidRequestError'
-          - $ref: '#/components/schemas/AuthenticationError'
-          - $ref: '#/components/schemas/PermissionError'
-          - $ref: '#/components/schemas/NotFoundError'
-          - $ref: '#/components/schemas/RateLimitError'
-          - $ref: '#/components/schemas/APIError'
-          - $ref: '#/components/schemas/OverloadedError'
-          title: Error
-      required:
-      - type
-      - error
-      title: ErrorResponse
-      type: object
-    RequestImageBlock:
-      additionalProperties: false
-      properties:
-        type:
-          enum:
-          - image
-          title: Type
-          type: string
-        source:
-          discriminator:
-            mapping:
-              base64: '#/components/schemas/Base64ImageSource'
-            propertyName: type
-          oneOf:
-          - $ref: '#/components/schemas/Base64ImageSource'
-          title: Source
-      required:
-      - type
-      - source
-      title: Image
-      type: object
-    ToolChoiceTool:
-      additionalProperties: false
-      description: The model will use the specified tool with `tool_choice.name`.
-      properties:
-        type:
-          enum:
-          - tool
-          title: Type
-          type: string
-        name:
-          description: The name of the tool to use.
-          title: Name
-          type: string
-      required:
-      - type
-      - name
-      title: ToolChoiceTool
-      type: object
-    NotFoundError:
-      properties:
-        type:
-          default: not_found_error
-          enum:
-          - not_found_error
-          title: Type
-          type: string
-        message:
-          default: Not found
-          title: Message
-          type: string
-      required:
-      - type
-      - message
-      title: NotFoundError
-      type: object
-    RateLimitError:
-      properties:
-        type:
-          default: rate_limit_error
-          enum:
-          - rate_limit_error
-          title: Type
-          type: string
-        message:
-          default: Rate limited
-          title: Message
-          type: string
-      required:
-      - type
-      - message
-      title: RateLimitError
-      type: object
-    Tool:
-      additionalProperties: false
-      properties:
-        description:
-          description: 'Description of what this tool does.
-
-
-            Tool descriptions should be as detailed as possible. The more information that the model has about what the tool is and how to use it, the better it will perform. You can use natural language descriptions to reinforce important aspects of the tool input JSON schema.'
-          example:
-          - Get the current weather in a given location
-          title: Description
-          type: string
-        name:
-          maxLength: 64
-          minLength: 1
-          pattern: ^[a-zA-Z0-9_-]{1,64}$
-          title: Name
-          type: string
-        input_schema:
-          allOf:
-          - $ref: '#/components/schemas/InputSchema'
-          description: '[JSON schema](https://json-schema.org/) for this tool''s input.
-
-
-            This defines the shape of the `input` that your tool accepts and that the model will produce.'
-          example:
-          - properties:
-              location:
-                description: The city and state, e.g. San Francisco, CA
-                type: string
-              unit:
-                description: Unit for the output - one of (celsius, fahrenheit)
-                type: string
-            required:
-            - location
-            type: object
-      required:
-      - name
-      - input_schema
-      title: Tool
-      type: object
-    RequestToolResultBlock:
-      additionalProperties: false
-      properties:
-        type:
-          enum:
-          - tool_result
-          title: Type
-          type: string
-        tool_use_id:
-          pattern: ^[a-zA-Z0-9_-]+$
-          title: Tool Use Id
-          type: string
-        is_error:
-          default: false
-          title: Is Error
-          type: boolean
-        content:
-          anyOf:
-          - type: string
-            x-stainless-skip:
-            - go
-          - items:
-              discriminator:
-                mapping:
-                  image: '#/components/schemas/RequestImageBlock'
-                  text: '#/components/schemas/RequestTextBlock'
-                propertyName: type
-              oneOf:
-              - $ref: '#/components/schemas/RequestTextBlock'
-              - $ref: '#/components/schemas/RequestImageBlock'
-            type: array
-            x-stainless-naming:
-              python:
-                type_name: Content
-          title: Content
-      required:
-      - type
-      - tool_use_id
-      title: Tool Result
-      type: object
-    ContentBlock:
-      discriminator:
-        mapping:
-          text: '#/components/schemas/ResponseTextBlock'
-          tool_use: '#/components/schemas/ResponseToolUseBlock'
-          thinking: '#/components/schemas/ResponseThinkingBlock'
-        propertyName: type
-      oneOf:
-      - $ref: '#/components/schemas/ResponseTextBlock'
-      - $ref: '#/components/schemas/ResponseToolUseBlock'
-      - $ref: '#/components/schemas/ResponseThinkingBlock'
-    AuthenticationError:
-      properties:
-        type:
-          default: authentication_error
-          enum:
-          - authentication_error
-          title: Type
-          type: string
-        message:
-          default: Authentication error
-          title: Message
-          type: string
-      required:
-      - type
-      - message
-      title: AuthenticationError
-      type: object
-    InputMessage:
-      additionalProperties: false
-      properties:
-        role:
-          enum:
-          - user
-          - agent
-          title: Role
-          type: string
-        content:
-          anyOf:
-          - type: string
-            x-stainless-skip:
-            - go
-          - items:
-              discriminator:
-                mapping:
-                  image: '#/components/schemas/RequestImageBlock'
-                  text: '#/components/schemas/RequestTextBlock'
-                  tool_result: '#/components/schemas/RequestToolResultBlock'
-                  tool_use: '#/components/schemas/RequestToolUseBlock'
-                propertyName: type
-              oneOf:
-              - $ref: '#/components/schemas/RequestTextBlock'
-              - $ref: '#/components/schemas/RequestImageBlock'
-              - $ref: '#/components/schemas/RequestToolUseBlock'
-              - $ref: '#/components/schemas/RequestToolResultBlock'
-              x-stainless-python-extend-union:
-              - ContentBlock
-              x-stainless-python-extend-union-imports:
-              - from .content_block import ContentBlock
-            type: array
-            example:
-            - type: text
-              text: What is a quaternion?
-          title: Content
-      required:
-      - role
-      - content
-      title: InputMessage
-      type: object
-    ThinkingConfig:
-      type: object
-      title: Thinking
-      description: 'Configuration for enabling Claude''s extended thinking. When enabled, responses include `thinking` content blocks showing Claude''s reasoning process before the final answer.
-
-
-        See [extended thinking](https://platform.claude.com/docs/en/build-with-claude/extended-thinking) for details.'
-      properties:
-        type:
-          type: string
-          enum:
-          - enabled
-          description: Must be "enabled" to activate extended thinking.
-        budget_tokens:
-          type: integer
-          minimum: 1024
-          description: Maximum number of tokens Claude can use for thinking. Must be ≥1024 and less than max_tokens.
-      required:
-      - type
-      - budget_tokens
-    Base64ImageSource:
-      additionalProperties: false
-      properties:
-        type:
-          enum:
-          - base64
-          title: Type
-          type: string
-        media_type:
-          enum:
-          - image/jpeg
-          - image/png
-          - image/gif
-          - image/webp
-          title: Media Type
-          type: string
-        data:
-          format: byte
-          title: Data
-          type: string
-      required:
-      - type
-      - media_type
-      - data
-      title: Base64ImageSource
-      type: object
-    Usage:
-      properties:
-        input_tokens:
-          description: The number of input tokens which were used.
-          example:
-          - 2095
-          title: Input Tokens
-          type: integer
-        output_tokens:
-          description: The number of output tokens which were used.
-          example:
-          - 503
-          title: Output Tokens
-          type: integer
-      required:
-      - input_tokens
-      - output_tokens
-      title: Usage
-      type: object
-    InputSchema:
-      additionalProperties: true
-      properties:
-        type:
-          enum:
-          - object
-          title: Type
-          type: string
-        properties:
-          anyOf:
-          - type: object
-          default: null
-          title: Properties
-      required:
-      - type
-      title: InputSchema
-      type: object
-    ResponseTextBlock:
-      properties:
-        type:
-          default: text
-          enum:
-          - text
-          title: Type
-          type: string
-        text:
-          maxLength: 5000000
-          minLength: 0
-          title: Text
-          type: string
-      required:
-      - type
-      - text
-      title: Text
-      type: object
-    Model:
-      title: Model
-      description: The model that will complete your prompt. See [models](https://platform.claude.com/docs/en/docs/models-overview) for additional details and options.
-      type: string
   securitySchemes:
     bearerAuth:
       type: http

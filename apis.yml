@@ -53,7 +53,7 @@ tags:
 - Agents
 - MCP
 - Workflows
-- Knowledge-Management
+- Knowledge Management
 - Germany
 - Europe
 tags_raw:
@@ -67,6 +67,7 @@ tags_raw:
 - Knowledge Management
 - Germany
 - Europe
+- Knowledge-Management
 apis:
 - aid: langdock:langdock-agent-api
   name: Langdock Agent API
@@ -151,7 +152,7 @@ apis:
   - type: OpenAPI
     url: openapi/langdock-embeddings-api-openapi.yml
 - aid: langdock:langdock-fim-api
-  name: Langdock fim API
+  name: Langdock Fim API
   description: The fim API from Langdock — 1 operation(s) for fim.
   humanURL: https://docs.langdock.com/en/developer/overview/api-introduction
   baseURL: https://api.langdock.com
