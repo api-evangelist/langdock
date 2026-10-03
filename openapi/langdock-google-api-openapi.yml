@@ -96,57 +96,6 @@ paths:
       - bearerAuth: []
 components:
   schemas:
-    OverloadedError:
-      properties:
-        type:
-          default: overloaded_error
-          enum:
-          - overloaded_error
-          title: Type
-          type: string
-        message:
-          default: Overloaded
-          title: Message
-          type: string
-      required:
-      - type
-      - message
-      title: OverloadedError
-      type: object
-    InvalidRequestError:
-      properties:
-        type:
-          default: invalid_request_error
-          enum:
-          - invalid_request_error
-          title: Type
-          type: string
-        message:
-          default: Invalid request
-          title: Message
-          type: string
-      required:
-      - type
-      - message
-      title: InvalidRequestError
-      type: object
-    AuthenticationError:
-      properties:
-        type:
-          default: authentication_error
-          enum:
-          - authentication_error
-          title: Type
-          type: string
-        message:
-          default: Authentication error
-          title: Message
-          type: string
-      required:
-      - type
-      - message
-      title: AuthenticationError
-      type: object
     ErrorResponse:
       properties:
         type:
@@ -180,39 +129,22 @@ components:
       - error
       title: ErrorResponse
       type: object
-    APIError:
+    AuthenticationError:
       properties:
         type:
-          default: api_error
+          default: authentication_error
           enum:
-          - api_error
+          - authentication_error
           title: Type
           type: string
         message:
-          default: Internal server error
+          default: Authentication error
           title: Message
           type: string
       required:
       - type
       - message
-      title: APIError
-      type: object
-    PermissionError:
-      properties:
-        type:
-          default: permission_error
-          enum:
-          - permission_error
-          title: Type
-          type: string
-        message:
-          default: Permission denied
-          title: Message
-          type: string
-      required:
-      - type
-      - message
-      title: PermissionError
+      title: AuthenticationError
       type: object
     RateLimitError:
       properties:
@@ -231,6 +163,23 @@ components:
       - message
       title: RateLimitError
       type: object
+    InvalidRequestError:
+      properties:
+        type:
+          default: invalid_request_error
+          enum:
+          - invalid_request_error
+          title: Type
+          type: string
+        message:
+          default: Invalid request
+          title: Message
+          type: string
+      required:
+      - type
+      - message
+      title: InvalidRequestError
+      type: object
     NotFoundError:
       properties:
         type:
@@ -247,6 +196,57 @@ components:
       - type
       - message
       title: NotFoundError
+      type: object
+    PermissionError:
+      properties:
+        type:
+          default: permission_error
+          enum:
+          - permission_error
+          title: Type
+          type: string
+        message:
+          default: Permission denied
+          title: Message
+          type: string
+      required:
+      - type
+      - message
+      title: PermissionError
+      type: object
+    APIError:
+      properties:
+        type:
+          default: api_error
+          enum:
+          - api_error
+          title: Type
+          type: string
+        message:
+          default: Internal server error
+          title: Message
+          type: string
+      required:
+      - type
+      - message
+      title: APIError
+      type: object
+    OverloadedError:
+      properties:
+        type:
+          default: overloaded_error
+          enum:
+          - overloaded_error
+          title: Type
+          type: string
+        message:
+          default: Overloaded
+          title: Message
+          type: string
+      required:
+      - type
+      - message
+      title: OverloadedError
       type: object
   securitySchemes:
     bearerAuth:

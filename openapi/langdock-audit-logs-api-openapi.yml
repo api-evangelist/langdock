@@ -114,19 +114,6 @@ paths:
           description: Internal server error
 components:
   schemas:
-    AuditLogListResponse:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/AuditLog'
-        next_cursor:
-          type:
-          - string
-          - 'null'
-          format: uuid
-          description: Cursor for the next page, null if no more results
     AuditLog:
       type: object
       properties:
@@ -204,6 +191,19 @@ components:
           - object
           - 'null'
           description: Full entity snapshot or additional event metadata (e.g. on delete/create events, or extra context like failed login details)
+    AuditLogListResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuditLog'
+        next_cursor:
+          type:
+          - string
+          - 'null'
+          format: uuid
+          description: Cursor for the next page, null if no more results
   securitySchemes:
     bearerAuth:
       type: http
