@@ -65,50 +65,23 @@ paths:
       - FIM
 components:
   schemas:
-    ToolCall:
-      properties:
-        id:
-          type: string
-          title: Id
-          default: 'null'
-        type:
-          $ref: '#/components/schemas/ToolTypes'
-          default: function
-        function:
-          $ref: '#/components/schemas/FunctionCall'
-      additionalProperties: false
+    UsageInfo:
+      title: UsageInfo
       type: object
-      required:
-      - function
-      title: ToolCall
-    CompletionResponseStreamChoice:
-      title: CompletionResponseStreamChoice
-      type: object
-      required:
-      - index
-      - delta
-      - finish_reason
       properties:
-        index:
+        prompt_tokens:
           type: integer
-        delta:
-          $ref: '#/components/schemas/DeltaMessage'
-        finish_reason:
-          type: string
-          enum:
-          - stop
-          - length
-          - error
-          - tool_calls
-    ChatCompletionResponseBase:
-      allOf:
-      - $ref: '#/components/schemas/ResponseBase'
-      - type: object
-        title: ChatCompletionResponseBase
-        properties:
-          created:
-            type: integer
-            example: 1702256327
+          example: 16
+        completion_tokens:
+          type: integer
+          example: 34
+        total_tokens:
+          type: integer
+          example: 50
+      required:
+      - prompt_tokens
+      - completion_tokens
+      - total_tokens
     CompletionChunk:
       title: CompletionChunk
       type: object
@@ -131,6 +104,81 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CompletionResponseStreamChoice'
+    CompletionEvent:
+      title: CompletionEvent
+      type: object
+      required:
+      - data
+      properties:
+        data:
+          $ref: '#/components/schemas/CompletionChunk'
+    ResponseBase:
+      type: object
+      title: ResponseBase
+      properties:
+        id:
+          type: string
+          example: cmpl-e5cc70bb28c444948073e77776eb30ef
+        object:
+          type: string
+          example: chat.completion
+        model:
+          type: string
+          example: mistral-small-latest
+        usage:
+          $ref: '#/components/schemas/UsageInfo'
+    ChatCompletionResponse:
+      allOf:
+      - $ref: '#/components/schemas/ChatCompletionResponseBase'
+      - type: object
+        title: ChatCompletionResponse
+        properties:
+          choices:
+            type: array
+            items:
+              $ref: '#/components/schemas/ChatCompletionChoice'
+        required:
+        - id
+        - object
+        - data
+        - model
+        - usage
+    FunctionCall:
+      properties:
+        name:
+          type: string
+          title: Name
+        arguments:
+          title: Arguments
+          anyOf:
+          - type: object
+            additionalProperties: true
+          - type: string
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - arguments
+      title: FunctionCall
+    CompletionResponseStreamChoice:
+      title: CompletionResponseStreamChoice
+      type: object
+      required:
+      - index
+      - delta
+      - finish_reason
+      properties:
+        index:
+          type: integer
+        delta:
+          $ref: '#/components/schemas/DeltaMessage'
+        finish_reason:
+          type: string
+          enum:
+          - stop
+          - length
+          - error
+          - tool_calls
     TextChunk:
       properties:
         type:
@@ -147,23 +195,44 @@ components:
       required:
       - text
       title: TextChunk
-    UsageInfo:
-      title: UsageInfo
-      type: object
+    ContentChunk:
+      oneOf:
+      - $ref: '#/components/schemas/TextChunk'
+      - $ref: '#/components/schemas/ImageURLChunk'
+      discriminator:
+        propertyName: type
+        mapping:
+          image_url: '#/components/schemas/ImageURLChunk'
+          text: '#/components/schemas/TextChunk'
+      title: ContentChunk
+    AssistantMessage:
       properties:
-        prompt_tokens:
-          type: integer
-          example: 16
-        completion_tokens:
-          type: integer
-          example: 34
-        total_tokens:
-          type: integer
-          example: 50
-      required:
-      - prompt_tokens
-      - completion_tokens
-      - total_tokens
+        content:
+          title: Content
+          anyOf:
+          - type: string
+          - items:
+              $ref: '#/components/schemas/ContentChunk'
+            type: array
+        tool_calls:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/ToolCall'
+            type: array
+          title: Tool Calls
+        prefix:
+          type: boolean
+          title: Prefix
+          default: false
+        role:
+          type: string
+          default: assistant
+          title: Role
+          enum:
+          - assistant
+      additionalProperties: false
+      type: object
+      title: AgentMessage
     ChatCompletionChoice:
       title: ChatCompletionChoice
       type: object
@@ -186,14 +255,14 @@ components:
           - error
           - tool_calls
           example: stop
-    CompletionEvent:
-      title: CompletionEvent
-      type: object
-      required:
-      - data
-      properties:
-        data:
-          $ref: '#/components/schemas/CompletionChunk'
+    FIMCompletionResponse:
+      allOf:
+      - $ref: '#/components/schemas/ChatCompletionResponse'
+      - type: object
+        properties:
+          model:
+            type: string
+            example: codestral-latest
     DeltaMessage:
       title: DeltaMessage
       type: object
@@ -212,6 +281,69 @@ components:
           - type: array
             items:
               $ref: '#/components/schemas/ToolCall'
+    ImageURL:
+      properties:
+        url:
+          type: string
+          title: Url
+        detail:
+          anyOf:
+          - type: string
+          title: Detail
+      additionalProperties: false
+      type: object
+      required:
+      - url
+      title: ImageURL
+    ImageURLChunk:
+      properties:
+        type:
+          type: string
+          enum:
+          - image_url
+          title: Type
+          default: image_url
+        image_url:
+          anyOf:
+          - $ref: '#/components/schemas/ImageURL'
+          - type: string
+          title: Image Url
+      additionalProperties: false
+      type: object
+      required:
+      - image_url
+      title: ImageURLChunk
+      description: '{"type":"image_url","image_url":{"url":"data:image/png;base64,iVBORw0'
+    ToolTypes:
+      type: string
+      enum:
+      - function
+      title: ToolTypes
+    ToolCall:
+      properties:
+        id:
+          type: string
+          title: Id
+          default: 'null'
+        type:
+          $ref: '#/components/schemas/ToolTypes'
+          default: function
+        function:
+          $ref: '#/components/schemas/FunctionCall'
+      additionalProperties: false
+      type: object
+      required:
+      - function
+      title: ToolCall
+    ChatCompletionResponseBase:
+      allOf:
+      - $ref: '#/components/schemas/ResponseBase'
+      - type: object
+        title: ChatCompletionResponseBase
+        properties:
+          created:
+            type: integer
+            example: 1702256327
     FIMCompletionRequest:
       properties:
         model:
@@ -281,138 +413,6 @@ components:
       - prompt
       - model
       title: FIMCompletionRequest
-    ImageURL:
-      properties:
-        url:
-          type: string
-          title: Url
-        detail:
-          anyOf:
-          - type: string
-          title: Detail
-      additionalProperties: false
-      type: object
-      required:
-      - url
-      title: ImageURL
-    ChatCompletionResponse:
-      allOf:
-      - $ref: '#/components/schemas/ChatCompletionResponseBase'
-      - type: object
-        title: ChatCompletionResponse
-        properties:
-          choices:
-            type: array
-            items:
-              $ref: '#/components/schemas/ChatCompletionChoice'
-        required:
-        - id
-        - object
-        - data
-        - model
-        - usage
-    AssistantMessage:
-      properties:
-        content:
-          title: Content
-          anyOf:
-          - type: string
-          - items:
-              $ref: '#/components/schemas/ContentChunk'
-            type: array
-        tool_calls:
-          anyOf:
-          - items:
-              $ref: '#/components/schemas/ToolCall'
-            type: array
-          title: Tool Calls
-        prefix:
-          type: boolean
-          title: Prefix
-          default: false
-        role:
-          type: string
-          default: assistant
-          title: Role
-          enum:
-          - assistant
-      additionalProperties: false
-      type: object
-      title: AgentMessage
-    ToolTypes:
-      type: string
-      enum:
-      - function
-      title: ToolTypes
-    ImageURLChunk:
-      properties:
-        type:
-          type: string
-          enum:
-          - image_url
-          title: Type
-          default: image_url
-        image_url:
-          anyOf:
-          - $ref: '#/components/schemas/ImageURL'
-          - type: string
-          title: Image Url
-      additionalProperties: false
-      type: object
-      required:
-      - image_url
-      title: ImageURLChunk
-      description: '{"type":"image_url","image_url":{"url":"data:image/png;base64,iVBORw0'
-    FIMCompletionResponse:
-      allOf:
-      - $ref: '#/components/schemas/ChatCompletionResponse'
-      - type: object
-        properties:
-          model:
-            type: string
-            example: codestral-latest
-    ResponseBase:
-      type: object
-      title: ResponseBase
-      properties:
-        id:
-          type: string
-          example: cmpl-e5cc70bb28c444948073e77776eb30ef
-        object:
-          type: string
-          example: chat.completion
-        model:
-          type: string
-          example: mistral-small-latest
-        usage:
-          $ref: '#/components/schemas/UsageInfo'
-    ContentChunk:
-      oneOf:
-      - $ref: '#/components/schemas/TextChunk'
-      - $ref: '#/components/schemas/ImageURLChunk'
-      discriminator:
-        propertyName: type
-        mapping:
-          image_url: '#/components/schemas/ImageURLChunk'
-          text: '#/components/schemas/TextChunk'
-      title: ContentChunk
-    FunctionCall:
-      properties:
-        name:
-          type: string
-          title: Name
-        arguments:
-          title: Arguments
-          anyOf:
-          - type: object
-            additionalProperties: true
-          - type: string
-      additionalProperties: false
-      type: object
-      required:
-      - name
-      - arguments
-      title: FunctionCall
   securitySchemes:
     bearerAuth:
       type: http

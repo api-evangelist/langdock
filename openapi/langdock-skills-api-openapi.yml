@@ -234,36 +234,13 @@ paths:
           description: Internal server error
 components:
   schemas:
-    UpdateSkillRequest:
+    SkillResponse:
       type: object
-      minProperties: 1
-      additionalProperties: false
+      required:
+      - skill
       properties:
-        name:
-          type: string
-          maxLength: 64
-          minLength: 1
-          description: Skill name.
-        slug:
-          type: string
-          maxLength: 100
-          pattern: ^[a-z0-9-]+$
-          description: Stable Skill slug.
-        description:
-          type: string
-          maxLength: 1024
-          description: Description used to explain when the Skill should apply.
-        instructions:
-          type: string
-          maxLength: 50000
-          minLength: 1
-          description: Skill instructions.
-        integrationIds:
-          type: array
-          items:
-            type: string
-            format: uuid
-          description: Integration IDs to attach to the Skill. Replaces the current integration list.
+        skill:
+          $ref: '#/components/schemas/Skill'
     ImportedSkillFile:
       type: object
       required:
@@ -284,84 +261,6 @@ components:
         hasScript:
           type: boolean
           description: Whether the file is a script file.
-    ListSkillsResponse:
-      type: object
-      required:
-      - skills
-      properties:
-        skills:
-          type: array
-          items:
-            $ref: '#/components/schemas/Skill'
-        nextCursor:
-          type: string
-          format: uuid
-          description: Cursor for the next page, if more results are available.
-    SkillResponse:
-      type: object
-      required:
-      - skill
-      properties:
-        skill:
-          $ref: '#/components/schemas/Skill'
-    ImportSkillRequest:
-      type: object
-      required:
-      - file
-      - fileType
-      properties:
-        file:
-          type: string
-          format: binary
-          description: SKILL.md, .zip, or .skill file content.
-        fileType:
-          type: string
-          enum:
-          - md
-          - zip
-          description: File parser to use.
-        mode:
-          type: string
-          enum:
-          - create
-          - upsert
-          default: create
-          description: Whether to create a Skill or update an editable Skill with the same slug.
-        integrationIds:
-          type: string
-          description: JSON-encoded array of integration UUIDs.
-    CreateSkillRequest:
-      type: object
-      required:
-      - name
-      - instructions
-      additionalProperties: false
-      properties:
-        name:
-          type: string
-          maxLength: 64
-          minLength: 1
-          description: Skill name.
-        slug:
-          type: string
-          maxLength: 100
-          pattern: ^[a-z0-9-]+$
-          description: Stable Skill slug.
-        description:
-          type: string
-          maxLength: 1024
-          description: Description used to explain when the Skill should apply.
-        instructions:
-          type: string
-          maxLength: 50000
-          minLength: 1
-          description: Skill instructions.
-        integrationIds:
-          type: array
-          items:
-            type: string
-            format: uuid
-          description: Integration IDs to attach to the Skill.
     Skill:
       type: object
       required:
@@ -409,6 +308,68 @@ components:
           type: string
           format: date-time
           description: ISO 8601 timestamp for the latest Skill update.
+    CreateSkillRequest:
+      type: object
+      required:
+      - name
+      - instructions
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+          maxLength: 64
+          minLength: 1
+          description: Skill name.
+        slug:
+          type: string
+          maxLength: 100
+          pattern: ^[a-z0-9-]+$
+          description: Stable Skill slug.
+        description:
+          type: string
+          maxLength: 1024
+          description: Description used to explain when the Skill should apply.
+        instructions:
+          type: string
+          maxLength: 50000
+          minLength: 1
+          description: Skill instructions.
+        integrationIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: Integration IDs to attach to the Skill.
+    UpdateSkillRequest:
+      type: object
+      minProperties: 1
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+          maxLength: 64
+          minLength: 1
+          description: Skill name.
+        slug:
+          type: string
+          maxLength: 100
+          pattern: ^[a-z0-9-]+$
+          description: Stable Skill slug.
+        description:
+          type: string
+          maxLength: 1024
+          description: Description used to explain when the Skill should apply.
+        instructions:
+          type: string
+          maxLength: 50000
+          minLength: 1
+          description: Skill instructions.
+        integrationIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: Integration IDs to attach to the Skill. Replaces the current integration list.
     ImportSkillResponse:
       type: object
       required:
@@ -421,6 +382,45 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ImportedSkillFile'
+    ListSkillsResponse:
+      type: object
+      required:
+      - skills
+      properties:
+        skills:
+          type: array
+          items:
+            $ref: '#/components/schemas/Skill'
+        nextCursor:
+          type: string
+          format: uuid
+          description: Cursor for the next page, if more results are available.
+    ImportSkillRequest:
+      type: object
+      required:
+      - file
+      - fileType
+      properties:
+        file:
+          type: string
+          format: binary
+          description: SKILL.md, .zip, or .skill file content.
+        fileType:
+          type: string
+          enum:
+          - md
+          - zip
+          description: File parser to use.
+        mode:
+          type: string
+          enum:
+          - create
+          - upsert
+          default: create
+          description: Whether to create a Skill or update an editable Skill with the same slug.
+        integrationIds:
+          type: string
+          description: JSON-encoded array of integration UUIDs.
   parameters:
     SkillId:
       name: skillId

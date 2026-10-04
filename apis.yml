@@ -135,16 +135,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/langdock-audit-logs-api-openapi.yml
-- aid: langdock:langdock-chat-api
-  name: Langdock Chat API
-  description: The Chat API from Langdock — 1 operation(s) for chat.
-  humanURL: https://docs.langdock.com/en/developer/overview/api-introduction
-  baseURL: https://api.langdock.com
-  tags:
-  - Chat
-  properties:
-  - type: OpenAPI
-    url: openapi/langdock-chat-api-openapi.yml
 - aid: langdock:langdock-embeddings-api
   name: Langdock Embeddings API
   description: The Embeddings API from Langdock — 1 operation(s) for embeddings.
@@ -229,6 +219,16 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/langdock-user-management-api-openapi.yml
+- aid: langdock:langdock-chat-completions-api
+  name: Langdock Chat Completions API
+  description: The Chat Completions API from Langdock — 1 operation(s) for chat completions.
+  humanURL: https://docs.langdock.com/en/developer/overview/api-introduction
+  baseURL: https://api.langdock.com
+  tags:
+  - Chat Completions
+  properties:
+  - type: OpenAPI
+    url: openapi/langdock-chat-completions-api-openapi.yml
 common:
 - type: CapabilityMap
   url: capabilities/langdock-capability-edges.yml
