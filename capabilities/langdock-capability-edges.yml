@@ -1,0 +1,46 @@
+slug: langdock
+provider: Langdock
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 3
+edges:
+- tag: Agent Build
+  spec_file: langdock-agent-build-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.78
+  evidence: POST /agent/v1/create  Creates a new agent; POST /agent/v1/publish  Publishes a draft agent
+    as a new version
+  reason: Create, update, version and publish AI agents — an explicit AI asset lifecycle (draft to published
+    version), which is the core of Artificial Intelligence Management / MLOps. No evidence of software
+    release engineering for a product build pipeline, so the AI capability fits better.
+- tag: Agent
+  spec_file: langdock-agent-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.72
+  evidence: POST /agent/v1/chat/completions  Creates a chat completion with an agent (Vercel AI SDK compatible);
+    GET /agent/v1/models  Lists the available models
+  reason: Runtime invocation of AI agents and enumeration of available models on a model-agnostic enterprise
+    AI platform. Realises AI/ML operation and management, not a vertical business function.
+- tag: User Management
+  spec_file: langdock-user-management-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.7
+  evidence: POST /user-management/v1/invite  Invite users to workspace; POST /user-management/v1/deactivate-user  Deactivate
+    a workspace user
+  reason: Joiner/leaver lifecycle of workspace user accounts — identity and access administration. Could
+    also be read as tenant user lifecycle, so not maximal confidence.
