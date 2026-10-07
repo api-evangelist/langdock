@@ -1,0 +1,141 @@
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-10-07'
+method: searched
+source: https://langdock.com/pricing
+sources:
+- https://langdock.com/pricing
+- https://www.langdock.com/pricing
+provenance:
+  tool: all/0-working/economics/harvest_pricing.py
+  run: 20261007T104522
+  grounding: every price_text was found verbatim in the fetched page text
+audience: business-product
+pricing_basis: per-seat
+delivery:
+  delivery: managed+licensed
+  method: page
+  read: '2026-10-07'
+  evidence: Deployable anywhere Managed, own cloud or on-prem
+  managed_tier: Business
+published: true
+note: Seat-based base subscription with workflow, governance and token-based API add-ons; volume seat
+  tiers shown in price breakdown (e.g. governance €2.80 yearly / €3.50 monthly for first 50 seats). Page
+  states deployment 'Managed, own cloud or on-prem'.
+plan_count: 18
+currency: EUR
+plans:
+- name: Chat & Agents – Trial
+  price_text: Free
+  period: none
+  unit: 7-day trial
+  included_quota: €5 AI model credits, test all platform features, invite team members to trial
+- name: Chat & Agents – Business (Standard seat)
+  price_text: € 25.00
+  price: 25
+  currency: EUR
+  period: month
+  unit: per user
+  included_quota: Up to 1,000 users, all features included, SSO / SCIM / SAML
+- name: Chat & Agents – Business Max seat
+  price_text: € 99.00
+  price: 99
+  currency: EUR
+  period: month
+  unit: per user
+  included_quota: 5x more usage than Standard seat
+- name: Chat & Agents – Enterprise
+  price_text: Custom
+  period: none
+  included_quota: 1,000+ users, dedicated deployment possible, custom support
+- name: Workflows – Starter
+  price_text: Included in Chat & Agents
+  period: month
+  unit: per workspace
+  included_quota: 2,500 workflow runs / month
+  overage: AI model usage billed per API pricing
+- name: Workflows – Business 40k
+  price_text: € 539
+  price: 539
+  currency: EUR
+  period: month
+  unit: per workspace
+  included_quota: 40k workflow runs / month
+- name: Workflows – Business 100k
+  price_text: € 1199 / month
+  price: 1199
+  currency: EUR
+  period: month
+  unit: per workspace
+  included_quota: 100k workflow runs / month
+- name: Governance Add-on
+  price_text: € 3.50
+  price: 3.5
+  currency: EUR
+  period: month
+  unit: per user
+  included_quota: Agent governance, custom compliance rules, automated checks; free until January 1, 2027
+  overage: LLM usage for automated checks billed separately per API pricing
+- name: API – GPT-5.5 input
+  price_text: € 4.8 / 1M tokens
+  price: 4.8
+  currency: EUR
+  period: per-use
+  unit: 1M input tokens
+- name: API – GPT-5.5 output
+  price_text: € 28.81 / 1M tokens
+  price: 28.81
+  currency: EUR
+  period: per-use
+  unit: 1M output tokens
+- name: API – GPT-5.4 input
+  price_text: € 2.4 / 1M tokens
+  price: 2.4
+  currency: EUR
+  period: per-use
+  unit: 1M input tokens
+- name: API – GPT-5.4 output
+  price_text: € 14.4 / 1M tokens
+  price: 14.4
+  currency: EUR
+  period: per-use
+  unit: 1M output tokens
+- name: API – Opus 4.8 input
+  price_text: € 4.37 / 1M tokens
+  price: 4.37
+  currency: EUR
+  period: per-use
+  unit: 1M input tokens
+- name: API – Opus 4.8 output
+  price_text: € 21.83 / 1M tokens
+  price: 21.83
+  currency: EUR
+  period: per-use
+  unit: 1M output tokens
+- name: API – Sonnet 4.6 input
+  price_text: € 2.62 / 1M tokens
+  price: 2.62
+  currency: EUR
+  period: per-use
+  unit: 1M input tokens
+- name: API – Sonnet 4.6 output
+  price_text: € 13.1 / 1M tokens
+  price: 13.1
+  currency: EUR
+  period: per-use
+  unit: 1M output tokens
+- name: API – Gemini 3.1 Pro Preview input
+  price_text: € 1.92 / 1M tokens
+  price: 1.92
+  currency: EUR
+  period: per-use
+  unit: 1M input tokens
+- name: API – Gemini 3.1 Pro Preview output
+  price_text: € 11.52 / 1M tokens
+  price: 11.52
+  currency: EUR
+  period: per-use
+  unit: 1M output tokens
+rate_limit_statements:
+- 'Fair usage limits apply: up to 2,000 steps per workflow by default. Contact us for higher limits.'
+- Unused workflow runs expire at the end of each billing cycle and do not roll over.
+- Up to 1,000 users
