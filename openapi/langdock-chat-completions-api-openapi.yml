@@ -70,50 +70,193 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    ChatCompletionTokenLogprob:
+    ChatCompletionRequestMessageContentPartImage:
       type: object
+      title: Image content part
       properties:
-        token:
-          description: The token.
+        type:
           type: string
-        logprob:
-          description: The log probability of this token, if it is within the top 20 most likely tokens. Otherwise, the value `-9999.0` is used to signify that the token is very unlikely.
-          type: number
-        bytes:
-          description: A list of integers representing the UTF-8 bytes representation of the token. Useful in instances where characters are represented by multiple tokens and their byte representations must be combined to generate the correct text representation. Can be `null` if there is no bytes representation for the token.
-          type:
-          - array
-          - 'null'
-          items:
-            type: integer
-        top_logprobs:
-          description: List of the most likely tokens and their log probability, at this token position. In rare cases, there may be fewer than the number of requested `top_logprobs` returned.
+          enum:
+          - image_url
+          description: The type of the content part.
+        image_url:
+          type: object
+          properties:
+            url:
+              type: string
+              description: Either a URL of the image or the base64 encoded image data.
+              format: uri
+            detail:
+              type: string
+              description: Specifies the detail level of the image. Learn more in the [Vision guide](https://platform.openai.com/docs/guides/vision/low-or-high-fidelity-image-understanding).
+              enum:
+              - auto
+              - low
+              - high
+              default: auto
+          required:
+          - url
+      required:
+      - type
+      - image_url
+    ChatCompletionRequestMessageContentPart:
+      oneOf:
+      - $ref: '#/components/schemas/ChatCompletionRequestMessageContentPartText'
+      - $ref: '#/components/schemas/ChatCompletionRequestMessageContentPartImage'
+      x-oaiExpandable: true
+    CreateChatCompletionResponse:
+      type: object
+      description: Represents a chat completion response returned by model, based on the provided input.
+      properties:
+        id:
+          type: string
+          description: A unique identifier for the chat completion.
+        choices:
           type: array
+          description: A list of chat completion choices. Can be more than one if `n` is greater than 1.
           items:
             type: object
-            properties:
-              token:
-                description: The token.
-                type: string
-              logprob:
-                description: The log probability of this token, if it is within the top 20 most likely tokens. Otherwise, the value `-9999.0` is used to signify that the token is very unlikely.
-                type: number
-              bytes:
-                description: A list of integers representing the UTF-8 bytes representation of the token. Useful in instances where characters are represented by multiple tokens and their byte representations must be combined to generate the correct text representation. Can be `null` if there is no bytes representation for the token.
-                type:
-                - array
-                - 'null'
-                items:
-                  type: integer
             required:
-            - token
-            - logprob
-            - bytes
+            - finish_reason
+            - index
+            - message
+            - logprobs
+            properties:
+              finish_reason:
+                type: string
+                description: 'The reason the model stopped generating tokens. This will be `stop` if the model hit a natural stop point or a provided stop sequence,
+
+                  `length` if the maximum number of tokens specified in the request was reached,
+
+                  `content_filter` if content was omitted due to a flag from OpenAI''s content filters,
+
+                  `tool_calls` if the model called a tool, or `function_call` (deprecated) if the model called a function.
+
+                  '
+                enum:
+                - stop
+                - length
+                - tool_calls
+                - content_filter
+                - function_call
+              index:
+                type: integer
+                description: The index of the choice in the list of choices.
+              message:
+                $ref: '#/components/schemas/ChatCompletionResponseMessage'
+              logprobs:
+                description: Log probability information for the choice.
+                type:
+                - object
+                - 'null'
+                properties:
+                  content:
+                    description: A list of message content tokens with log probability information.
+                    type:
+                    - array
+                    - 'null'
+                    items:
+                      $ref: '#/components/schemas/ChatCompletionTokenLogprob'
+                required:
+                - content
+        created:
+          type: integer
+          description: The Unix timestamp (in seconds) of when the chat completion was created.
+        model:
+          type: string
+          description: The model used for the chat completion.
+        system_fingerprint:
+          type: string
+          description: 'This fingerprint represents the backend configuration that the model runs with.
+
+
+            Can be used in conjunction with the `seed` request parameter to understand when backend changes have been made that might impact determinism.
+
+            '
+        object:
+          type: string
+          description: The object type, which is always `chat.completion`.
+          enum:
+          - chat.completion
+        usage:
+          $ref: '#/components/schemas/CompletionUsage'
       required:
-      - token
-      - logprob
-      - bytes
-      - top_logprobs
+      - choices
+      - created
+      - id
+      - model
+      - object
+      x-oaiMeta:
+        name: The chat completion object
+        group: chat
+        example: "{\n  \"id\": \"chatcmpl-123\",\n  \"object\": \"chat.completion\",\n  \"created\": 1677652288,\n  \"model\": \"gpt-4o-mini\",\n  \"system_fingerprint\": \"fp_44709d6fcb\",\n  \"choices\": [{\n    \"index\": 0,\n    \"message\": {\n      \"role\": \"assistant\",\n      \"content\": \"\\n\\nHello there, how may I assist you today?\",\n    },\n    \"logprobs\": null,\n    \"finish_reason\": \"stop\"\n  }],\n  \"usage\": {\n    \"prompt_tokens\": 9,\n    \"completion_tokens\": 12,\n    \"total_tokens\": 21\n  }\n"
+    ChatCompletionRequestFunctionMessage:
+      type: object
+      title: Function message
+      deprecated: true
+      properties:
+        role:
+          type: string
+          enum:
+          - function
+          description: The role of the messages author, in this case `function`.
+        content:
+          type:
+          - string
+          - 'null'
+          description: The contents of the function message.
+        name:
+          type: string
+          description: The name of the function to call.
+      required:
+      - role
+      - content
+      - name
+    ChatCompletionFunctionCallOption:
+      type: object
+      description: 'Specifying a particular function via `{"name": "my_function"}` forces the model to call that function.
+
+        '
+      properties:
+        name:
+          type: string
+          description: The name of the function to call.
+      required:
+      - name
+    ChatCompletionTool:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - function
+          description: The type of the tool. Currently, only `function` is supported.
+        function:
+          $ref: '#/components/schemas/FunctionObject'
+      required:
+      - type
+      - function
+    CompletionUsage:
+      type: object
+      description: Usage statistics for the completion request.
+      properties:
+        completion_tokens:
+          type: integer
+          description: Number of tokens in the generated completion.
+        prompt_tokens:
+          type: integer
+          description: Number of tokens in the prompt.
+        total_tokens:
+          type: integer
+          description: Total number of tokens used in the request (prompt + completion).
+      required:
+      - prompt_tokens
+      - completion_tokens
+      - total_tokens
+    FunctionParameters:
+      type: object
+      description: "The parameters the functions accepts, described as a JSON Schema object. See the [guide](https://platform.openai.com/docs/guides/function-calling) for examples, and the [JSON Schema reference](https://json-schema.org/understanding-json-schema/reference) for documentation about the format. \n\nOmitting `parameters` defines a function with an empty parameter list."
+      additionalProperties: true
     ChatCompletionMessageToolCall:
       type: object
       properties:
@@ -142,6 +285,19 @@ components:
       - id
       - type
       - function
+    FunctionObject:
+      type: object
+      properties:
+        description:
+          type: string
+          description: A description of what the function does, used by the model to choose when and how to call the function.
+        name:
+          type: string
+          description: The name of the function to be called. Must be a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64.
+        parameters:
+          $ref: '#/components/schemas/FunctionParameters'
+      required:
+      - name
     ChatCompletionRequestSystemMessage:
       type: object
       title: System message
@@ -160,19 +316,6 @@ components:
       required:
       - content
       - role
-    FunctionObject:
-      type: object
-      properties:
-        description:
-          type: string
-          description: A description of what the function does, used by the model to choose when and how to call the function.
-        name:
-          type: string
-          description: The name of the function to be called. Must be a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64.
-        parameters:
-          $ref: '#/components/schemas/FunctionParameters'
-      required:
-      - name
     CreateChatCompletionRequest:
       type: object
       properties:
@@ -414,70 +557,6 @@ components:
       required:
       - model
       - messages
-    ChatCompletionFunctionCallOption:
-      type: object
-      description: 'Specifying a particular function via `{"name": "my_function"}` forces the model to call that function.
-
-        '
-      properties:
-        name:
-          type: string
-          description: The name of the function to call.
-      required:
-      - name
-    ChatCompletionRequestToolMessage:
-      type: object
-      title: Tool message
-      properties:
-        role:
-          type: string
-          enum:
-          - tool
-          description: The role of the messages author, in this case `tool`.
-        content:
-          type: string
-          description: The contents of the tool message.
-        tool_call_id:
-          type: string
-          description: Tool call that this message is responding to.
-      required:
-      - role
-      - content
-      - tool_call_id
-    ChatCompletionRequestUserMessage:
-      type: object
-      title: User message
-      properties:
-        content:
-          description: 'The contents of the user message.
-
-            '
-          oneOf:
-          - type: string
-            description: The text contents of the message.
-            title: Text content
-          - type: array
-            description: An array of content parts with a defined type, each can be of type `text` or `image_url` when passing in images. You can pass multiple images by adding multiple `image_url` content parts. Image input is only supported when using the `gpt-4-visual-preview` model.
-            title: Array of content parts
-            items:
-              $ref: '#/components/schemas/ChatCompletionRequestMessageContentPart'
-            minItems: 1
-          x-oaiExpandable: true
-        role:
-          type: string
-          enum:
-          - user
-          description: The role of the messages author, in this case `user`.
-        name:
-          type: string
-          description: An optional name for the participant. Provides the model information to differentiate between participants of the same role.
-      required:
-      - content
-      - role
-    FunctionParameters:
-      type: object
-      description: "The parameters the functions accepts, described as a JSON Schema object. See the [guide](https://platform.openai.com/docs/guides/function-calling) for examples, and the [JSON Schema reference](https://json-schema.org/understanding-json-schema/reference) for documentation about the format. \n\nOmitting `parameters` defines a function with an empty parameter list."
-      additionalProperties: true
     ChatCompletionResponseMessage:
       type: object
       description: A chat completion message generated by the model.
@@ -511,21 +590,14 @@ components:
       required:
       - role
       - content
-    ChatCompletionRequestMessageContentPartText:
-      type: object
-      title: Text content part
-      properties:
-        type:
-          type: string
-          enum:
-          - text
-          description: The type of the content part.
-        text:
-          type: string
-          description: The text content.
-      required:
-      - type
-      - text
+    ChatCompletionRequestMessage:
+      oneOf:
+      - $ref: '#/components/schemas/ChatCompletionRequestSystemMessage'
+      - $ref: '#/components/schemas/ChatCompletionRequestUserMessage'
+      - $ref: '#/components/schemas/ChatCompletionRequestAssistantMessage'
+      - $ref: '#/components/schemas/ChatCompletionRequestToolMessage'
+      - $ref: '#/components/schemas/ChatCompletionRequestFunctionMessage'
+      x-oaiExpandable: true
     ChatCompletionRequestAssistantMessage:
       type: object
       title: Assistant message
@@ -565,25 +637,36 @@ components:
           - name
       required:
       - role
-    ChatCompletionFunctions:
+    ChatCompletionRequestUserMessage:
       type: object
-      deprecated: true
+      title: User message
       properties:
-        description:
+        content:
+          description: 'The contents of the user message.
+
+            '
+          oneOf:
+          - type: string
+            description: The text contents of the message.
+            title: Text content
+          - type: array
+            description: An array of content parts with a defined type, each can be of type `text` or `image_url` when passing in images. You can pass multiple images by adding multiple `image_url` content parts. Image input is only supported when using the `gpt-4-visual-preview` model.
+            title: Array of content parts
+            items:
+              $ref: '#/components/schemas/ChatCompletionRequestMessageContentPart'
+            minItems: 1
+          x-oaiExpandable: true
+        role:
           type: string
-          description: A description of what the function does, used by the model to choose when and how to call the function.
+          enum:
+          - user
+          description: The role of the messages author, in this case `user`.
         name:
           type: string
-          description: The name of the function to be called. Must be a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64.
-        parameters:
-          $ref: '#/components/schemas/FunctionParameters'
+          description: An optional name for the participant. Provides the model information to differentiate between participants of the same role.
       required:
-      - name
-    ChatCompletionMessageToolCalls:
-      type: array
-      description: The tool calls generated by the model, such as function calls.
-      items:
-        $ref: '#/components/schemas/ChatCompletionMessageToolCall'
+      - content
+      - role
     ChatCompletionToolChoiceOption:
       description: 'Controls which (if any) tool is called by the model.
 
@@ -610,6 +693,103 @@ components:
         - required
       - $ref: '#/components/schemas/ChatCompletionNamedToolChoice'
       x-oaiExpandable: true
+    ChatCompletionTokenLogprob:
+      type: object
+      properties:
+        token:
+          description: The token.
+          type: string
+        logprob:
+          description: The log probability of this token, if it is within the top 20 most likely tokens. Otherwise, the value `-9999.0` is used to signify that the token is very unlikely.
+          type: number
+        bytes:
+          description: A list of integers representing the UTF-8 bytes representation of the token. Useful in instances where characters are represented by multiple tokens and their byte representations must be combined to generate the correct text representation. Can be `null` if there is no bytes representation for the token.
+          type:
+          - array
+          - 'null'
+          items:
+            type: integer
+        top_logprobs:
+          description: List of the most likely tokens and their log probability, at this token position. In rare cases, there may be fewer than the number of requested `top_logprobs` returned.
+          type: array
+          items:
+            type: object
+            properties:
+              token:
+                description: The token.
+                type: string
+              logprob:
+                description: The log probability of this token, if it is within the top 20 most likely tokens. Otherwise, the value `-9999.0` is used to signify that the token is very unlikely.
+                type: number
+              bytes:
+                description: A list of integers representing the UTF-8 bytes representation of the token. Useful in instances where characters are represented by multiple tokens and their byte representations must be combined to generate the correct text representation. Can be `null` if there is no bytes representation for the token.
+                type:
+                - array
+                - 'null'
+                items:
+                  type: integer
+            required:
+            - token
+            - logprob
+            - bytes
+      required:
+      - token
+      - logprob
+      - bytes
+      - top_logprobs
+    ChatCompletionRequestMessageContentPartText:
+      type: object
+      title: Text content part
+      properties:
+        type:
+          type: string
+          enum:
+          - text
+          description: The type of the content part.
+        text:
+          type: string
+          description: The text content.
+      required:
+      - type
+      - text
+    ChatCompletionFunctions:
+      type: object
+      deprecated: true
+      properties:
+        description:
+          type: string
+          description: A description of what the function does, used by the model to choose when and how to call the function.
+        name:
+          type: string
+          description: The name of the function to be called. Must be a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64.
+        parameters:
+          $ref: '#/components/schemas/FunctionParameters'
+      required:
+      - name
+    ChatCompletionRequestToolMessage:
+      type: object
+      title: Tool message
+      properties:
+        role:
+          type: string
+          enum:
+          - tool
+          description: The role of the messages author, in this case `tool`.
+        content:
+          type: string
+          description: The contents of the tool message.
+        tool_call_id:
+          type: string
+          description: Tool call that this message is responding to.
+      required:
+      - role
+      - content
+      - tool_call_id
+    ChatCompletionMessageToolCalls:
+      type: array
+      description: The tool calls generated by the model, such as function calls.
+      items:
+        $ref: '#/components/schemas/ChatCompletionMessageToolCall'
     ChatCompletionNamedToolChoice:
       type: object
       description: Specifies a tool the model should use. Use to force the model to call a specific function.
@@ -627,186 +807,6 @@ components:
               description: The name of the function to call.
           required:
           - name
-      required:
-      - type
-      - function
-    CreateChatCompletionResponse:
-      type: object
-      description: Represents a chat completion response returned by model, based on the provided input.
-      properties:
-        id:
-          type: string
-          description: A unique identifier for the chat completion.
-        choices:
-          type: array
-          description: A list of chat completion choices. Can be more than one if `n` is greater than 1.
-          items:
-            type: object
-            required:
-            - finish_reason
-            - index
-            - message
-            - logprobs
-            properties:
-              finish_reason:
-                type: string
-                description: 'The reason the model stopped generating tokens. This will be `stop` if the model hit a natural stop point or a provided stop sequence,
-
-                  `length` if the maximum number of tokens specified in the request was reached,
-
-                  `content_filter` if content was omitted due to a flag from OpenAI''s content filters,
-
-                  `tool_calls` if the model called a tool, or `function_call` (deprecated) if the model called a function.
-
-                  '
-                enum:
-                - stop
-                - length
-                - tool_calls
-                - content_filter
-                - function_call
-              index:
-                type: integer
-                description: The index of the choice in the list of choices.
-              message:
-                $ref: '#/components/schemas/ChatCompletionResponseMessage'
-              logprobs:
-                description: Log probability information for the choice.
-                type:
-                - object
-                - 'null'
-                properties:
-                  content:
-                    description: A list of message content tokens with log probability information.
-                    type:
-                    - array
-                    - 'null'
-                    items:
-                      $ref: '#/components/schemas/ChatCompletionTokenLogprob'
-                required:
-                - content
-        created:
-          type: integer
-          description: The Unix timestamp (in seconds) of when the chat completion was created.
-        model:
-          type: string
-          description: The model used for the chat completion.
-        system_fingerprint:
-          type: string
-          description: 'This fingerprint represents the backend configuration that the model runs with.
-
-
-            Can be used in conjunction with the `seed` request parameter to understand when backend changes have been made that might impact determinism.
-
-            '
-        object:
-          type: string
-          description: The object type, which is always `chat.completion`.
-          enum:
-          - chat.completion
-        usage:
-          $ref: '#/components/schemas/CompletionUsage'
-      required:
-      - choices
-      - created
-      - id
-      - model
-      - object
-      x-oaiMeta:
-        name: The chat completion object
-        group: chat
-        example: "{\n  \"id\": \"chatcmpl-123\",\n  \"object\": \"chat.completion\",\n  \"created\": 1677652288,\n  \"model\": \"gpt-4o-mini\",\n  \"system_fingerprint\": \"fp_44709d6fcb\",\n  \"choices\": [{\n    \"index\": 0,\n    \"message\": {\n      \"role\": \"assistant\",\n      \"content\": \"\\n\\nHello there, how may I assist you today?\",\n    },\n    \"logprobs\": null,\n    \"finish_reason\": \"stop\"\n  }],\n  \"usage\": {\n    \"prompt_tokens\": 9,\n    \"completion_tokens\": 12,\n    \"total_tokens\": 21\n  }\n"
-    ChatCompletionRequestMessage:
-      oneOf:
-      - $ref: '#/components/schemas/ChatCompletionRequestSystemMessage'
-      - $ref: '#/components/schemas/ChatCompletionRequestUserMessage'
-      - $ref: '#/components/schemas/ChatCompletionRequestAssistantMessage'
-      - $ref: '#/components/schemas/ChatCompletionRequestToolMessage'
-      - $ref: '#/components/schemas/ChatCompletionRequestFunctionMessage'
-      x-oaiExpandable: true
-    ChatCompletionRequestMessageContentPartImage:
-      type: object
-      title: Image content part
-      properties:
-        type:
-          type: string
-          enum:
-          - image_url
-          description: The type of the content part.
-        image_url:
-          type: object
-          properties:
-            url:
-              type: string
-              description: Either a URL of the image or the base64 encoded image data.
-              format: uri
-            detail:
-              type: string
-              description: Specifies the detail level of the image. Learn more in the [Vision guide](https://platform.openai.com/docs/guides/vision/low-or-high-fidelity-image-understanding).
-              enum:
-              - auto
-              - low
-              - high
-              default: auto
-          required:
-          - url
-      required:
-      - type
-      - image_url
-    ChatCompletionRequestMessageContentPart:
-      oneOf:
-      - $ref: '#/components/schemas/ChatCompletionRequestMessageContentPartText'
-      - $ref: '#/components/schemas/ChatCompletionRequestMessageContentPartImage'
-      x-oaiExpandable: true
-    ChatCompletionRequestFunctionMessage:
-      type: object
-      title: Function message
-      deprecated: true
-      properties:
-        role:
-          type: string
-          enum:
-          - function
-          description: The role of the messages author, in this case `function`.
-        content:
-          type:
-          - string
-          - 'null'
-          description: The contents of the function message.
-        name:
-          type: string
-          description: The name of the function to call.
-      required:
-      - role
-      - content
-      - name
-    CompletionUsage:
-      type: object
-      description: Usage statistics for the completion request.
-      properties:
-        completion_tokens:
-          type: integer
-          description: Number of tokens in the generated completion.
-        prompt_tokens:
-          type: integer
-          description: Number of tokens in the prompt.
-        total_tokens:
-          type: integer
-          description: Total number of tokens used in the request (prompt + completion).
-      required:
-      - prompt_tokens
-      - completion_tokens
-      - total_tokens
-    ChatCompletionTool:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - function
-          description: The type of the tool. Currently, only `function` is supported.
-        function:
-          $ref: '#/components/schemas/FunctionObject'
       required:
       - type
       - function

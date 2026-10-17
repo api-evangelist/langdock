@@ -20,7 +20,9 @@
     "langdock-user-management-api-openapi.yml",
     "langdock-fim-api-openapi.yml"
   ],
-  "archived": [],
+  "archived": [
+    "deleted 1 superseded output(s) from the previous generation"
+  ],
   "errors": [
     "langdock-openapi-original.yml: dangling $ref: #/components/schemas/Action",
     "langdock-openapi-original.yml: dangling $ref: #/components/schemas/VectorDb"
@@ -49,7 +51,8 @@
     "langdock-openapi-original.yml: declared missing tag: Usage Export",
     "langdock-openapi-original.yml: declared missing tag: User Management",
     "langdock-openapi-original.yml: declared missing tag: fim",
-    "apis.yml register: already-registered"
+    "superseded outputs removed: langdock-chat-completions-api-openapi.yml",
+    "apis.yml register: written (+1 apis, 15 total)"
   ],
   "skipped": [
     "langdock-agent-api-openapi.yml: previously refined output, superseded by openapi/_original/",
@@ -58,7 +61,7 @@
     "langdock-assistant-build-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "langdock-attachments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "langdock-audit-logs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "langdock-chat-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "langdock-chat-completions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "langdock-embeddings-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "langdock-fim-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "langdock-google-api-openapi.yml: previously refined output, superseded by openapi/_original/",
