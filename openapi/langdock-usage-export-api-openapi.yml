@@ -10,12 +10,12 @@ security:
 tags:
 - name: Usage Export
 paths:
-  /export/assistants:
+  /export/agents:
     post:
       tags:
       - Usage Export
-      summary: Export assistant usage data
-      description: Export detailed usage data for all assistants in the workspace
+      summary: Export agent usage data
+      description: Export detailed usage data for all agents in the workspace
       parameters: []
       requestBody:
         required: true
@@ -54,8 +54,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/UsageExportError'
               example:
-                error: Export too large
-                message: 'Export too large: 1500000 rows exceeds limit of 1000000. Please narrow the date range.'
+                message: 'Export too large: more than 1,000,000 usage rows for the selected date range. Try a shorter date range and combine the CSV files.'
+                code: USAGE_EXPORT_TOO_LARGE
+                details:
+                  usageRows: 1500000
+                  limit: 1000000
         '401':
           description: Unauthorized - Invalid or missing API key
           content:
@@ -63,8 +66,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/UsageExportError'
               example:
-                error: Unauthorized
-                message: Invalid or missing API key
+                message: The provided API key is invalid.
         '404':
           description: No data found for the selected period
           content:
@@ -72,9 +74,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/UsageExportError'
               example:
-                error: No data found
                 message: No usage data found for the selected period
-      operationId: postExportAssistants
+                code: NOT_FOUND
+      operationId: postExportAgents
       x-operation-id-source: derived
   /export/users:
     post:
@@ -196,6 +198,46 @@ paths:
                 $ref: '#/components/schemas/UsageExportError'
       operationId: postExportModels
       x-operation-id-source: derived
+  /export/workflows:
+    post:
+      tags:
+      - Usage Export
+      summary: Export workflow usage data
+      description: Export cost, run counts, and monthly cap utilization for workflows in the workspace
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UsageExportRequest'
+      responses:
+        '200':
+          description: Export successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsageExportResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsageExportError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsageExportError'
+        '404':
+          description: No data found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsageExportError'
+      operationId: postExportWorkflows
+      x-operation-id-source: derived
   /export/api-keys:
     post:
       tags:
@@ -246,6 +288,80 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    UsageExportModelsRequest:
+      allOf:
+      - $ref: '#/components/schemas/UsageExportRequest'
+      - type: object
+        properties:
+          group_by:
+            type: string
+            description: Optional aggregation dimension. `deployment` is only available for BYOK workspaces.
+            enum:
+            - source
+            - deployment
+    UsageExportResponse:
+      type: object
+      description: Successful response from usage export endpoints
+      properties:
+        success:
+          type: boolean
+          description: Indicates if the export was successful
+          example: true
+        data:
+          type: object
+          description: Export data information
+          properties:
+            filePath:
+              type: string
+              description: Path to the generated export file
+              example: agents-usage/workspace-id/agents-usage-2024-01-01-2024-01-31-abc12345.csv
+            downloadUrl:
+              type: string
+              format: uri
+              description: Signed URL to download the export file
+              example: https://storage.example.com/signed-url
+            dataType:
+              type: string
+              description: Type of data exported
+              enum:
+              - assistants
+              - agents
+              - api_keys
+              - users
+              - projects
+              - models
+              - workflows
+              example: assistants
+            recordCount:
+              type: integer
+              description: Number of records in the export
+              example: 1250
+            dateRange:
+              type: object
+              description: Actual date range of the exported data
+              properties:
+                from:
+                  type: string
+                  format: date-time
+                  description: Start date of the export
+                  example: '2024-01-01T00:00:00.000Z'
+                to:
+                  type: string
+                  format: date-time
+                  description: End date of the export
+                  example: '2024-01-31T23:59:59.999Z'
+              required:
+              - from
+              - to
+          required:
+          - filePath
+          - downloadUrl
+          - dataType
+          - recordCount
+          - dateRange
+      required:
+      - success
+      - data
     UsageExportRequest:
       type: object
       description: Request body for usage export endpoints
@@ -289,16 +405,18 @@ components:
       type: object
       description: Error response from usage export endpoints
       properties:
-        error:
-          type: string
-          description: Error type
-          example: No data found
         message:
           type: string
           description: Detailed error message
           example: No usage data found for the selected period
+        code:
+          type: string
+          description: Machine-readable error code
+          example: NOT_FOUND
+        details:
+          type: object
+          description: Additional error context. Oversized exports include the scanned row counts and the configured row limit.
       required:
-      - error
       - message
     UsageExportModelGroupByRequest:
       allOf:
@@ -310,79 +428,6 @@ components:
             description: Optional aggregation dimension.
             enum:
             - model
-    UsageExportModelsRequest:
-      allOf:
-      - $ref: '#/components/schemas/UsageExportRequest'
-      - type: object
-        properties:
-          group_by:
-            type: string
-            description: Optional aggregation dimension. `deployment` is only available for BYOK workspaces.
-            enum:
-            - source
-            - deployment
-    UsageExportResponse:
-      type: object
-      description: Successful response from usage export endpoints
-      properties:
-        success:
-          type: boolean
-          description: Indicates if the export was successful
-          example: true
-        data:
-          type: object
-          description: Export data information
-          properties:
-            filePath:
-              type: string
-              description: Path to the generated export file
-              example: agents-usage/workspace-id/agents-usage-2024-01-01-2024-01-31-abc12345.csv
-            downloadUrl:
-              type: string
-              format: uri
-              description: Signed URL to download the export file
-              example: https://storage.example.com/signed-url
-            dataType:
-              type: string
-              description: Type of data exported
-              enum:
-              - assistants
-              - agents
-              - api_keys
-              - users
-              - projects
-              - models
-              example: assistants
-            recordCount:
-              type: integer
-              description: Number of records in the export
-              example: 1250
-            dateRange:
-              type: object
-              description: Actual date range of the exported data
-              properties:
-                from:
-                  type: string
-                  format: date-time
-                  description: Start date of the export
-                  example: '2024-01-01T00:00:00.000Z'
-                to:
-                  type: string
-                  format: date-time
-                  description: End date of the export
-                  example: '2024-01-31T23:59:59.999Z'
-              required:
-              - from
-              - to
-          required:
-          - filePath
-          - downloadUrl
-          - dataType
-          - recordCount
-          - dateRange
-      required:
-      - success
-      - data
   securitySchemes:
     bearerAuth:
       type: http

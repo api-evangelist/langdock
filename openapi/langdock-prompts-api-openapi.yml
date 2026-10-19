@@ -1,0 +1,620 @@
+openapi: 3.2.0
+info:
+  title: Langdock Prompts API
+  version: 3.0.0
+servers:
+- url: https://api.langdock.com
+  description: Production
+security:
+- bearerAuth: []
+tags:
+- name: Prompts
+paths:
+  /prompts/v1:
+    get:
+      operationId: listPrompts
+      summary: List prompts
+      description: Returns prompts you can access in your workspace.
+      tags:
+      - Prompts
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 250
+          default: 50
+        description: Number of prompts to return.
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+          format: uuid
+        description: Cursor from the previous response for pagination.
+      - name: query
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Search query matched against prompt title and content.
+      - name: promptFolderId
+        in: query
+        required: false
+        schema:
+          type: string
+          format: uuid
+        description: Filter by prompt folder UUID.
+      - name: sharedWithWorkspace
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        description: Filter by workspace sharing.
+      responses:
+        '200':
+          description: Prompts returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListPromptsResponse'
+        '400':
+          description: Invalid query parameter
+        '401':
+          description: Invalid or missing API key
+        '403':
+          description: Missing required scope or access
+        '429':
+          description: Rate limit exceeded
+        '500':
+          description: Internal server error
+    post:
+      operationId: createPrompt
+      summary: Create a prompt
+      description: Creates a prompt in your workspace.
+      tags:
+      - Prompts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePromptRequest'
+      responses:
+        '201':
+          description: Prompt created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PromptResponse'
+        '400':
+          description: Invalid request body
+        '401':
+          description: Invalid or missing API key
+        '403':
+          description: Missing required scope, share permission, or folder write access
+        '404':
+          description: Prompt folder not found
+        '429':
+          description: Rate limit exceeded
+        '500':
+          description: Internal server error
+  /prompts/v1/{promptId}:
+    get:
+      operationId: getPrompt
+      summary: Get a prompt
+      description: Retrieves a prompt by ID from your workspace.
+      tags:
+      - Prompts
+      parameters:
+      - $ref: '#/components/parameters/PromptId'
+      responses:
+        '200':
+          description: Prompt returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PromptResponse'
+        '400':
+          description: Invalid prompt ID
+        '401':
+          description: Invalid or missing API key
+        '403':
+          description: Missing required scope or access
+        '404':
+          description: Prompt not found
+        '429':
+          description: Rate limit exceeded
+        '500':
+          description: Internal server error
+    patch:
+      operationId: updatePrompt
+      summary: Update a prompt
+      description: Updates an existing prompt in your workspace.
+      tags:
+      - Prompts
+      parameters:
+      - $ref: '#/components/parameters/PromptId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePromptRequest'
+      responses:
+        '200':
+          description: Prompt updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PromptResponse'
+        '400':
+          description: Invalid request body
+        '401':
+          description: Invalid or missing API key
+        '403':
+          description: Missing required scope, write access, or share permission
+        '404':
+          description: Prompt or prompt folder not found
+        '429':
+          description: Rate limit exceeded
+        '500':
+          description: Internal server error
+    delete:
+      operationId: deletePrompt
+      summary: Delete a prompt
+      description: Permanently deletes a prompt from your workspace.
+      tags:
+      - Prompts
+      parameters:
+      - $ref: '#/components/parameters/PromptId'
+      responses:
+        '200':
+          description: Prompt deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+        '400':
+          description: Invalid prompt ID
+        '401':
+          description: Invalid or missing API key
+        '403':
+          description: Missing required scope or write access
+        '404':
+          description: Prompt not found
+        '429':
+          description: Rate limit exceeded
+        '500':
+          description: Internal server error
+  /prompts/v1/folders:
+    get:
+      operationId: listPromptFolders
+      summary: List prompt folders
+      description: Returns prompt folders you can access in your workspace.
+      tags:
+      - Prompts
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 250
+          default: 50
+        description: Number of folders to return.
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+          format: uuid
+        description: Cursor from the previous response for pagination.
+      - name: query
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Search query matched against folder name.
+      - name: sharedWithWorkspace
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        description: Filter by workspace sharing.
+      responses:
+        '200':
+          description: Prompt folders returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListPromptFoldersResponse'
+        '400':
+          description: Invalid query parameter
+        '401':
+          description: Invalid or missing API key
+        '403':
+          description: Missing required scope or access
+        '429':
+          description: Rate limit exceeded
+        '500':
+          description: Internal server error
+    post:
+      operationId: createPromptFolder
+      summary: Create a prompt folder
+      description: Creates a prompt folder in your workspace.
+      tags:
+      - Prompts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePromptFolderRequest'
+      responses:
+        '201':
+          description: Prompt folder created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PromptFolderResponse'
+        '400':
+          description: Invalid request body
+        '401':
+          description: Invalid or missing API key
+        '403':
+          description: Missing required scope or share permission
+        '404':
+          description: Group not found
+        '429':
+          description: Rate limit exceeded
+        '500':
+          description: Internal server error
+  /prompts/v1/folders/{folderId}:
+    get:
+      operationId: getPromptFolder
+      summary: Get a prompt folder
+      description: Retrieves a prompt folder by ID from your workspace.
+      tags:
+      - Prompts
+      parameters:
+      - $ref: '#/components/parameters/PromptFolderId'
+      responses:
+        '200':
+          description: Prompt folder returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PromptFolderResponse'
+        '400':
+          description: Invalid folder ID
+        '401':
+          description: Invalid or missing API key
+        '403':
+          description: Missing required scope or access
+        '404':
+          description: Prompt folder not found
+        '429':
+          description: Rate limit exceeded
+        '500':
+          description: Internal server error
+    patch:
+      operationId: updatePromptFolder
+      summary: Update a prompt folder
+      description: Updates an existing prompt folder in your workspace.
+      tags:
+      - Prompts
+      parameters:
+      - $ref: '#/components/parameters/PromptFolderId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePromptFolderRequest'
+      responses:
+        '200':
+          description: Prompt folder updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PromptFolderResponse'
+        '400':
+          description: Invalid request body
+        '401':
+          description: Invalid or missing API key
+        '403':
+          description: Missing required scope or manage access
+        '404':
+          description: Prompt folder or group not found
+        '429':
+          description: Rate limit exceeded
+        '500':
+          description: Internal server error
+    delete:
+      operationId: deletePromptFolder
+      summary: Delete a prompt folder
+      description: Permanently deletes a prompt folder and the prompts in it.
+      tags:
+      - Prompts
+      parameters:
+      - $ref: '#/components/parameters/PromptFolderId'
+      responses:
+        '200':
+          description: Prompt folder deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+        '400':
+          description: Invalid folder ID
+        '401':
+          description: Invalid or missing API key
+        '403':
+          description: Missing required scope or manage access
+        '404':
+          description: Prompt folder not found
+        '429':
+          description: Rate limit exceeded
+        '500':
+          description: Internal server error
+components:
+  schemas:
+    UpdatePromptRequest:
+      type: object
+      minProperties: 1
+      additionalProperties: false
+      properties:
+        title:
+          type: string
+          minLength: 2
+          maxLength: 100
+          description: Prompt title.
+        prompt:
+          type: string
+          minLength: 2
+          maxLength: 120000
+          description: Prompt content.
+        promptFolderId:
+          type:
+          - string
+          - 'null'
+          format: uuid
+          description: Folder UUID to assign, or null to remove the folder.
+        sharedWithWorkspace:
+          type: boolean
+          description: Share the prompt with the workspace.
+    Prompt:
+      type: object
+      required:
+      - id
+      - title
+      - prompt
+      - sharedWithWorkspace
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the prompt.
+        title:
+          type: string
+          minLength: 2
+          maxLength: 100
+          description: Prompt title.
+        prompt:
+          type: string
+          minLength: 2
+          maxLength: 120000
+          description: Prompt content.
+        createdBy:
+          type:
+          - string
+          - 'null'
+          format: uuid
+          description: User ID of the prompt creator.
+        promptFolderId:
+          type:
+          - string
+          - 'null'
+          format: uuid
+          description: Folder ID the prompt is assigned to.
+        sharedWithWorkspace:
+          type: boolean
+          description: Whether the prompt is shared with the workspace.
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: ISO 8601 timestamp for prompt creation.
+        updatedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: ISO 8601 timestamp for the latest prompt update.
+    UpdatePromptFolderRequest:
+      type: object
+      minProperties: 1
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+          minLength: 2
+          maxLength: 50
+          description: Folder name.
+        sharedWithWorkspace:
+          type: boolean
+          description: Share the folder with the workspace.
+        sharedWithGroupId:
+          type:
+          - string
+          - 'null'
+          format: uuid
+          description: Group UUID to share with, or null to disconnect the group.
+    PromptResponse:
+      type: object
+      required:
+      - prompt
+      properties:
+        prompt:
+          $ref: '#/components/schemas/Prompt'
+    CreatePromptFolderRequest:
+      type: object
+      required:
+      - name
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+          minLength: 2
+          maxLength: 50
+          description: Folder name.
+        sharedWithWorkspace:
+          type: boolean
+          description: Share the folder with the workspace. Cannot be true when sharedWithGroupId is set.
+        sharedWithGroupId:
+          type: string
+          format: uuid
+          description: Group UUID to share with. Cannot be set when sharedWithWorkspace is true.
+    PromptFolderResponse:
+      type: object
+      required:
+      - folder
+      properties:
+        folder:
+          $ref: '#/components/schemas/PromptFolder'
+    ListPromptFoldersResponse:
+      type: object
+      required:
+      - folders
+      properties:
+        folders:
+          type: array
+          items:
+            $ref: '#/components/schemas/PromptFolder'
+        nextCursor:
+          type: string
+          format: uuid
+          description: Cursor for the next page, if more results are available.
+    ListPromptsResponse:
+      type: object
+      required:
+      - prompts
+      properties:
+        prompts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Prompt'
+        nextCursor:
+          type: string
+          format: uuid
+          description: Cursor for the next page, if more results are available.
+    PromptFolder:
+      type: object
+      required:
+      - id
+      - name
+      - createdBy
+      - sharedWithWorkspace
+      - createdAt
+      - updatedAt
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the prompt folder.
+        name:
+          type: string
+          minLength: 2
+          maxLength: 50
+          description: Folder name.
+        createdBy:
+          type: string
+          format: uuid
+          description: User ID of the folder creator.
+        sharedWithWorkspace:
+          type: boolean
+          description: Whether the folder is shared with the workspace.
+        sharedWithGroupId:
+          type:
+          - string
+          - 'null'
+          format: uuid
+          description: Group ID the folder is shared with.
+        createdAt:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp for folder creation.
+        updatedAt:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp for the latest folder update.
+    CreatePromptRequest:
+      type: object
+      required:
+      - title
+      - prompt
+      additionalProperties: false
+      properties:
+        title:
+          type: string
+          minLength: 2
+          maxLength: 100
+          description: Prompt title.
+        prompt:
+          type: string
+          minLength: 2
+          maxLength: 120000
+          description: Prompt content.
+        promptFolderId:
+          type: string
+          format: uuid
+          description: Folder UUID to assign. Cannot be set when sharedWithWorkspace is true.
+        sharedWithWorkspace:
+          type: boolean
+          description: Share the prompt with the workspace. Cannot be true when promptFolderId is set.
+  parameters:
+    PromptFolderId:
+      name: folderId
+      in: path
+      required: true
+      description: UUID of the prompt folder.
+      schema:
+        type: string
+        format: uuid
+    PromptId:
+      name: promptId
+      in: path
+      required: true
+      description: UUID of the prompt.
+      schema:
+        type: string
+        format: uuid
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: API Key
+      description: API key as Bearer token. Format "Bearer YOUR_API_KEY"

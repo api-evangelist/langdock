@@ -44,7 +44,7 @@ paths:
               properties:
                 contents:
                   type: array
-                  description: The content to generate a response for.
+                  description: Conversation history. Parts may be text, functionCall, or functionResponse.
                   items:
                     type: object
                     properties:
@@ -60,6 +60,29 @@ paths:
                           properties:
                             text:
                               type: string
+                            thoughtSignature:
+                              type: string
+                              description: Return unchanged on the follow-up turn (required for Gemini 3).
+                            functionCall:
+                              type: object
+                              properties:
+                                name:
+                                  type: string
+                                args:
+                                  type: object
+                                id:
+                                  type: string
+                                  description: Return unchanged on the follow-up turn (required for Gemini 3).
+                            functionResponse:
+                              type: object
+                              properties:
+                                name:
+                                  type: string
+                                response:
+                                  type: object
+                                id:
+                                  type: string
+                                  description: Return unchanged on the follow-up turn (required for Gemini 3).
               required:
               - contents
             example:
@@ -96,23 +119,6 @@ paths:
       - bearerAuth: []
 components:
   schemas:
-    AuthenticationError:
-      properties:
-        type:
-          default: authentication_error
-          enum:
-          - authentication_error
-          title: Type
-          type: string
-        message:
-          default: Authentication error
-          title: Message
-          type: string
-      required:
-      - type
-      - message
-      title: AuthenticationError
-      type: object
     ErrorResponse:
       properties:
         type:
@@ -163,22 +169,22 @@ components:
       - message
       title: NotFoundError
       type: object
-    APIError:
+    PermissionError:
       properties:
         type:
-          default: api_error
+          default: permission_error
           enum:
-          - api_error
+          - permission_error
           title: Type
           type: string
         message:
-          default: Internal server error
+          default: Permission denied
           title: Message
           type: string
       required:
       - type
       - message
-      title: APIError
+      title: PermissionError
       type: object
     RateLimitError:
       properties:
@@ -197,6 +203,40 @@ components:
       - message
       title: RateLimitError
       type: object
+    OverloadedError:
+      properties:
+        type:
+          default: overloaded_error
+          enum:
+          - overloaded_error
+          title: Type
+          type: string
+        message:
+          default: Overloaded
+          title: Message
+          type: string
+      required:
+      - type
+      - message
+      title: OverloadedError
+      type: object
+    APIError:
+      properties:
+        type:
+          default: api_error
+          enum:
+          - api_error
+          title: Type
+          type: string
+        message:
+          default: Internal server error
+          title: Message
+          type: string
+      required:
+      - type
+      - message
+      title: APIError
+      type: object
     InvalidRequestError:
       properties:
         type:
@@ -214,39 +254,22 @@ components:
       - message
       title: InvalidRequestError
       type: object
-    PermissionError:
+    AuthenticationError:
       properties:
         type:
-          default: permission_error
+          default: authentication_error
           enum:
-          - permission_error
+          - authentication_error
           title: Type
           type: string
         message:
-          default: Permission denied
+          default: Authentication error
           title: Message
           type: string
       required:
       - type
       - message
-      title: PermissionError
-      type: object
-    OverloadedError:
-      properties:
-        type:
-          default: overloaded_error
-          enum:
-          - overloaded_error
-          title: Type
-          type: string
-        message:
-          default: Overloaded
-          title: Message
-          type: string
-      required:
-      - type
-      - message
-      title: OverloadedError
+      title: AuthenticationError
       type: object
   securitySchemes:
     bearerAuth:

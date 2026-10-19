@@ -70,6 +70,59 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    ChatCompletionRequestToolMessage:
+      type: object
+      title: Tool message
+      properties:
+        role:
+          type: string
+          enum:
+          - tool
+          description: The role of the messages author, in this case `tool`.
+        content:
+          type: string
+          description: The contents of the tool message.
+        tool_call_id:
+          type: string
+          description: Tool call that this message is responding to.
+      required:
+      - role
+      - content
+      - tool_call_id
+    ChatCompletionFunctions:
+      type: object
+      deprecated: true
+      properties:
+        description:
+          type: string
+          description: A description of what the function does, used by the model to choose when and how to call the function.
+        name:
+          type: string
+          description: The name of the function to be called. Must be a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64.
+        parameters:
+          $ref: '#/components/schemas/FunctionParameters'
+      required:
+      - name
+    ChatCompletionNamedToolChoice:
+      type: object
+      description: Specifies a tool the model should use. Use to force the model to call a specific function.
+      properties:
+        type:
+          type: string
+          enum:
+          - function
+          description: The type of the tool. Currently, only `function` is supported.
+        function:
+          type: object
+          properties:
+            name:
+              type: string
+              description: The name of the function to call.
+          required:
+          - name
+      required:
+      - type
+      - function
     ChatCompletionRequestMessageContentPartImage:
       type: object
       title: Image content part
@@ -104,6 +157,56 @@ components:
       - $ref: '#/components/schemas/ChatCompletionRequestMessageContentPartText'
       - $ref: '#/components/schemas/ChatCompletionRequestMessageContentPartImage'
       x-oaiExpandable: true
+    CompletionUsage:
+      type: object
+      description: Usage statistics for the completion request.
+      properties:
+        completion_tokens:
+          type: integer
+          description: Number of tokens in the generated completion.
+        prompt_tokens:
+          type: integer
+          description: Number of tokens in the prompt.
+        prompt_tokens_details:
+          type: object
+          description: Breakdown of tokens used in the prompt.
+          properties:
+            cached_tokens:
+              type: integer
+              description: Number of prompt tokens served from the provider's prompt cache.
+              example: 0
+          additionalProperties: true
+        total_tokens:
+          type: integer
+          description: Total number of tokens used in the request (prompt + completion).
+      required:
+      - prompt_tokens
+      - completion_tokens
+      - total_tokens
+    ChatCompletionTool:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - function
+          description: The type of the tool. Currently, only `function` is supported.
+        function:
+          $ref: '#/components/schemas/FunctionObject'
+      required:
+      - type
+      - function
+    ChatCompletionFunctionCallOption:
+      type: object
+      description: 'Specifying a particular function via `{"name": "my_function"}` forces the model to call that function.
+
+        '
+      properties:
+        name:
+          type: string
+          description: The name of the function to call.
+      required:
+      - name
     CreateChatCompletionResponse:
       type: object
       description: Represents a chat completion response returned by model, based on the provided input.
@@ -190,6 +293,21 @@ components:
         name: The chat completion object
         group: chat
         example: "{\n  \"id\": \"chatcmpl-123\",\n  \"object\": \"chat.completion\",\n  \"created\": 1677652288,\n  \"model\": \"gpt-4o-mini\",\n  \"system_fingerprint\": \"fp_44709d6fcb\",\n  \"choices\": [{\n    \"index\": 0,\n    \"message\": {\n      \"role\": \"assistant\",\n      \"content\": \"\\n\\nHello there, how may I assist you today?\",\n    },\n    \"logprobs\": null,\n    \"finish_reason\": \"stop\"\n  }],\n  \"usage\": {\n    \"prompt_tokens\": 9,\n    \"completion_tokens\": 12,\n    \"total_tokens\": 21\n  }\n"
+    ChatCompletionRequestMessageContentPartText:
+      type: object
+      title: Text content part
+      properties:
+        type:
+          type: string
+          enum:
+          - text
+          description: The type of the content part.
+        text:
+          type: string
+          description: The text content.
+      required:
+      - type
+      - text
     ChatCompletionRequestFunctionMessage:
       type: object
       title: Function message
@@ -212,110 +330,32 @@ components:
       - role
       - content
       - name
-    ChatCompletionFunctionCallOption:
-      type: object
-      description: 'Specifying a particular function via `{"name": "my_function"}` forces the model to call that function.
+    ChatCompletionToolChoiceOption:
+      description: 'Controls which (if any) tool is called by the model.
+
+        `none` means the model will not call any tool and instead generates a message.
+
+        `auto` means the model can pick between generating a message or calling one or more tools.
+
+        `required` means the model must call one or more tools.
+
+        Specifying a particular tool via `{"type": "function", "function": {"name": "my_function"}}` forces the model to call that tool.
+
+
+        `none` is the default when no tools are present. `auto` is the default if tools are present.
 
         '
-      properties:
-        name:
-          type: string
-          description: The name of the function to call.
-      required:
-      - name
-    ChatCompletionTool:
-      type: object
-      properties:
-        type:
-          type: string
-          enum:
-          - function
-          description: The type of the tool. Currently, only `function` is supported.
-        function:
-          $ref: '#/components/schemas/FunctionObject'
-      required:
-      - type
-      - function
-    CompletionUsage:
-      type: object
-      description: Usage statistics for the completion request.
-      properties:
-        completion_tokens:
-          type: integer
-          description: Number of tokens in the generated completion.
-        prompt_tokens:
-          type: integer
-          description: Number of tokens in the prompt.
-        total_tokens:
-          type: integer
-          description: Total number of tokens used in the request (prompt + completion).
-      required:
-      - prompt_tokens
-      - completion_tokens
-      - total_tokens
-    FunctionParameters:
-      type: object
-      description: "The parameters the functions accepts, described as a JSON Schema object. See the [guide](https://platform.openai.com/docs/guides/function-calling) for examples, and the [JSON Schema reference](https://json-schema.org/understanding-json-schema/reference) for documentation about the format. \n\nOmitting `parameters` defines a function with an empty parameter list."
-      additionalProperties: true
-    ChatCompletionMessageToolCall:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The ID of the tool call.
-        type:
-          type: string
-          enum:
-          - function
-          description: The type of the tool. Currently, only `function` is supported.
-        function:
-          type: object
-          description: The function that the model called.
-          properties:
-            name:
-              type: string
-              description: The name of the function to call.
-            arguments:
-              type: string
-              description: The arguments to call the function with, as generated by the model in JSON format. Note that the model does not always generate valid JSON, and may hallucinate parameters not defined by your function schema. Validate the arguments in your code before calling your function.
-          required:
-          - name
-          - arguments
-      required:
-      - id
-      - type
-      - function
-    FunctionObject:
-      type: object
-      properties:
-        description:
-          type: string
-          description: A description of what the function does, used by the model to choose when and how to call the function.
-        name:
-          type: string
-          description: The name of the function to be called. Must be a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64.
-        parameters:
-          $ref: '#/components/schemas/FunctionParameters'
-      required:
-      - name
-    ChatCompletionRequestSystemMessage:
-      type: object
-      title: System message
-      properties:
-        content:
-          description: The contents of the system message.
-          type: string
-        role:
-          type: string
-          enum:
-          - system
-          description: The role of the messages author, in this case `system`.
-        name:
-          type: string
-          description: An optional name for the participant. Provides the model information to differentiate between participants of the same role.
-      required:
-      - content
-      - role
+      oneOf:
+      - type: string
+        description: '`none` means the model will not call any tool and instead generates a message. `auto` means the model can pick between generating a message or calling one or more tools. `required` means the model must call one or more tools.
+
+          '
+        enum:
+        - none
+        - auto
+        - required
+      - $ref: '#/components/schemas/ChatCompletionNamedToolChoice'
+      x-oaiExpandable: true
     CreateChatCompletionRequest:
       type: object
       properties:
@@ -424,8 +464,8 @@ components:
           type:
           - integer
           - 'null'
-          minimum: -9223372036854776000
-          maximum: 9223372036854776000
+          minimum: -9223372036854775808
+          maximum: 9223372036854775807
           description: 'This feature is in Beta.
 
             If specified, OpenAI''s system will make a best effort to sample deterministically, such that repeated requests with the same `seed` and parameters should return the same result.
@@ -557,47 +597,38 @@ components:
       required:
       - model
       - messages
-    ChatCompletionResponseMessage:
+    FunctionParameters:
       type: object
-      description: A chat completion message generated by the model.
+      description: "The parameters the functions accepts, described as a JSON Schema object. See the [guide](https://platform.openai.com/docs/guides/function-calling) for examples, and the [JSON Schema reference](https://json-schema.org/understanding-json-schema/reference) for documentation about the format. \n\nOmitting `parameters` defines a function with an empty parameter list."
+      additionalProperties: true
+    ChatCompletionMessageToolCall:
+      type: object
       properties:
-        content:
-          type:
-          - string
-          - 'null'
-          description: The contents of the message.
-        tool_calls:
-          $ref: '#/components/schemas/ChatCompletionMessageToolCalls'
-        role:
+        id:
+          type: string
+          description: The ID of the tool call.
+        type:
           type: string
           enum:
-          - assistant
-          description: The role of the author of this message.
-        function_call:
+          - function
+          description: The type of the tool. Currently, only `function` is supported.
+        function:
           type: object
-          deprecated: true
-          description: Deprecated and replaced by `tool_calls`. The name and arguments of a function that should be called, as generated by the model.
+          description: The function that the model called.
           properties:
-            arguments:
-              type: string
-              description: The arguments to call the function with, as generated by the model in JSON format. Note that the model does not always generate valid JSON, and may hallucinate parameters not defined by your function schema. Validate the arguments in your code before calling your function.
             name:
               type: string
               description: The name of the function to call.
+            arguments:
+              type: string
+              description: The arguments to call the function with, as generated by the model in JSON format. Note that the model does not always generate valid JSON, and may hallucinate parameters not defined by your function schema. Validate the arguments in your code before calling your function.
           required:
           - name
           - arguments
       required:
-      - role
-      - content
-    ChatCompletionRequestMessage:
-      oneOf:
-      - $ref: '#/components/schemas/ChatCompletionRequestSystemMessage'
-      - $ref: '#/components/schemas/ChatCompletionRequestUserMessage'
-      - $ref: '#/components/schemas/ChatCompletionRequestAssistantMessage'
-      - $ref: '#/components/schemas/ChatCompletionRequestToolMessage'
-      - $ref: '#/components/schemas/ChatCompletionRequestFunctionMessage'
-      x-oaiExpandable: true
+      - id
+      - type
+      - function
     ChatCompletionRequestAssistantMessage:
       type: object
       title: Assistant message
@@ -637,6 +668,75 @@ components:
           - name
       required:
       - role
+    ChatCompletionMessageToolCalls:
+      type: array
+      description: The tool calls generated by the model, such as function calls.
+      items:
+        $ref: '#/components/schemas/ChatCompletionMessageToolCall'
+    ChatCompletionRequestSystemMessage:
+      type: object
+      title: System message
+      properties:
+        content:
+          description: The contents of the system message.
+          type: string
+        role:
+          type: string
+          enum:
+          - system
+          description: The role of the messages author, in this case `system`.
+        name:
+          type: string
+          description: An optional name for the participant. Provides the model information to differentiate between participants of the same role.
+      required:
+      - content
+      - role
+    FunctionObject:
+      type: object
+      properties:
+        description:
+          type: string
+          description: A description of what the function does, used by the model to choose when and how to call the function.
+        name:
+          type: string
+          description: The name of the function to be called. Must be a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64.
+        parameters:
+          $ref: '#/components/schemas/FunctionParameters'
+      required:
+      - name
+    ChatCompletionResponseMessage:
+      type: object
+      description: A chat completion message generated by the model.
+      properties:
+        content:
+          type:
+          - string
+          - 'null'
+          description: The contents of the message.
+        tool_calls:
+          $ref: '#/components/schemas/ChatCompletionMessageToolCalls'
+        role:
+          type: string
+          enum:
+          - assistant
+          description: The role of the author of this message.
+        function_call:
+          type: object
+          deprecated: true
+          description: Deprecated and replaced by `tool_calls`. The name and arguments of a function that should be called, as generated by the model.
+          properties:
+            arguments:
+              type: string
+              description: The arguments to call the function with, as generated by the model in JSON format. Note that the model does not always generate valid JSON, and may hallucinate parameters not defined by your function schema. Validate the arguments in your code before calling your function.
+            name:
+              type: string
+              description: The name of the function to call.
+          required:
+          - name
+          - arguments
+      required:
+      - role
+      - content
     ChatCompletionRequestUserMessage:
       type: object
       title: User message
@@ -667,31 +767,13 @@ components:
       required:
       - content
       - role
-    ChatCompletionToolChoiceOption:
-      description: 'Controls which (if any) tool is called by the model.
-
-        `none` means the model will not call any tool and instead generates a message.
-
-        `auto` means the model can pick between generating a message or calling one or more tools.
-
-        `required` means the model must call one or more tools.
-
-        Specifying a particular tool via `{"type": "function", "function": {"name": "my_function"}}` forces the model to call that tool.
-
-
-        `none` is the default when no tools are present. `auto` is the default if tools are present.
-
-        '
+    ChatCompletionRequestMessage:
       oneOf:
-      - type: string
-        description: '`none` means the model will not call any tool and instead generates a message. `auto` means the model can pick between generating a message or calling one or more tools. `required` means the model must call one or more tools.
-
-          '
-        enum:
-        - none
-        - auto
-        - required
-      - $ref: '#/components/schemas/ChatCompletionNamedToolChoice'
+      - $ref: '#/components/schemas/ChatCompletionRequestSystemMessage'
+      - $ref: '#/components/schemas/ChatCompletionRequestUserMessage'
+      - $ref: '#/components/schemas/ChatCompletionRequestAssistantMessage'
+      - $ref: '#/components/schemas/ChatCompletionRequestToolMessage'
+      - $ref: '#/components/schemas/ChatCompletionRequestFunctionMessage'
       x-oaiExpandable: true
     ChatCompletionTokenLogprob:
       type: object
@@ -737,79 +819,6 @@ components:
       - logprob
       - bytes
       - top_logprobs
-    ChatCompletionRequestMessageContentPartText:
-      type: object
-      title: Text content part
-      properties:
-        type:
-          type: string
-          enum:
-          - text
-          description: The type of the content part.
-        text:
-          type: string
-          description: The text content.
-      required:
-      - type
-      - text
-    ChatCompletionFunctions:
-      type: object
-      deprecated: true
-      properties:
-        description:
-          type: string
-          description: A description of what the function does, used by the model to choose when and how to call the function.
-        name:
-          type: string
-          description: The name of the function to be called. Must be a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64.
-        parameters:
-          $ref: '#/components/schemas/FunctionParameters'
-      required:
-      - name
-    ChatCompletionRequestToolMessage:
-      type: object
-      title: Tool message
-      properties:
-        role:
-          type: string
-          enum:
-          - tool
-          description: The role of the messages author, in this case `tool`.
-        content:
-          type: string
-          description: The contents of the tool message.
-        tool_call_id:
-          type: string
-          description: Tool call that this message is responding to.
-      required:
-      - role
-      - content
-      - tool_call_id
-    ChatCompletionMessageToolCalls:
-      type: array
-      description: The tool calls generated by the model, such as function calls.
-      items:
-        $ref: '#/components/schemas/ChatCompletionMessageToolCall'
-    ChatCompletionNamedToolChoice:
-      type: object
-      description: Specifies a tool the model should use. Use to force the model to call a specific function.
-      properties:
-        type:
-          type: string
-          enum:
-          - function
-          description: The type of the tool. Currently, only `function` is supported.
-        function:
-          type: object
-          properties:
-            name:
-              type: string
-              description: The name of the function to call.
-          required:
-          - name
-      required:
-      - type
-      - function
   securitySchemes:
     bearerAuth:
       type: http

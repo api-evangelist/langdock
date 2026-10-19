@@ -100,7 +100,7 @@ paths:
     get:
       operationId: getSkill
       summary: Get a Skill
-      description: Retrieves a Skill by ID from your workspace.
+      description: Retrieves a Skill by ID from your workspace, including metadata for every stored file.
       tags:
       - Skills
       parameters:
@@ -111,7 +111,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SkillResponse'
+                $ref: '#/components/schemas/GetSkillResponse'
         '400':
           description: Invalid Skill ID
         '401':
@@ -192,6 +192,42 @@ paths:
           description: Rate limit exceeded
         '500':
           description: Internal server error
+  /skills/v1/{skillId}/files:
+    get:
+      operationId: getSkillFile
+      summary: Get a Skill file
+      description: Retrieves a stored Skill file by path from your workspace.
+      tags:
+      - Skills
+      parameters:
+      - $ref: '#/components/parameters/SkillId'
+      - name: path
+        in: query
+        required: true
+        description: Relative path of the file inside the Skill.
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 255
+      responses:
+        '200':
+          description: File returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SkillFileContent'
+        '400':
+          description: Invalid Skill ID, invalid path, unsupported file type, invalid UTF-8, or file larger than 512 KB
+        '401':
+          description: Invalid or missing API key
+        '403':
+          description: Missing required scope or access
+        '404':
+          description: Skill or file not found
+        '429':
+          description: Rate limit exceeded
+        '500':
+          description: Internal server error
   /skills/v1/import:
     post:
       operationId: importSkill
@@ -234,45 +270,36 @@ paths:
           description: Internal server error
 components:
   schemas:
-    ListSkillsResponse:
+    GetSkillResponse:
       type: object
       required:
-      - skills
+      - skill
+      - files
       properties:
-        skills:
+        skill:
+          $ref: '#/components/schemas/Skill'
+        files:
           type: array
+          description: Stored Skill files, ordered by path. Includes text and binary files. Does not include file contents.
           items:
-            $ref: '#/components/schemas/Skill'
-        nextCursor:
-          type: string
-          format: uuid
-          description: Cursor for the next page, if more results are available.
-    ImportSkillRequest:
+            $ref: '#/components/schemas/SkillFile'
+    SkillResponse:
       type: object
       required:
-      - file
-      - fileType
+      - skill
       properties:
-        file:
-          type: string
-          format: binary
-          description: SKILL.md, .zip, or .skill file content.
-        fileType:
-          type: string
-          enum:
-          - md
-          - zip
-          description: File parser to use.
-        mode:
-          type: string
-          enum:
-          - create
-          - upsert
-          default: create
-          description: Whether to create a Skill or update an editable Skill with the same slug.
-        integrationIds:
-          type: string
-          description: JSON-encoded array of integration UUIDs.
+        skill:
+          $ref: '#/components/schemas/Skill'
+    SkillFileContent:
+      allOf:
+      - $ref: '#/components/schemas/SkillFile'
+      - type: object
+        required:
+        - content
+        properties:
+          content:
+            type: string
+            description: UTF-8 file contents.
     UpdateSkillRequest:
       type: object
       minProperties: 1
@@ -303,45 +330,6 @@ components:
             type: string
             format: uuid
           description: Integration IDs to attach to the Skill. Replaces the current integration list.
-    SkillResponse:
-      type: object
-      required:
-      - skill
-      properties:
-        skill:
-          $ref: '#/components/schemas/Skill'
-    ImportedSkillFile:
-      type: object
-      required:
-      - path
-      - sizeBytes
-      - extension
-      - hasScript
-      properties:
-        path:
-          type: string
-          description: File path inside the imported Skill.
-        sizeBytes:
-          type: integer
-          description: File size in bytes.
-        extension:
-          type: string
-          description: File extension.
-        hasScript:
-          type: boolean
-          description: Whether the file is a script file.
-    ImportSkillResponse:
-      type: object
-      required:
-      - skill
-      - files
-      properties:
-        skill:
-          $ref: '#/components/schemas/Skill'
-        files:
-          type: array
-          items:
-            $ref: '#/components/schemas/ImportedSkillFile'
     Skill:
       type: object
       required:
@@ -421,6 +409,101 @@ components:
             type: string
             format: uuid
           description: Integration IDs to attach to the Skill.
+    ListSkillsResponse:
+      type: object
+      required:
+      - skills
+      properties:
+        skills:
+          type: array
+          items:
+            $ref: '#/components/schemas/Skill'
+        nextCursor:
+          type: string
+          format: uuid
+          description: Cursor for the next page, if more results are available.
+    SkillFile:
+      type: object
+      required:
+      - path
+      - sizeBytes
+      - extension
+      - hasScript
+      - sha256
+      properties:
+        path:
+          type: string
+          description: Relative path inside the Skill.
+        sizeBytes:
+          type: integer
+          description: File size in bytes.
+        extension:
+          type: string
+          description: Lowercase file extension, including the leading dot.
+        hasScript:
+          type: boolean
+          description: Whether the file is a script file (`.py`, `.sh`, `.js`, or `.ts`).
+        sha256:
+          type: string
+          description: Lowercase SHA-256 hash of the original file bytes.
+    ImportedSkillFile:
+      type: object
+      required:
+      - path
+      - sizeBytes
+      - extension
+      - hasScript
+      properties:
+        path:
+          type: string
+          description: File path inside the imported Skill.
+        sizeBytes:
+          type: integer
+          description: File size in bytes.
+        extension:
+          type: string
+          description: File extension.
+        hasScript:
+          type: boolean
+          description: Whether the file is a script file.
+    ImportSkillResponse:
+      type: object
+      required:
+      - skill
+      - files
+      properties:
+        skill:
+          $ref: '#/components/schemas/Skill'
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImportedSkillFile'
+    ImportSkillRequest:
+      type: object
+      required:
+      - file
+      - fileType
+      properties:
+        file:
+          type: string
+          format: binary
+          description: SKILL.md, .zip, or .skill file content.
+        fileType:
+          type: string
+          enum:
+          - md
+          - zip
+          description: File parser to use.
+        mode:
+          type: string
+          enum:
+          - create
+          - upsert
+          default: create
+          description: Whether to create a Skill or update an editable Skill with the same slug.
+        integrationIds:
+          type: string
+          description: JSON-encoded array of integration UUIDs.
   parameters:
     SkillId:
       name: skillId

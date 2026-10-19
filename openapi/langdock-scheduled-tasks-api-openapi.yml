@@ -1,0 +1,488 @@
+openapi: 3.2.0
+info:
+  title: Langdock Scheduled Tasks API
+  version: 3.0.0
+servers:
+- url: https://api.langdock.com
+  description: Production
+security:
+- bearerAuth: []
+tags:
+- name: Scheduled Tasks
+paths:
+  /automations/v1:
+    get:
+      operationId: listScheduledTasks
+      tags:
+      - Scheduled Tasks
+      summary: List scheduled tasks
+      description: Returns scheduled tasks created by this workspace API key, newest first.
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 250
+          default: 50
+        description: Number of scheduled tasks to return.
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+          format: uuid
+        description: Task UUID from nextCursor in the previous response.
+      responses:
+        '200':
+          description: Scheduled tasks returned successfully. nextCursor is present only when another page exists. Each task includes runCount.
+        '400':
+          description: Invalid limit or cursor
+        '401':
+          description: Invalid or missing API key, or the key user was not found
+        '403':
+          description: Missing AUTOMATION_API, a personal API key, Scheduled Tasks disabled, or the key has no access
+        '405':
+          description: Method not allowed
+        '429':
+          description: Rate limit exceeded
+        '500':
+          description: Internal server error
+    post:
+      operationId: createScheduledTask
+      tags:
+      - Scheduled Tasks
+      summary: Create a scheduled task
+      description: Creates a scheduled task owned by this workspace API key. New tasks start active. The response does not include runCount.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required:
+              - name
+              - prompt
+              - frequency
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 200
+                prompt:
+                  type: string
+                  minLength: 1
+                  maxLength: 120000
+                frequency:
+                  type: string
+                  enum:
+                  - MANUAL
+                  - DAILY
+                  - WEEKDAYS
+                  - WEEKLY
+                  - MONTHLY
+                  - SELECTED_WEEKDAYS
+                timeOfDay:
+                  type:
+                  - string
+                  - 'null'
+                  description: 24 hour HH:mm. Required unless frequency is MANUAL.
+                dayOfWeek:
+                  type:
+                  - integer
+                  - 'null'
+                  minimum: 0
+                  maximum: 6
+                  description: Required for WEEKLY. 0 is Sunday and 6 is Saturday.
+                dayOfMonth:
+                  type:
+                  - integer
+                  - 'null'
+                  minimum: 1
+                  maximum: 31
+                  description: Required for MONTHLY.
+                daysOfWeek:
+                  type: array
+                  maxItems: 7
+                  items:
+                    type: integer
+                    minimum: 0
+                    maximum: 6
+                  description: Required for SELECTED_WEEKDAYS.
+                timezone:
+                  type:
+                  - string
+                  - 'null'
+                  maxLength: 64
+                  description: IANA timezone. Empty or omitted on a scheduled frequency is stored as UTC.
+                modelMode:
+                  type: string
+                  enum:
+                  - UNSET
+                  - EXPLICIT
+                  - AUTO
+                modelId:
+                  type:
+                  - string
+                  - 'null'
+                  format: uuid
+                  description: Required in the same request when modelMode is EXPLICIT.
+                assistantId:
+                  type:
+                  - string
+                  - 'null'
+                  format: uuid
+                taggedAssistantId:
+                  type:
+                  - string
+                  - 'null'
+                  format: uuid
+                taggedIntegrationIds:
+                  type: array
+                  maxItems: 20
+                  items:
+                    type: string
+                    format: uuid
+                taggedKnowledgeFolderIds:
+                  type: array
+                  maxItems: 20
+                  items:
+                    type: string
+                    format: uuid
+                taggedWorkflowIds:
+                  type: array
+                  maxItems: 20
+                  items:
+                    type: string
+                    format: uuid
+                taggedSkillSlugs:
+                  type: array
+                  maxItems: 20
+                  items:
+                    type: string
+                    maxLength: 100
+                attachmentIds:
+                  type: array
+                  maxItems: 20
+                  items:
+                    type: string
+                    format: uuid
+      responses:
+        '201':
+          description: Scheduled task created. The automation object does not include runCount.
+        '400':
+          description: Invalid body, or message AUTOMATION_LIMIT_REACHED
+        '401':
+          description: Invalid or missing API key, or the key user was not found
+        '403':
+          description: Missing AUTOMATION_API, a personal API key, Scheduled Tasks disabled, no product access, TRIAL_EXPIRED, or AUTOMATION_TAG_ACCESS_DENIED
+        '405':
+          description: Method not allowed
+        '429':
+          description: Rate limit exceeded
+        '500':
+          description: Internal server error
+  /automations/v1/{automationId}:
+    get:
+      operationId: getScheduledTask
+      tags:
+      - Scheduled Tasks
+      summary: Get a scheduled task
+      description: Returns one scheduled task owned by this workspace API key, including runCount.
+      parameters:
+      - name: automationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Scheduled task returned successfully
+        '400':
+          description: Invalid task id
+        '401':
+          description: Invalid or missing API key, or the key user was not found
+        '403':
+          description: Missing AUTOMATION_API, a personal API key, Scheduled Tasks disabled, or the key has no access
+        '404':
+          description: Message AUTOMATION_NOT_FOUND
+        '405':
+          description: Method not allowed
+        '429':
+          description: Rate limit exceeded
+        '500':
+          description: Internal server error
+    patch:
+      operationId: updateScheduledTask
+      tags:
+      - Scheduled Tasks
+      summary: Update a scheduled task
+      description: Updates one scheduled task owned by this workspace API key. Send at least one field. The response does not include runCount. The merged schedule is validated.
+      parameters:
+      - name: automationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              minProperties: 1
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 200
+                prompt:
+                  type: string
+                  minLength: 1
+                  maxLength: 120000
+                frequency:
+                  type: string
+                  enum:
+                  - MANUAL
+                  - DAILY
+                  - WEEKDAYS
+                  - WEEKLY
+                  - MONTHLY
+                  - SELECTED_WEEKDAYS
+                timeOfDay:
+                  type:
+                  - string
+                  - 'null'
+                  description: 24 hour HH:mm. Omitted keeps the stored value.
+                dayOfWeek:
+                  type:
+                  - integer
+                  - 'null'
+                  minimum: 0
+                  maximum: 6
+                  description: 0 is Sunday and 6 is Saturday. Omitted keeps the stored value.
+                dayOfMonth:
+                  type:
+                  - integer
+                  - 'null'
+                  minimum: 1
+                  maximum: 31
+                  description: Omitted keeps the stored value.
+                daysOfWeek:
+                  type: array
+                  maxItems: 7
+                  items:
+                    type: integer
+                    minimum: 0
+                    maximum: 6
+                  description: Omitted keeps the stored value.
+                timezone:
+                  type:
+                  - string
+                  - 'null'
+                  maxLength: 64
+                  description: IANA timezone. Omitted keeps the stored value. Empty is stored as UTC on a scheduled frequency.
+                modelMode:
+                  type: string
+                  enum:
+                  - UNSET
+                  - EXPLICIT
+                  - AUTO
+                modelId:
+                  type:
+                  - string
+                  - 'null'
+                  format: uuid
+                  description: Required in this request when modelMode is EXPLICIT.
+                assistantId:
+                  type:
+                  - string
+                  - 'null'
+                  format: uuid
+                taggedAssistantId:
+                  type:
+                  - string
+                  - 'null'
+                  format: uuid
+                taggedIntegrationIds:
+                  type: array
+                  maxItems: 20
+                  items:
+                    type: string
+                    format: uuid
+                taggedKnowledgeFolderIds:
+                  type: array
+                  maxItems: 20
+                  items:
+                    type: string
+                    format: uuid
+                taggedWorkflowIds:
+                  type: array
+                  maxItems: 20
+                  items:
+                    type: string
+                    format: uuid
+                taggedSkillSlugs:
+                  type: array
+                  maxItems: 20
+                  items:
+                    type: string
+                    maxLength: 100
+                attachmentIds:
+                  type: array
+                  maxItems: 20
+                  items:
+                    type: string
+                    format: uuid
+      responses:
+        '200':
+          description: Scheduled task updated. The automation object does not include runCount.
+        '400':
+          description: Invalid body, message At least one field must be provided, or an incomplete merged schedule
+        '401':
+          description: Invalid or missing API key, or the key user was not found
+        '403':
+          description: Missing AUTOMATION_API, a personal API key, Scheduled Tasks disabled, no product access, or AUTOMATION_TAG_ACCESS_DENIED
+        '404':
+          description: Message AUTOMATION_NOT_FOUND
+        '405':
+          description: Method not allowed
+        '429':
+          description: Rate limit exceeded
+        '500':
+          description: Internal server error
+    delete:
+      operationId: deleteScheduledTask
+      tags:
+      - Scheduled Tasks
+      summary: Delete a scheduled task
+      description: Deletes a scheduled task owned by this workspace API key.
+      parameters:
+      - name: automationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Scheduled task deleted
+        '400':
+          description: Invalid task id
+        '401':
+          description: Invalid or missing API key, or the key user was not found
+        '403':
+          description: Missing AUTOMATION_API, a personal API key, Scheduled Tasks disabled, or the key has no access
+        '404':
+          description: Message AUTOMATION_NOT_FOUND
+        '405':
+          description: Method not allowed
+        '429':
+          description: Rate limit exceeded
+        '500':
+          description: Internal server error
+  /automations/v1/{automationId}/pause:
+    post:
+      operationId: pauseScheduledTask
+      tags:
+      - Scheduled Tasks
+      summary: Pause a scheduled task
+      description: Sets active to false. The response does not include runCount.
+      parameters:
+      - name: automationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Scheduled task paused
+        '400':
+          description: Invalid task id
+        '401':
+          description: Invalid or missing API key, or the key user was not found
+        '403':
+          description: Missing AUTOMATION_API, a personal API key, Scheduled Tasks disabled, or the key has no access
+        '404':
+          description: Message AUTOMATION_NOT_FOUND
+        '405':
+          description: Method not allowed
+        '429':
+          description: Rate limit exceeded
+        '500':
+          description: Internal server error
+  /automations/v1/{automationId}/resume:
+    post:
+      operationId: resumeScheduledTask
+      tags:
+      - Scheduled Tasks
+      summary: Resume a scheduled task
+      description: Sets active to true. The response does not include runCount.
+      parameters:
+      - name: automationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Scheduled task resumed
+        '400':
+          description: Invalid task id
+        '401':
+          description: Invalid or missing API key, or the key user was not found
+        '403':
+          description: Missing AUTOMATION_API, a personal API key, Scheduled Tasks disabled, no product access, or code TRIAL_EXPIRED with message Your trial has expired. Upgrade to continue.
+        '404':
+          description: Message AUTOMATION_NOT_FOUND
+        '405':
+          description: Method not allowed
+        '429':
+          description: Rate limit exceeded
+        '500':
+          description: Internal server error
+  /automations/v1/{automationId}/run:
+    post:
+      operationId: runScheduledTask
+      tags:
+      - Scheduled Tasks
+      summary: Run a scheduled task
+      description: Enqueues one run and returns immediately. conversationId is null. A paused task can be run, and active stays unchanged.
+      parameters:
+      - name: automationId
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Run queued. Body is runId and conversationId null.
+        '400':
+          description: Invalid task id
+        '401':
+          description: Invalid or missing API key, or the key user was not found
+        '403':
+          description: Missing AUTOMATION_API, a personal API key, Scheduled Tasks disabled, no product access, or TRIAL_EXPIRED
+        '404':
+          description: Message AUTOMATION_NOT_FOUND
+        '405':
+          description: Method not allowed
+        '429':
+          description: Rate limit exceeded
+        '500':
+          description: Internal server error
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: API Key
+      description: API key as Bearer token. Format "Bearer YOUR_API_KEY"

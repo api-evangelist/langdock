@@ -1,0 +1,620 @@
+openapi: 3.2.0
+info:
+  title: Langdock Responses API
+  version: 3.0.0
+servers:
+- url: https://api.langdock.com
+  description: Production
+security:
+- bearerAuth: []
+tags:
+- name: Responses
+paths:
+  /openai/{region}/v1/responses:
+    post:
+      tags:
+      - Responses
+      summary: Creates a stateless model response
+      description: Creates a stateless OpenAI-compatible response. Supports text generation, streaming, and function tools. Do not send store=true, previous_response_id, background=true, or hosted tools.
+      operationId: createResponse
+      parameters:
+      - name: region
+        in: path
+        required: true
+        description: The region of the API to use.
+        schema:
+          type: string
+          enum:
+          - eu
+          - us
+          - global
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - model
+              - input
+              properties:
+                model:
+                  type: string
+                  description: The model ID. Use the models endpoint to list models available in your workspace.
+                input:
+                  description: The input text or full conversation state to process.
+                  oneOf:
+                  - type: string
+                  - type: array
+                    items: {}
+                  - type: object
+                    additionalProperties: true
+                instructions:
+                  type:
+                  - string
+                  - 'null'
+                  description: Instructions added to the model context.
+                max_output_tokens:
+                  type:
+                  - integer
+                  - 'null'
+                  minimum: 1
+                  description: The maximum number of output tokens.
+                temperature:
+                  type:
+                  - number
+                  - 'null'
+                  description: Controls response randomness.
+                top_p:
+                  type:
+                  - number
+                  - 'null'
+                  description: Controls nucleus sampling.
+                stream:
+                  type:
+                  - boolean
+                  - 'null'
+                  default: false
+                  description: Whether to return native Responses API server sent events.
+                tools:
+                  type: array
+                  description: Function tool definitions. Hosted tools are not supported.
+                  items:
+                    type: object
+                    required:
+                    - type
+                    - name
+                    properties:
+                      type:
+                        type: string
+                        enum:
+                        - function
+                      name:
+                        type: string
+                        minLength: 1
+                      description:
+                        type:
+                        - string
+                        - 'null'
+                      parameters:
+                        type:
+                        - object
+                        - 'null'
+                        additionalProperties: true
+                      strict:
+                        type:
+                        - boolean
+                        - 'null'
+                tool_choice:
+                  description: Controls whether the model can call a function.
+                  oneOf:
+                  - type: string
+                    enum:
+                    - none
+                    - auto
+                    - required
+                  - type: object
+                    required:
+                    - type
+                    - name
+                    properties:
+                      type:
+                        type: string
+                        enum:
+                        - function
+                      name:
+                        type: string
+                        minLength: 1
+                parallel_tool_calls:
+                  type:
+                  - boolean
+                  - 'null'
+                  description: Whether the model can return multiple function calls.
+                reasoning:
+                  type: object
+                  description: OpenAI Responses reasoning configuration.
+                  additionalProperties: true
+                text:
+                  type: object
+                  description: OpenAI Responses text output configuration.
+                  additionalProperties: true
+                metadata:
+                  type:
+                  - object
+                  - 'null'
+                  description: String metadata attached to the request.
+                  additionalProperties:
+                    type: string
+                store:
+                  type:
+                  - boolean
+                  - 'null'
+                  enum:
+                  - false
+                  description: Responses are not persisted. Omit this field or set it to false.
+                background:
+                  type:
+                  - boolean
+                  - 'null'
+                  enum:
+                  - false
+                  description: Background responses are not supported.
+                include:
+                  type:
+                  - array
+                  - 'null'
+                  items:
+                    type: string
+                  description: Additional response fields to include.
+                truncation:
+                  type:
+                  - string
+                  - 'null'
+                  enum:
+                  - auto
+                  - disabled
+                service_tier:
+                  type:
+                  - string
+                  - 'null'
+                  description: The OpenAI service tier forwarded to the model provider.
+            example:
+              model: gpt-5-mini
+              input: Write a short poem about cats.
+              store: false
+      responses:
+        '200':
+          description: Successful response or event stream.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateResponseResponse'
+              example:
+                id: resp_09e99d1f7f163d10016a678387353481
+                object: response
+                created_at: 1785168775
+                status: completed
+                model: gpt-5-mini-2025-08-07
+                output:
+                - id: rs_09e99d1f7f163d10016a678387f47881
+                  type: reasoning
+                  content: []
+                  summary: []
+                - id: msg_09e99d1f7f163d10016a67838935a881
+                  type: message
+                  status: completed
+                  role: assistant
+                  content:
+                  - type: output_text
+                    annotations: []
+                    logprobs: []
+                    text: 'Whiskers sketch moonlight on the sill,
+
+                      paws treading silence, soft and still.
+
+                      Eyes like lanterns, sly and bright,
+
+                      turning midnight into light.
+
+                      A velvet sigh, a sudden purr—
+
+                      the world made small, the heart made her.'
+                usage:
+                  input_tokens: 13
+                  input_tokens_details:
+                    cached_tokens: 0
+                  output_tokens: 154
+                  output_tokens_details:
+                    reasoning_tokens: 64
+                  total_tokens: 167
+            text/event-stream:
+              schema:
+                type: string
+                description: Native OpenAI Responses API server sent events.
+        '400':
+          description: Invalid fields, unsupported features, or an unavailable model.
+        '401':
+          description: Missing, invalid, or expired API key.
+        '403':
+          description: API key without the Completion API scope.
+        '413':
+          description: Request body exceeds 20 MB.
+        '429':
+          description: Usage or rate limit exceeded.
+        '500':
+          description: Internal server or upstream provider error.
+        default:
+          description: Error returned by the upstream model provider.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - error
+                properties:
+                  error:
+                    type: object
+                    required:
+                    - message
+                    - type
+                    properties:
+                      message:
+                        type: string
+                      type:
+                        type: string
+                      code:
+                        type:
+                        - string
+                        - 'null'
+                      param:
+                        type:
+                        - string
+                        - 'null'
+      security:
+      - bearerAuth: []
+components:
+  schemas:
+    ResponseOutputMessage:
+      type: object
+      description: A message generated by the model.
+      required:
+      - id
+      - type
+      - status
+      - role
+      - content
+      properties:
+        id:
+          type: string
+          example: msg_09e99d1f7f163d10016a67838935a881
+        type:
+          type: string
+          enum:
+          - message
+        status:
+          type: string
+          enum:
+          - in_progress
+          - completed
+          - incomplete
+        role:
+          type: string
+          enum:
+          - assistant
+        content:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/ResponseOutputText'
+            - $ref: '#/components/schemas/ResponseOutputRefusal'
+      additionalProperties: true
+    ResponseOutputText:
+      type: object
+      description: Text generated by the model.
+      required:
+      - type
+      - text
+      - annotations
+      properties:
+        type:
+          type: string
+          enum:
+          - output_text
+        text:
+          type: string
+          example: 'Whiskers sketch moonlight on the sill,
+
+            paws treading silence, soft and still.'
+        annotations:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        logprobs:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+      additionalProperties: true
+    ResponseFunctionToolCall:
+      type: object
+      description: A function call requested by the model.
+      required:
+      - id
+      - type
+      - call_id
+      - name
+      - arguments
+      properties:
+        id:
+          type: string
+          example: fc_123
+        type:
+          type: string
+          enum:
+          - function_call
+        status:
+          type: string
+          enum:
+          - in_progress
+          - completed
+          - incomplete
+        call_id:
+          type: string
+          example: call_123
+        name:
+          type: string
+          example: lookup_weather
+        arguments:
+          type: string
+          description: JSON-encoded arguments for the function.
+          example: '{"city":"Berlin"}'
+      additionalProperties: true
+    ResponseReasoningItem:
+      type: object
+      description: Reasoning information generated by a reasoning model.
+      required:
+      - id
+      - type
+      - summary
+      properties:
+        id:
+          type: string
+          example: rs_123
+        type:
+          type: string
+          enum:
+          - reasoning
+        summary:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        content:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        encrypted_content:
+          type:
+          - string
+          - 'null'
+          description: Encrypted reasoning content when requested.
+        status:
+          type:
+          - string
+          - 'null'
+          enum:
+          - in_progress
+          - completed
+          - incomplete
+      additionalProperties: true
+    ResponseUsage:
+      type: object
+      description: Token usage for the response.
+      required:
+      - input_tokens
+      - output_tokens
+      - total_tokens
+      properties:
+        input_tokens:
+          type: integer
+          example: 13
+        input_tokens_details:
+          type: object
+          properties:
+            cached_tokens:
+              type: integer
+              example: 0
+          additionalProperties: true
+        output_tokens:
+          type: integer
+          example: 154
+        output_tokens_details:
+          type: object
+          properties:
+            reasoning_tokens:
+              type: integer
+              example: 64
+          additionalProperties: true
+        total_tokens:
+          type: integer
+          example: 167
+      additionalProperties: true
+    ResponseOutputRefusal:
+      type: object
+      description: A refusal returned by the model.
+      required:
+      - type
+      - refusal
+      properties:
+        type:
+          type: string
+          enum:
+          - refusal
+        refusal:
+          type: string
+      additionalProperties: true
+    CreateResponseResponse:
+      type: object
+      description: A response returned by the OpenAI-compatible Responses endpoint.
+      required:
+      - id
+      - object
+      - created_at
+      - status
+      - model
+      - output
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the response.
+          example: resp_09e99d1f7f163d10016a678387353481
+        object:
+          type: string
+          enum:
+          - response
+          description: The object type, which is always `response`.
+        created_at:
+          type: integer
+          description: Unix timestamp in seconds when the response was created.
+          example: 1785168775
+        completed_at:
+          type:
+          - integer
+          - 'null'
+          description: Unix timestamp in seconds when the response completed.
+          example: 1785168778
+        background:
+          type: boolean
+          enum:
+          - false
+          description: Langdock does not support background responses.
+        status:
+          type: string
+          enum:
+          - completed
+          - failed
+          - in_progress
+          - cancelled
+          - queued
+          - incomplete
+          description: Current response status.
+          example: completed
+        model:
+          type: string
+          description: Model used to generate the response.
+          example: gpt-5-mini-2025-08-07
+        output:
+          type: array
+          description: Output items generated by the model.
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/ResponseReasoningItem'
+            - $ref: '#/components/schemas/ResponseOutputMessage'
+            - $ref: '#/components/schemas/ResponseFunctionToolCall'
+        output_text:
+          type: string
+          description: Aggregated text from all `output_text` items.
+        error:
+          type:
+          - object
+          - 'null'
+          description: Error information when the response failed.
+          properties:
+            code:
+              type:
+              - string
+              - 'null'
+            message:
+              type: string
+        incomplete_details:
+          type:
+          - object
+          - 'null'
+          description: Details explaining why the response is incomplete.
+          properties:
+            reason:
+              type: string
+              enum:
+              - max_output_tokens
+              - content_filter
+        instructions:
+          type:
+          - string
+          - 'null'
+          description: Instructions used for the response.
+        max_output_tokens:
+          type:
+          - integer
+          - 'null'
+          description: Maximum number of output tokens configured for the response.
+        parallel_tool_calls:
+          type: boolean
+          description: Whether the model can return multiple function calls.
+        reasoning:
+          type:
+          - object
+          - 'null'
+          description: Reasoning configuration used for the response.
+          additionalProperties: true
+        store:
+          type: boolean
+          enum:
+          - false
+          description: Langdock Responses are never persisted.
+        temperature:
+          type:
+          - number
+          - 'null'
+          description: Sampling temperature used for the response.
+        text:
+          type:
+          - object
+          - 'null'
+          description: Text output configuration used for the response.
+          additionalProperties: true
+        service_tier:
+          type:
+          - string
+          - 'null'
+          description: Service tier used to process the response.
+        tool_choice:
+          description: Tool choice used for the response.
+          oneOf:
+          - type: string
+          - type: object
+            additionalProperties: true
+        tools:
+          type: array
+          description: Function tools available to the model.
+          items:
+            type: object
+            additionalProperties: true
+        top_p:
+          type:
+          - number
+          - 'null'
+          description: Nucleus sampling value used for the response.
+        truncation:
+          type: string
+          enum:
+          - auto
+          - disabled
+          description: Truncation strategy used for the response.
+        usage:
+          $ref: '#/components/schemas/ResponseUsage'
+        metadata:
+          type:
+          - object
+          - 'null'
+          description: Metadata attached to the request.
+          additionalProperties:
+            type: string
+      additionalProperties: true
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: API Key
+      description: API key as Bearer token. Format "Bearer YOUR_API_KEY"

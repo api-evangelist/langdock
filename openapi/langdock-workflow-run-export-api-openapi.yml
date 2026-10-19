@@ -1,0 +1,338 @@
+openapi: 3.2.0
+info:
+  title: Langdock Workflow Run Export API
+  version: 3.0.0
+servers:
+- url: https://api.langdock.com
+  description: Production
+security:
+- bearerAuth: []
+tags:
+- name: Workflow Run Export
+paths:
+  /workflows/{workflowId}/runs:
+    get:
+      operationId: exportWorkflowRunData
+      tags:
+      - Workflow Run Export
+      summary: Export workflow run data
+      description: 'Returns flattened workflow run and node execution rows for the selected
+
+        workflow. The date range filters workflow run creation time. The
+
+        endpoint requires a workspace API key with the `WORKFLOW_API` scope and
+
+        owner or editor access. Workspace administrators can access workflows
+
+        without a workflow share, but a User share does not grant access.'
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: workflowId
+        in: path
+        required: true
+        description: ID of the workflow to export.
+        schema:
+          type: string
+          format: uuid
+      - name: from
+        in: query
+        required: true
+        description: 'Start of the export range. Use an ISO 8601 date or timestamp. A
+
+          date-only value starts at 00:00:00.000 UTC.
+
+          '
+        schema:
+          type: string
+        example: '2026-08-01'
+      - name: to
+        in: query
+        required: true
+        description: 'End of the export range. Use an ISO 8601 date or timestamp. A
+
+          date-only value ends at 23:59:59.999 UTC.
+
+          '
+        schema:
+          type: string
+        example: '2026-08-31'
+      responses:
+        '200':
+          description: Workflow run export
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkflowRunExportResponse'
+              example:
+                data:
+                - run_id: 7d2a1c4e-2f6a-4b9f-8c31-1a6d8e4f2b90
+                  run_number: 42
+                  run_status: COMPLETED
+                  run_created_at: '2026-08-12T09:15:00.000Z'
+                  run_updated_at: '2026-08-12T09:15:08.000Z'
+                  workflow_version: '3'
+                  trigger_mode: WEBHOOK
+                  node_execution_id: 2b8c1d4e-6f7a-4b90-9c12-3d5e7f8a1b20
+                  node_id: 9c1f2d3e-7a4b-4c58-8d19-2e6f0b7a4c31
+                  node_type: agent
+                  node_status: COMPLETED
+                  node_created_at: '2026-08-12T09:15:01.000Z'
+                  node_updated_at: '2026-08-12T09:15:06.000Z'
+                  failure_code: null
+                  input:
+                    customer_id: customer-42
+                  input_error: null
+                  output:
+                    category: support
+                  output_error: null
+                  logs: []
+                  data_redacted: false
+                  execution_data_expired_at: null
+        '400':
+          description: Invalid request or export exceeds a configured limit
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkflowRunExportError'
+              example:
+                message: Workflow run exports are limited to 10,000 runs. Select a smaller date range.
+                code: WORKFLOW_RUN_EXPORT_LIMIT_EXCEEDED
+                details:
+                  maxRuns: 10000
+        '401':
+          description: Missing or invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkflowRunExportError'
+        '403':
+          description: Missing scope or workflow access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkflowRunExportError'
+        '405':
+          description: Method not allowed
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkflowRunExportError'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkflowRunExportError'
+components:
+  schemas:
+    WorkflowRunExportError:
+      type: object
+      description: Error response from the Workflow Run Export API.
+      properties:
+        message:
+          type: string
+          description: Error message.
+        code:
+          type: string
+          description: Machine-readable error code, when available.
+        details:
+          type: object
+          additionalProperties: true
+          description: Additional error context, when available.
+        errors:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+          description: Validation details for malformed query parameters.
+      required:
+      - message
+    WorkflowRunExportResponse:
+      type: object
+      description: Flattened workflow run and node execution rows.
+      required:
+      - data
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkflowRunExportRow'
+    WorkflowRunExportRow:
+      type: object
+      description: Data for one workflow run and its node execution.
+      required:
+      - run_id
+      - run_number
+      - run_status
+      - run_created_at
+      - run_updated_at
+      - workflow_version
+      - trigger_mode
+      - node_execution_id
+      - node_id
+      - node_type
+      - node_status
+      - node_created_at
+      - node_updated_at
+      - failure_code
+      - input
+      - input_error
+      - output
+      - output_error
+      - logs
+      - data_redacted
+      - execution_data_expired_at
+      properties:
+        run_id:
+          type: string
+          format: uuid
+          description: ID of the workflow run.
+        run_number:
+          type: integer
+          description: Sequential number of the run within the workflow.
+        run_status:
+          type: string
+          enum:
+          - PENDING
+          - IN_PROGRESS
+          - AWAITING_INPUT
+          - COMPLETED
+          - FAILED
+          - CANCELLED
+          description: Status of the workflow run.
+        run_created_at:
+          type: string
+          format: date-time
+          description: Creation time of the workflow run.
+        run_updated_at:
+          type: string
+          format: date-time
+          description: Last update time of the workflow run.
+        workflow_version:
+          type: string
+          description: Version of the workflow used for the run.
+        trigger_mode:
+          type:
+          - string
+          - 'null'
+          enum:
+          - WEBHOOK
+          - FORM
+          - SCHEDULED
+          - INTEGRATION_POLLING
+          - MANUAL
+          description: Mode that triggered the run.
+        node_execution_id:
+          type:
+          - string
+          - 'null'
+          format: uuid
+          description: ID of the node execution.
+        node_id:
+          type:
+          - string
+          - 'null'
+          format: uuid
+          description: ID of the workflow node.
+        node_type:
+          type:
+          - string
+          - 'null'
+          description: Type of the workflow node.
+        node_status:
+          type:
+          - string
+          - 'null'
+          enum:
+          - NONE
+          - IN_PROGRESS
+          - AWAITING_INPUT
+          - COMPLETED
+          - FAILED
+          - CANCELLED
+          description: Status of the node execution.
+        node_created_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Creation time of the node execution.
+        node_updated_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Last update time of the node execution.
+        failure_code:
+          type:
+          - string
+          - 'null'
+          description: Failure code when the node execution fails.
+        input:
+          description: Input data for the node execution.
+          oneOf:
+          - type: object
+            additionalProperties: true
+          - type: array
+            items: {}
+          - type: string
+          - type: number
+          - type: boolean
+        input_error:
+          description: Error data for the node input.
+          oneOf:
+          - type: object
+            additionalProperties: true
+          - type: array
+            items: {}
+          - type: string
+          - type: number
+          - type: boolean
+        output:
+          description: Output data for the node execution.
+          oneOf:
+          - type: object
+            additionalProperties: true
+          - type: array
+            items: {}
+          - type: string
+          - type: number
+          - type: boolean
+        output_error:
+          description: Error data for the node output.
+          oneOf:
+          - type: object
+            additionalProperties: true
+          - type: array
+            items: {}
+          - type: string
+          - type: number
+          - type: boolean
+        logs:
+          description: Logs generated during the node execution.
+          oneOf:
+          - type: object
+            additionalProperties: true
+          - type: array
+            items: {}
+          - type: string
+          - type: number
+          - type: boolean
+        data_redacted:
+          type: boolean
+          description: Whether payload fields were omitted because access to the node data could not be established.
+        execution_data_expired_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Time when detailed execution data expired.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: API Key
+      description: API key as Bearer token. Format "Bearer YOUR_API_KEY"

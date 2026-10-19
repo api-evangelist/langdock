@@ -95,26 +95,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/langdock-agent-build-api-openapi.yml
-- aid: langdock:langdock-assistant-api
-  name: Langdock Assistant API
-  description: The Assistant API from Langdock — 2 operation(s) for assistant.
-  humanURL: https://docs.langdock.com/en/developer/overview/api-introduction
-  baseURL: https://api.langdock.com
-  tags:
-  - Assistant
-  properties:
-  - type: OpenAPI
-    url: openapi/langdock-assistant-api-openapi.yml
-- aid: langdock:langdock-assistant-build-api
-  name: Langdock Assistant Build API
-  description: The Assistant Build API from Langdock — 3 operation(s) for assistant build.
-  humanURL: https://docs.langdock.com/en/developer/overview/api-introduction
-  baseURL: https://api.langdock.com
-  tags:
-  - Assistant Build
-  properties:
-  - type: OpenAPI
-    url: openapi/langdock-assistant-build-api-openapi.yml
 - aid: langdock:langdock-attachments-api
   name: Langdock Attachments API
   description: The Attachments API from Langdock — 2 operation(s) for attachments.
@@ -219,6 +199,66 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/langdock-user-management-api-openapi.yml
+- aid: langdock:langdock-images-api
+  name: Langdock Images API
+  description: The Images API from Langdock — 1 operation(s) for images.
+  humanURL: https://docs.langdock.com/en/developer/overview/api-introduction
+  baseURL: https://api.langdock.com
+  tags:
+  - Images
+  properties:
+  - type: OpenAPI
+    url: openapi/langdock-images-api-openapi.yml
+- aid: langdock:langdock-prompts-api
+  name: Langdock Prompts API
+  description: The Prompts API from Langdock — 4 operation(s) for prompts.
+  humanURL: https://docs.langdock.com/en/developer/overview/api-introduction
+  baseURL: https://api.langdock.com
+  tags:
+  - Prompts
+  properties:
+  - type: OpenAPI
+    url: openapi/langdock-prompts-api-openapi.yml
+- aid: langdock:langdock-responses-api
+  name: Langdock Responses API
+  description: The Responses API from Langdock — 1 operation(s) for responses.
+  humanURL: https://docs.langdock.com/en/developer/overview/api-introduction
+  baseURL: https://api.langdock.com
+  tags:
+  - Responses
+  properties:
+  - type: OpenAPI
+    url: openapi/langdock-responses-api-openapi.yml
+- aid: langdock:langdock-scheduled-tasks-api
+  name: Langdock Scheduled Tasks API
+  description: The Scheduled Tasks API from Langdock — 5 operation(s) for scheduled tasks.
+  humanURL: https://docs.langdock.com/en/developer/overview/api-introduction
+  baseURL: https://api.langdock.com
+  tags:
+  - Scheduled Tasks
+  properties:
+  - type: OpenAPI
+    url: openapi/langdock-scheduled-tasks-api-openapi.yml
+- aid: langdock:langdock-workflow-run-export-api
+  name: Langdock Workflow Run Export API
+  description: The Workflow Run Export API from Langdock — 1 operation(s) for workflow run export.
+  humanURL: https://docs.langdock.com/en/developer/overview/api-introduction
+  baseURL: https://api.langdock.com
+  tags:
+  - Workflow Run Export
+  properties:
+  - type: OpenAPI
+    url: openapi/langdock-workflow-run-export-api-openapi.yml
+- aid: langdock:langdock-workflows-api
+  name: Langdock Workflows API
+  description: The Workflows API from Langdock — 7 operation(s) for workflows.
+  humanURL: https://docs.langdock.com/en/developer/overview/api-introduction
+  baseURL: https://api.langdock.com
+  tags:
+  - Workflows
+  properties:
+  - type: OpenAPI
+    url: openapi/langdock-workflows-api-openapi.yml
 - aid: langdock:langdock-chat-completions-api
   name: Langdock Chat Completions API
   description: The Chat Completions API from Langdock — 1 operation(s) for chat completions.

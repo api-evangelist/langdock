@@ -1,0 +1,413 @@
+openapi: 3.2.0
+info:
+  title: Langdock Workflows API
+  version: 3.0.0
+servers:
+- url: https://api.langdock.com
+  description: Production
+security:
+- bearerAuth: []
+tags:
+- name: Workflows
+paths:
+  /workflows/v1/list:
+    get:
+      operationId: listWorkflows
+      tags:
+      - Workflows
+      summary: List workflows
+      description: Returns non-template workflows visible to the API key user.
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 250
+          default: 50
+        description: Number of workflows to return.
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+          format: uuid
+        description: Workflow UUID from nextCursor in the previous response.
+      responses:
+        '200':
+          description: Workflows returned successfully
+        '400':
+          description: Invalid query parameter
+        '401':
+          description: Invalid or missing API key
+        '403':
+          description: Missing WORKFLOW_API scope
+        '429':
+          description: Rate limit exceeded
+        '500':
+          description: Internal server error
+  /workflows/v1/create:
+    post:
+      operationId: createWorkflow
+      tags:
+      - Workflows
+      summary: Create a workflow
+      description: Creates an inactive unpublished draft owned by the API key user.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - name
+              properties:
+                name:
+                  type: string
+                  maxLength: 60
+                description:
+                  type: string
+                  maxLength: 500
+                timezone:
+                  type: string
+                  description: Valid IANA timezone.
+                initialTriggerKind:
+                  type: string
+                  enum:
+                  - manual
+                  - webhook
+                  - scheduled
+                  - form
+                  - integration
+                  - meeting_end
+                  description: Starter trigger. Do not send this together with nodes and edges.
+                nodes:
+                  type: array
+                  items:
+                    type: object
+                  description: Draft nodes. Must be sent together with edges.
+                edges:
+                  type: array
+                  items:
+                    type: object
+                  description: Draft edges. Must be sent together with nodes.
+                shareWith:
+                  type: object
+                  properties:
+                    userIds:
+                      type: array
+                      items:
+                        type: string
+                        format: uuid
+                      maxItems: 100
+                    groupIds:
+                      type: array
+                      items:
+                        type: string
+                        format: uuid
+                      maxItems: 100
+                    role:
+                      type: string
+                      enum:
+                      - user
+                      - editor
+                      default: editor
+                limits:
+                  type: object
+                  description: Execution caps. Send null on a field to clear it.
+                  properties:
+                    monthlyCostUsd:
+                      type:
+                      - number
+                      - 'null'
+                      minimum: 1
+                      maximum: 10000
+                    perRunCostUsd:
+                      type:
+                      - number
+                      - 'null'
+                      minimum: 1
+                      maximum: 100
+                    maxExecutionsPerHour:
+                      type:
+                      - integer
+                      - 'null'
+                      minimum: 1
+                      maximum: 5000
+      responses:
+        '200':
+          description: Workflow created successfully
+        '400':
+          description: Invalid body, mixed initialTriggerKind with a graph, or nodes without edges
+        '401':
+          description: Invalid or missing API key
+        '403':
+          description: Missing WORKFLOW_WRITE_API scope, createWorkflows, or shareWorkflows. meeting_end without Meetings returns MEETINGS_FEATURE_FLAG_DISABLED.
+        '404':
+          description: A shareWith target is unknown or cannot be shared
+        '429':
+          description: Rate limit exceeded
+        '500':
+          description: Internal server error
+  /workflows/v1/get:
+    get:
+      operationId: getWorkflow
+      tags:
+      - Workflows
+      summary: Get a workflow
+      description: Returns a workflow the API key user can view, including the draft graph, published graph, version history, and execution limits.
+      parameters:
+      - name: workflowId
+        in: query
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: UUID of the workflow.
+      responses:
+        '200':
+          description: Workflow returned successfully
+        '400':
+          description: Invalid workflow ID
+        '401':
+          description: Invalid or missing API key
+        '403':
+          description: Missing WORKFLOW_API scope
+        '404':
+          description: Workflow not found, or the key user cannot view it
+        '429':
+          description: Rate limit exceeded
+        '500':
+          description: Internal server error
+  /workflows/v1/update:
+    patch:
+      operationId: updateWorkflow
+      tags:
+      - Workflows
+      summary: Update a workflow
+      description: Updates metadata or the draft graph. Updating the draft does not publish a new version.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - workflowId
+              properties:
+                workflowId:
+                  type: string
+                  format: uuid
+                name:
+                  type: string
+                  maxLength: 60
+                description:
+                  type: string
+                  maxLength: 500
+                status:
+                  type: string
+                  enum:
+                  - ACTIVE
+                  - INACTIVE
+                timezone:
+                  type: string
+                  description: Valid IANA timezone.
+                nodes:
+                  type: array
+                  items:
+                    type: object
+                edges:
+                  type: array
+                  items:
+                    type: object
+                patch:
+                  type: object
+                  description: Incremental graph operations. Cannot be sent with nodes and edges or with metadata.
+                limits:
+                  type: object
+                  description: Execution caps. Omitted fields stay unchanged. Send null on a field to clear it.
+      responses:
+        '200':
+          description: Workflow updated successfully
+        '400':
+          description: Invalid body, mixed graph and metadata, nodes without edges, no fields, or activate without a published version
+        '401':
+          description: Invalid or missing API key
+        '403':
+          description: Missing WORKFLOW_WRITE_API scope or editor access. A missing workflow, a template, or a workflow in another workspace also returns this status.
+        '429':
+          description: Rate limit exceeded
+        '500':
+          description: Internal server error
+  /workflows/v1/publish:
+    post:
+      operationId: publishWorkflow
+      tags:
+      - Workflows
+      summary: Publish a workflow
+      description: Publishes the current draft as a new production version.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - workflowId
+              - bumpType
+              properties:
+                workflowId:
+                  type: string
+                  format: uuid
+                bumpType:
+                  type: string
+                  enum:
+                  - major
+                  - minor
+                  - patch
+                description:
+                  type: string
+                  maxLength: 255
+                timezone:
+                  type: string
+                  description: Valid IANA timezone. Stored only when a valid name is sent.
+      responses:
+        '200':
+          description: Workflow published successfully
+        '400':
+          description: Invalid body, disconnected trigger, webhook auth required, template workflow, or missing draft
+        '401':
+          description: Invalid or missing API key
+        '403':
+          description: Missing WORKFLOW_WRITE_API scope or editor access. A missing workflow, a template, or a workflow in another workspace also returns this status.
+        '429':
+          description: Rate limit exceeded
+        '500':
+          description: Internal server error
+  /workflows/v1/delete:
+    delete:
+      operationId: deleteWorkflow
+      tags:
+      - Workflows
+      summary: Delete a workflow
+      description: Permanently deletes a workflow, including its draft and published versions.
+      parameters:
+      - name: workflowId
+        in: query
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: UUID of the workflow.
+      responses:
+        '200':
+          description: Workflow permanently deleted
+        '400':
+          description: Invalid workflow ID
+        '401':
+          description: Invalid or missing API key
+        '403':
+          description: Missing WORKFLOW_DELETE_API scope
+        '404':
+          description: Workflow not found, or the key user cannot edit it
+        '429':
+          description: Rate limit exceeded
+        '500':
+          description: Internal server error
+  /workflows/v1/runs:
+    get:
+      operationId: listWorkflowRuns
+      tags:
+      - Workflows
+      summary: List workflow runs
+      description: Returns paginated runs and node executions for a workflow the API key user can edit.
+      parameters:
+      - name: workflowId
+        in: query
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: UUID of the workflow.
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 50
+        description: Number of runs to return.
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+          format: uuid
+        description: Run UUID from nextCursor in the previous response.
+      - name: runId
+        in: query
+        required: false
+        schema:
+          type: string
+          format: uuid
+        description: Filter to a single run UUID.
+      - name: runMode
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - test
+          - production
+      - name: status
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - PENDING
+          - IN_PROGRESS
+          - AWAITING_INPUT
+          - COMPLETED
+          - FAILED
+          - CANCELLED
+      - name: from
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Start of the run creation range. ISO 8601 timestamp or YYYY-MM-DD. Must be sent together with to.
+      - name: to
+        in: query
+        required: false
+        schema:
+          type: string
+        description: End of the run creation range. Must be equal to or later than from.
+      - name: version
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Workflow version used for the run. Version 0 is the draft used for test runs.
+      responses:
+        '200':
+          description: Workflow runs returned successfully
+        '400':
+          description: Invalid query, from without to, to earlier than from, or runMode that disagrees with version
+        '401':
+          description: Invalid or missing API key
+        '403':
+          description: Missing WORKFLOW_API scope or editor access. A missing workflow, a template, or a workflow in another workspace also returns this status.
+        '429':
+          description: Rate limit exceeded
+        '500':
+          description: Internal server error
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: API Key
+      description: API key as Bearer token. Format "Bearer YOUR_API_KEY"

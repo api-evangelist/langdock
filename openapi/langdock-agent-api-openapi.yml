@@ -64,6 +64,7 @@ paths:
                           - assistant
                           - system
                           - tool
+                          description: Extra history messages with role system stay as user context. A last message that is not user is dropped.
                         parts:
                           type: array
                           items:
@@ -175,12 +176,20 @@ paths:
                       properties:
                         id:
                           type: string
+                          description: Value to send as model. The deployment name when it maps to one accessible row, otherwise the model UUID.
+                        name:
+                          type: string
+                          description: Deployment name for the row.
                         object:
                           type: string
                         created:
                           type: integer
-                        owned_by:
+                        region:
                           type: string
+                          description: Region where the model is available.
+                        supportsExtendedThinking:
+                          type: boolean
+                          description: Whether this model supports extended thinking mode.
       operationId: getAgentV1Models
       x-operation-id-source: derived
 components:

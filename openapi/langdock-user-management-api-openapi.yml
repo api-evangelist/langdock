@@ -29,7 +29,11 @@ paths:
 
         An invitation email is sent to each successfully invited user. If the workspace does not
 
-        have SAML enabled, the email includes a magic link for passwordless sign-in.'
+        have SAML enabled, the email includes a magic link for passwordless sign-in. If SAML and
+
+        Allow External Authentication are enabled, users outside the workspace''s verified domains
+
+        receive a magic link. SAML remains enforced for users from verified domains.'
       parameters: []
       requestBody:
         required: true
@@ -188,8 +192,178 @@ paths:
                 $ref: '#/components/schemas/UserManagementError'
       operationId: postUserManagementV1DeactivateUser
       x-operation-id-source: derived
+  /user-management/v1/update-user-role:
+    post:
+      tags:
+      - User Management
+      summary: Change a member's system role
+      description: 'Changes an active human member''s workspace system role by email.
+
+        Send `member`, `editor`, or `admin`. Custom roles are not part of this endpoint.
+
+        The call is authorized by the workspace API key''s `USER_MANAGEMENT_API` scope
+
+        and does not run as the person who created the key.'
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserRoleRequest'
+            examples:
+              update_role:
+                summary: Change a member to editor
+                value:
+                  email: user@example.com
+                  role: editor
+      responses:
+        '200':
+          description: Role updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateUserRoleResponse'
+              examples:
+                success:
+                  summary: Role updated
+                  value:
+                    status: success
+                    email: user@example.com
+                    role: editor
+        '400':
+          description: Invalid role or request body, or the change would leave the workspace without an active admin
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserManagementError'
+              examples:
+                last_admin:
+                  summary: Last remaining admin
+                  value:
+                    code: BAD_REQUEST
+                    message: A workspace must retain at least one active admin.
+                invalid_role:
+                  summary: Invalid role value
+                  value:
+                    message: Invalid request
+                    errors:
+                    - code: invalid_value
+                      values:
+                      - member
+                      - editor
+                      - admin
+                      path:
+                      - role
+                      message: 'Invalid option: expected one of "member"|"editor"|"admin"'
+        '401':
+          description: API key is missing, invalid, or expired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserManagementError'
+        '403':
+          description: API key is missing the USER_MANAGEMENT_API scope
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserManagementError'
+              examples:
+                insufficient_scopes:
+                  summary: Missing scope
+                  value:
+                    message: Insufficient API key permissions.
+                    error: INSUFFICIENT_SCOPES
+                    details:
+                      required:
+                      - USER_MANAGEMENT_API
+                      missing:
+                      - USER_MANAGEMENT_API
+        '404':
+          description: User is not an active human member of this workspace
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserManagementError'
+              examples:
+                not_found:
+                  summary: User not found
+                  value:
+                    code: NOT_FOUND
+                    message: User is not an active member of this workspace
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserManagementError'
+      operationId: postUserManagementV1UpdateUserRole
+      x-operation-id-source: derived
 components:
   schemas:
+    UserManagementResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+          - success
+          description: Always "success" when the request is processed
+          example: success
+        message:
+          type: string
+          description: Human-readable summary of the result
+          example: User deactivated
+      required:
+      - status
+      - message
+    InviteUsersError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Error message
+          example: Invalid request body
+        errors:
+          type: array
+          items:
+            type: object
+          description: Detailed validation errors (present on 400 responses)
+        error:
+          type: string
+          description: Additional error details (present on 500 responses)
+      required:
+      - message
+    UpdateUserRoleRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - email
+      - role
+      properties:
+        email:
+          type: string
+          format: email
+          description: Email address of the active workspace member
+          example: user@example.com
+        role:
+          type: string
+          enum:
+          - member
+          - editor
+          - admin
+          description: Workspace system role. Values are lowercase.
+          example: editor
+    UserEmailRequest:
+      type: object
+      required:
+      - email
+      properties:
+        email:
+          type: string
+          format: email
+          description: Email address of the user
+          example: user@example.com
     InviteUsersRequest:
       type: object
       required:
@@ -217,58 +391,32 @@ components:
                 - admin
                 description: Role to assign. If omitted, defaults to `member`.
                 example: member
-    InviteUsersError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Error message
-          example: Invalid request body
-        errors:
-          type: array
-          items:
-            type: object
-          description: Detailed validation errors (present on 400 responses)
-        error:
-          type: string
-          description: Additional error details (present on 500 responses)
-      required:
-      - message
-    UserManagementResponse:
+    UpdateUserRoleResponse:
       type: object
       properties:
         status:
           type: string
           enum:
           - success
-          description: Always "success" when the request is processed
+          description: Always "success" when the role is updated
           example: success
-        message:
-          type: string
-          description: Human-readable summary of the result
-          example: User deactivated
-      required:
-      - status
-      - message
-    UserEmailRequest:
-      type: object
-      required:
-      - email
-      properties:
         email:
           type: string
           format: email
-          description: Email address of the user
+          description: Email address of the updated member
           example: user@example.com
-    UserManagementError:
-      type: object
-      properties:
-        message:
+        role:
           type: string
-          description: Error message
-          example: User not found or not an active member
+          enum:
+          - member
+          - editor
+          - admin
+          description: System role after the update
+          example: editor
       required:
-      - message
+      - status
+      - email
+      - role
     InviteUsersResponse:
       type: object
       properties:
@@ -302,6 +450,15 @@ components:
       - message
       - successfulInvites
       - invalidEmails
+    UserManagementError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Error message
+          example: User not found or not an active member
+      required:
+      - message
   securitySchemes:
     bearerAuth:
       type: http

@@ -22,7 +22,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Assistant'
+              $ref: '#/components/schemas/AssistantCreateRequest'
       responses:
         '201':
           description: Agent created successfully
@@ -30,18 +30,24 @@ paths:
             application/json:
               schema:
                 type: object
+                required:
+                - status
+                - message
+                - agent
                 properties:
                   status:
                     type: string
+                    enum:
+                    - success
                   message:
                     type: string
                   agent:
-                    $ref: '#/components/schemas/Assistant'
+                    $ref: '#/components/schemas/AssistantDetails'
   /agent/v1/update:
     patch:
       operationId: updateAgentV2
       summary: Updates an existing agent
-      description: Updates an existing agent in your workspace.
+      description: Updates an existing agent in your workspace. Updates apply to the draft. When `actions` is provided, the array replaces the draft list. Ids already on the draft that are missing or soft-deleted are dropped. Ids already on the draft whose integration is not enabled stay. A brand-new missing or unavailable id returns 400. The success body includes `preservedUnavailableActionIds` only when unavailable draft ids were kept.
       tags:
       - Agent Build
       requestBody:
@@ -57,10 +63,34 @@ paths:
                   agentId:
                     type: string
                     format: uuid
-              - $ref: '#/components/schemas/Assistant'
+              - $ref: '#/components/schemas/AssistantWriteRequest'
       responses:
         '200':
           description: Agent updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - status
+                - message
+                - agent
+                properties:
+                  status:
+                    type: string
+                    enum:
+                    - success
+                  message:
+                    type: string
+                    example: Agent updated successfully
+                  agent:
+                    $ref: '#/components/schemas/AssistantDetails'
+                  preservedUnavailableActionIds:
+                    type: array
+                    items:
+                      type: string
+                      format: uuid
+                    description: Unavailable action ids already on the draft that were kept. Omitted when empty.
   /agent/v1/publish:
     post:
       operationId: publishAgentV2
@@ -83,7 +113,8 @@ paths:
                   description: UUID of the agent to publish
                 description:
                   type: string
-                  maxLength: 100
+                  minLength: 1
+                  maxLength: 500
                   description: Optional change description shown in version history
       responses:
         '200':
@@ -92,6 +123,10 @@ paths:
             application/json:
               schema:
                 type: object
+                required:
+                - status
+                - message
+                - version
                 properties:
                   status:
                     type: string
@@ -116,7 +151,7 @@ paths:
     get:
       operationId: getAgentV2
       summary: Retrieves details of an existing agent
-      description: Retrieves the complete configuration and details of an existing agent.
+      description: Retrieves the current settings and details available for an existing agent. Returns the published version when one exists, otherwise the draft. The `actions` array omits missing and soft-deleted action ids and still includes live actions that are unavailable in the workspace.
       tags:
       - Agent Build
       parameters:
@@ -133,64 +168,360 @@ paths:
             application/json:
               schema:
                 type: object
+                required:
+                - status
+                - agent
                 properties:
                   status:
                     type: string
                   agent:
-                    $ref: '#/components/schemas/Assistant'
+                    $ref: '#/components/schemas/AssistantDetails'
 components:
   schemas:
-    Assistant:
+    AssistantInputFieldRequest:
       type: object
       required:
-      - name
-      - instructions
+      - slug
+      - type
+      - label
+      - order
+      properties:
+        slug:
+          type: string
+          minLength: 1
+          maxLength: 64
+          description: Unique identifier for the field
+        type:
+          type: string
+          enum:
+          - TEXT
+          - MULTI_LINE_TEXT
+          - NUMBER
+          - CHECKBOX
+          - FILE
+          - SELECT
+          - MULTI_SELECT
+          - DATE
+          - EMAIL
+          description: Field type
+        label:
+          type: string
+          minLength: 1
+          maxLength: 255
+          description: Display label for the field
+        description:
+          type: string
+          maxLength: 512
+          description: Help text for the field
+        required:
+          type: boolean
+          default: false
+          description: Whether the field is required
+        order:
+          type: integer
+          minimum: 0
+          description: Display order
+        options:
+          type: array
+          default: []
+          items:
+            type: string
+            minLength: 1
+            maxLength: 255
+          description: Options for SELECT and MULTI_SELECT fields
+        fileTypes:
+          type:
+          - string
+          - 'null'
+          maxLength: 255
+          description: Allowed file types for FILE fields
+        emailDomain:
+          type:
+          - string
+          - 'null'
+          description: Allowed email domain for EMAIL fields
+    AssistantCreateRequest:
+      allOf:
+      - $ref: '#/components/schemas/AssistantWriteRequest'
+      - type: object
+        required:
+        - name
+        properties:
+          inputType:
+            default: PROMPT
+          creativity:
+            default: 0.3
+          conversationStarters:
+            default: []
+          actions:
+            default: []
+          inputFields:
+            default: []
+          webSearch:
+            default: false
+          imageGeneration:
+            default: false
+          dataAnalyst:
+            default: false
+          extendedThinking:
+            default: false
+          attachments:
+            default: []
+          knowledgeFolderIds:
+            default: []
+    AssistantWriteRequest:
+      type: object
       properties:
         name:
           type: string
-          maxLength: 64
+          minLength: 1
+          maxLength: 80
+          description: Name of the agent or assistant
         description:
           type: string
-          maxLength: 256
-        instructions:
+          maxLength: 800
+          description: Description of what the agent or assistant does. Send an empty string to clear it during an update.
+        instruction:
           type: string
-          maxLength: 16384
-        temperature:
+          maxLength: 50000
+          description: System prompt or instructions. Send an empty string to clear it during an update.
+        inputType:
+          type: string
+          enum:
+          - PROMPT
+          - STRUCTURED
+          - INTEGRATION
+          - SCHEDULED
+          - WEBHOOK
+          description: Input type
+        emoji:
+          type:
+          - string
+          - 'null'
+          maxLength: 16
+          description: Emoji icon
+        model:
+          type: string
+          description: id from GET /agent/v1/models. Unique deployment names and Anthropic aliases stay valid. When several accessible rows share a name, send the UUID id.
+        creativity:
           type: number
           minimum: 0
           maximum: 1
-        model:
-          type: string
-          maxLength: 64
-        capabilities:
-          type: object
-          properties:
-            webSearch:
-              type: boolean
-            dataAnalyst:
-              type: boolean
-              deprecated: true
-              description: Deprecated. Accepted for compatibility and ignored.
-            imageGeneration:
-              type: boolean
+          description: Temperature for response generation
+        conversationStarters:
+          type: array
+          maxItems: 20
+          items:
+            type: string
+            minLength: 1
+            maxLength: 255
+          description: Suggested prompts
         actions:
           type: array
           items:
-            $ref: '#/components/schemas/Action'
-        vectorDb:
+            $ref: '#/components/schemas/AssistantActionRequest'
+          description: Actions that the agent or assistant can use. On update, the array replaces the draft list.
+        inputFields:
           type: array
           items:
-            $ref: '#/components/schemas/VectorDb'
+            $ref: '#/components/schemas/AssistantInputFieldRequest'
+          description: Form fields for STRUCTURED input
+        webSearch:
+          type: boolean
+          description: Enable web search
+        imageGeneration:
+          type: boolean
+          description: Enable image generation
+        dataAnalyst:
+          type: boolean
+          deprecated: true
+          description: Deprecated. Accepted for compatibility and ignored.
+        extendedThinking:
+          type: boolean
+          description: Enable extended thinking
+        attachments:
+          type: array
+          maxItems: 50
+          items:
+            type: string
+            format: uuid
+          description: Attachment UUIDs
         knowledgeFolderIds:
           type: array
           items:
             type: string
-        attachmentIds:
+            format: uuid
+          description: Folder UUIDs
+    AssistantDetails:
+      type: object
+      required:
+      - id
+      - name
+      - description
+      - instruction
+      - emojiIcon
+      - model
+      - temperature
+      - conversationStarters
+      - inputType
+      - webSearchEnabled
+      - imageGenerationEnabled
+      - canvasEnabled
+      - extendedThinking
+      - actions
+      - inputFields
+      - attachments
+      - knowledgeFolderIds
+      - createdAt
+      - updatedAt
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the agent
+        name:
+          type: string
+          description: Name of the agent
+        description:
+          type:
+          - string
+          - 'null'
+          description: Description of what the agent does
+        instruction:
+          type:
+          - string
+          - 'null'
+          description: System prompt/instructions for the agent
+        emojiIcon:
+          type:
+          - string
+          - 'null'
+          description: Emoji icon for the agent
+        model:
+          type:
+          - string
+          - 'null'
+          description: Model ID to use (see Models for Agent API)
+        temperature:
+          type: number
+          minimum: 0
+          maximum: 1
+          description: Temperature/creativity setting for response generation
+        conversationStarters:
+          type: array
+          items:
+            type: string
+          description: Array of suggested prompts to help users get started
+        inputType:
+          type: string
+          enum:
+          - PROMPT
+          - STRUCTURED
+          - INTEGRATION
+          - SCHEDULED
+          - WEBHOOK
+          description: Input type for the agent
+        webSearchEnabled:
+          type: boolean
+          description: Whether web search capability is enabled
+        imageGenerationEnabled:
+          type: boolean
+          description: Whether image generation capability is enabled
+        canvasEnabled:
+          type: boolean
+          description: Whether canvas capability is enabled
+        extendedThinking:
+          type: boolean
+          description: Whether extended thinking is enabled. Only supported on models that expose this capability; enabling it on an unsupported model returns a 400 error.
+        actions:
+          type: array
+          items:
+            type: object
+            required:
+            - actionId
+            - requiresConfirmation
+            properties:
+              actionId:
+                type: string
+                format: uuid
+                description: UUID of a live action. Missing and soft-deleted ids are omitted. Live unavailable actions remain.
+              requiresConfirmation:
+                type: boolean
+                description: Whether user confirmation is required before executing
+          description: Live actions on the returned version. Missing and soft-deleted ids are omitted. Live unavailable actions remain.
+        inputFields:
+          type: array
+          items:
+            type: object
+            required:
+            - type
+            - label
+            - description
+            - required
+            - order
+            properties:
+              type:
+                type: string
+                enum:
+                - TEXT
+                - MULTI_LINE_TEXT
+                - NUMBER
+                - CHECKBOX
+                - FILE
+                - SELECT
+                - MULTI_SELECT
+                - DATE
+                - EMAIL
+                description: Field type
+              label:
+                type: string
+                description: Display label for the field
+              description:
+                type:
+                - string
+                - 'null'
+                description: Help text for the field
+              required:
+                type: boolean
+                description: Whether the field is required
+              order:
+                type: integer
+                minimum: 0
+                description: Display order (0-indexed)
+          description: Array of form field definitions (for STRUCTURED input type)
+        attachments:
           type: array
           items:
             type: string
             format: uuid
-          description: Array of UUID strings identifying attachments for this message
+          description: Array of attachment UUIDs associated with the agent
+        knowledgeFolderIds:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: Array of Folder UUIDs associated with the agent
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp when the agent was created
+        updatedAt:
+          type: string
+          format: date-time
+          description: Timestamp when the agent was last updated
+    AssistantActionRequest:
+      type: object
+      required:
+      - actionId
+      properties:
+        actionId:
+          type: string
+          format: uuid
+          description: UUID of the action. Create requires an enabled workspace integration. Update also accepts ids already on the draft as described on PATCH /agent/v1/update.
+        requiresConfirmation:
+          type: boolean
+          default: true
+          description: Whether to require user confirmation before executing
   securitySchemes:
     bearerAuth:
       type: http
