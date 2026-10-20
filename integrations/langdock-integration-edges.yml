@@ -39,5 +39,24 @@ edges:
   category: Microsoft Teams app
   publisher_verified:
   - Microsoft 365 Certified
+- partner_name: OpenAI
+  partner: openai
+  partner_match: domain
+  type: contract
+  channel: provider-built
+  relationship: compatible
+  direction: provider-built
+  evidence: https://github.com/api-evangelist/langdock/blob/main/openapi/langdock-responses-api-openapi.yml#L460
+  contract_reference:
+    repo: langdock
+    spec_file: langdock-responses-api-openapi.yml
+    property: description
+    value: OpenAI-compatible
+    note: 'langdock declares OpenAI compatibility: ''description: A response returned by the OpenAI-compatible Responses
+      endpoint.'''
+    detected_by: sweep-model-routing.py
+    detected: '2026-10-19'
+  detected_by: sweep-model-routing.py
+  first_seen: '2026-10-19'
 source:
 - microsoft-teams/integrations/microsoft-teams-integration-edges.yml

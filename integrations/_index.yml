@@ -28,3 +28,23 @@
   relationship: platform-app
   status: not-a-workflow
   arazzo: null
+- slug: langdock-openai
+  label: OpenAI
+  partner: openai
+  partner_name: OpenAI
+  type: contract
+  channel: provider-built
+  evidence: https://github.com/api-evangelist/langdock/blob/main/openapi/langdock-responses-api-openapi.yml#L460
+  source: edge
+  relationship: compatible
+  contract_reference:
+    repo: langdock
+    spec_file: langdock-responses-api-openapi.yml
+    property: description
+    value: OpenAI-compatible
+    note: 'langdock declares OpenAI compatibility: ''description: A response returned by the OpenAI-compatible Responses
+      endpoint.'''
+    detected_by: sweep-model-routing.py
+    detected: '2026-10-19'
+  status: not-a-workflow
+  arazzo: null
