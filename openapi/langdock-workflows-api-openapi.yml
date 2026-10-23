@@ -411,3 +411,9 @@ components:
       scheme: bearer
       bearerFormat: API Key
       description: API key as Bearer token. Format "Bearer YOUR_API_KEY"
+x-provenance:
+  method: harvested
+  publisher: Langdock
+  source: https://docs.langdock.com/openapi.yaml
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
